@@ -20,6 +20,7 @@ public class UserController extends BaseController {
 
     @GetMapping(value = "/userInfo")
     public ResultDto userInfo() {
+		
         return success(userService.getOne(new QueryWrapper<User>().lambda().eq(User::getId, SecurityUtils.getCurrentUserId()).eq(User::getStatus, Constants.status.TRUE)));
     }
 }
