@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="iters-core" />
+        <module name="iters-dao" />
+        <module name="iters-service" />
+        <module name="iters-web" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="iters" target="1.8" />
+      <module name="iters-core" target="1.8" />
+      <module name="iters-dao" target="1.8" />
+      <module name="iters-service" target="1.8" />
+      <module name="iters-web" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="iters" options="-parameters" />
+      <module name="iters-core" options="-parameters" />
+      <module name="iters-dao" options="-parameters" />
+      <module name="iters-service" options="-parameters" />
+      <module name="iters-web" options="-parameters" />
+    </option>
+  </component>
+</project>

@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="iters-web:war">
+    <output-path>$PROJECT_DIR$/iters-web/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>iters-web</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="iters.war">
+      <element id="artifact" artifact-name="iters-web:war exploded" />
+    </root>
+  </artifact>
+</component>
