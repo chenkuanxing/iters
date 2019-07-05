@@ -13,7 +13,7 @@ function loginOut(){
     });
 }
 var vm = new Vue({
-    el:'#topbar-collapse',
+    el:'#container',
     data:{
         user:{}
     },
