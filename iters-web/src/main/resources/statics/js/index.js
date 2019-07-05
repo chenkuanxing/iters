@@ -4,7 +4,7 @@ function loginOut(){
         url: "signOut",
         dataType: "json",
         success: function (result) {
-            if (result.code == 100) {//µÇÂ¼³É¹¦
+            if (result.code == 100) {
                 location.href = parent.location.href = 'login';
             } else {
                 console.log(result.message);

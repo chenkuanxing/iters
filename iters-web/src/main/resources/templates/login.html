@@ -1,78 +1,53 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>登入</title>
-  <meta name="description" content="这是一个 index 页面">
-  <meta name="keywords" content="index">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="renderer" content="webkit">
-  <meta http-equiv="Cache-Control" content="no-siteapp" />
-  <link rel="icon" type="image/png" href="statics/assets/i/favicon.png">
-  <link rel="apple-touch-icon-precomposed" href="statics/assets/i/app-icon72x72@2x.png">
-  <meta name="apple-mobile-web-app-title" content="Amaze UI" />
-  <link rel="stylesheet" href="statics/assets/css/amazeui.min.css" />
-  <link rel="stylesheet" href="statics/assets/css/admin.css">
-  <link rel="stylesheet" href="statics/assets/css/app.css">
-</head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
 
-<body data-type="login">
+<title>登录</title>
+<link href="statics/assets/css/login.css" type="text/css" rel="stylesheet">
+</head> 
+<body> 
+<div class="div_top">OA日常办公管理系统</div>
+<div class="login">
+    <div class="message">用户登录</div>
+    <div id="darkbannerwrap"></div>
 
-  <div class="am-g myapp-login">
-	<div class="myapp-login-logo-block  tpl-login-max">
-		<div class="myapp-login-logo-text">
-			<div class="myapp-login-logo-text">
-				Amaze UI<span> Login</span> <i class="am-icon-skyatlas"></i>
-				
-			</div>
-		</div>
+		<input name="username" placeholder="用户名" required="" type="text" id="username">
+		<hr class="hr15">
+		<input name="password" placeholder="密码" required="" type="password" id="password">
+		<hr class="hr15">
+		<input value="登录" style="width:100%;" type="button" onclick="login()" id="login_btn">
+		<hr class="hr20">
+		  <a onClick="alert('请联系管理员')">忘记密码</a>
 
-		<div class="login-font">
-			<i>Log In </i> or <span> Sign Up</span>
-		</div>
-		<div class="am-u-sm-10 login-am-center">
-			<form class="am-form">
-				<fieldset>
-					<div class="am-form-group">
-						<input type="text" class="" id="username" placeholder="username...">
-					</div>
-					<div class="am-form-group">
-						<input type="password" class="" id="password" placeholder="password...">
-					</div>
-					<p><button type="button" class="am-btn am-btn-default" onclick="login()">登录</button></p>
-				</fieldset>
-			</form>
-		</div>
-	</div>
+
+	
 </div>
-  <script type="text/javascript">
-	  function login(){
-		  console.log("ssss");
-		  var username = $('#username').val();
-		  var password = $('#password').val();
-		  console.log("username=" + username + "&password=" + password);
-		  var data = "username=" + username + "&password=" + password;
-		  $.ajax({
-			  type: "POST",
-			  url: "signIn",
-			  data: data,
-			  dataType: "json",
-			  success: function (result) {
-				  if (result.code == 100) {//登录成功
-					  console.log(result);
-					  location.href = parent.location.href = 'index';
-				  } else {
-					  console.log(result.message);
-				  }
-			  }
-		  });
-	  }
-  </script>
-  <script src="statics/assets/js/jquery.min.js"></script>
-  <script src="statics/assets/js/amazeui.min.js"></script>
-  <script src="statics/assets/js/app.js"></script>
-</body>
 
+<div class="copyright">版权所有@<span style="color:#f77118">2017 </span>杭州天夏科技股份集团有限公司</div>
+<script type="text/javascript" src="statics/assets/js/jquery.js"></script>
+<script type="text/javascript">
+	function login(){
+		console.log("ssss");
+		var username = $('#username').val();
+		var password = $('#password').val();
+		console.log("username=" + username + "&password=" + password);
+		var data = "username=" + username + "&password=" + password;
+		$.ajax({
+			type: "POST",
+			url: "signIn",
+			data: data,
+			dataType: "json",
+			success: function (result) {
+				if (result.code == 100) {//登录成功
+					console.log(result);
+					location.href = parent.location.href = 'index';
+				} else {
+					console.log(result.message);
+				}
+			}
+		});
+	}
+</script>
+</body>
 </html>

@@ -21,4 +21,9 @@ public class LoginController extends BaseController {
     public String index() {
         return "page/index";
     }
+
+    @RequestMapping("/home")
+    public String home() {
+        return "page/home";
+    }
 }
