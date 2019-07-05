@@ -12,17 +12,9 @@
         <module name="iters-web" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="iters" target="1.8" />
-      <module name="iters-core" target="1.8" />
-      <module name="iters-dao" target="1.8" />
-      <module name="iters-service" target="1.8" />
-      <module name="iters-web" target="1.8" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="iters" options="-parameters" />
       <module name="iters-core" options="-parameters" />
       <module name="iters-dao" options="-parameters" />
       <module name="iters-service" options="-parameters" />
