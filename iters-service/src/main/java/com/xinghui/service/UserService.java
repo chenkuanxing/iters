@@ -6,6 +6,5 @@ import com.xinghui.security.CustUserDetails;
 
 public interface UserService extends IService<User> {
 
-    CustUserDetails queryUserPass(String username);
-
+    boolean updatePass(String oldPassword, String newPassword, String password);
 }

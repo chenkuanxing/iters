@@ -264,4 +264,9 @@ public class LoginController extends BaseController {
         return "page/write_email";
     }
 
+    @RequestMapping("/password")
+    public String password() {
+        return "page/password";
+    }
+
 }
