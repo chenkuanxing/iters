@@ -124,7 +124,7 @@ function openlayer() {
         area: ['98%', '98%'],
         shadeClose: true,
         closeBtn: 2,
-        content: 'notic_tail.html'
+        content: 'notic_tail'
 
     });
     
