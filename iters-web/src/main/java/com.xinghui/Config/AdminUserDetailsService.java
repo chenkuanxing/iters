@@ -5,6 +5,7 @@ import com.xinghui.common.Constants;
 import com.xinghui.entity.User;
 import com.xinghui.exception.CustException;
 import com.xinghui.security.CustUserDetails;
+import com.xinghui.service.RoleService;
 import com.xinghui.service.UserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,12 +26,16 @@ public class AdminUserDetailsService implements UserDetailsService {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private RoleService roleService;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User sysUser = userService.getOne(new QueryWrapper<User>().lambda().eq(User::getUserCode, username).eq(User::getStatus, Constants.status.TRUE));
         if (sysUser != null) {
             CustUserDetails userDtails = new CustUserDetails();
             BeanUtils.copyProperties(sysUser, userDtails);
+//            userDtails.setRoles(roleService.getRoleTag(userDtails.getId()));
             return userDtails;
         } else {
             throw new CustException("用户名或密码错误");

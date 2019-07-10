@@ -55,16 +55,4 @@ public class CustUserDetails extends User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-
-
-//    public CustUserDetails(User user) {
-//        setId(user.getId());
-//        setUserCode(user.getUserCode());
-//        setPassword(user.getPassword());
-//        setUserName(user.getUserName());
-//        setSex(user.getSex());
-//        setEmail(user.getEmail());
-//        setMobileNo(user.getMobileNo());
-//    }
-
 }

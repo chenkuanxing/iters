@@ -3,7 +3,13 @@ package com.xinghui.security;
 import com.xinghui.enums.HttpCodeEnum;
 import com.xinghui.exception.CustException;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.util.CollectionUtils;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 
 /**
@@ -22,7 +28,7 @@ public class SecurityUtils {
      *
      * @return
      */
-    public static Long getCurrentUserId() {
+    public static String getCurrentUserId() {
         Object object = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (object != "anonymousUser") {
             userDetails = (CustUserDetails) object;
@@ -45,6 +51,21 @@ public class SecurityUtils {
         } else {
             throw new CustException(HttpCodeEnum.deny.getValue(), HttpCodeEnum.deny.getDesc());
         }
+    }
+
+    /**
+     * 获取用户角色权限
+     * @return
+     */
+    public static List<String> getCurrentUserRoles(){
+        Collection<? extends GrantedAuthority> authorities =  SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+        List<String> permissions = new ArrayList<>();
+        if (!CollectionUtils.isEmpty(authorities)){
+            for (GrantedAuthority grantedAuthority : authorities){
+                permissions.add(grantedAuthority.getAuthority());
+            }
+        }
+        return permissions;
     }
 
 }

@@ -1,13 +1,13 @@
-package com.xinghui.service;
+package com.xinghui.serviceImpl;
+
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.xinghui.service.UserService;
 import com.xinghui.entity.User;
 import com.xinghui.exception.CustException;
 import com.xinghui.mapper.UserMapper;
-import com.xinghui.security.CustUserDetails;
 import com.xinghui.security.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
