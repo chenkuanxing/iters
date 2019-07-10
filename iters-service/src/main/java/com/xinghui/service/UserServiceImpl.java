@@ -1,5 +1,4 @@
 package com.xinghui.service;
-
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xinghui.entity.User;
 import com.xinghui.exception.CustException;
