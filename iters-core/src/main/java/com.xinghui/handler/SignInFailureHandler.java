@@ -31,7 +31,11 @@ public class SignInFailureHandler implements AuthenticationFailureHandler {
         response.setContentType("application/json;charset=utf-8");
         JSONObject json = new JSONObject();
         json.put("code", HttpCodeEnum.FAIL.getValue());
-        json.put("message", exception.getMessage());
+        if ("Bad credentials".equals(exception.getMessage())){
+            json.put("message", "密码错误!");
+        }else {
+            json.put("message", exception.getMessage());
+        }
         json.put("data", "");
         PrintWriter out = response.getWriter();
         out.print(json);
