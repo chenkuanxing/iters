@@ -51,7 +51,7 @@ function Workload() {
                 },
                 {
                     title: '发布人',
-                    field: 'publisher',
+                    field: 'publisherName',
                     align: 'center'
                 },
                 {

@@ -1,5 +1,6 @@
 package com.xinghui.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
@@ -28,4 +29,7 @@ public class Journal extends BaseEntity{
      *执行时间
      */
     private Date performTime;
+
+    @TableField(exist = false)
+    private String publisherName;
 }
