@@ -69,3 +69,10 @@ CREATE TABLE `s_role_resource`  (
                                   `update_by` varchar(555) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '更新人',
                                   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色资源关联表' ROW_FORMAT = Dynamic;
+/*工作日志模块表*/
+DROP TABLE IF EXISTS `s_journal`;
+CREATE TABLE `s_journal` (
+                             `journalTitle` varchar(64) DEFAULT NULL COMMENT '日志标题',
+                             `publisher` varchar(64) DEFAULT NULL COMMENT '发布人',
+                             `PublisherTime` varchar(64) DEFAULT NULL COMMENT '发布时间'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
