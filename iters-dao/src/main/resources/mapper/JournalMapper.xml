@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xinghui.mapper.JournalMapper">
+    <select id="listPage" resultType="com.xinghui.entity.Journal">
+        select * from s_journal a
+        left join s_user b on a.publisher = b.id and b.status = 1
+        where a.status = 1
+        <if test="journalDot.title != null and journalDot.title != ''">
+            and a.title = #{journalDot.title}
+        </if>
+        <if test="journalDot.publisher != null and journalDot.publisher != ''">
+            and b.user_code = #{journalDot.publisher}
+        </if>
+    </select>
+</mapper>
