@@ -73,9 +73,9 @@ CREATE TABLE `s_role_resource`  (
 DROP TABLE IF EXISTS `s_journal`;
 CREATE TABLE `s_journal` (
                            `id` varchar(555) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '编号',
-                             `journalTitle` varchar(64) DEFAULT NULL COMMENT '日志标题',
+                             `title` varchar(64) DEFAULT NULL COMMENT '日志标题',
                              `publisher` varchar(64) DEFAULT NULL COMMENT '发布人',
-                             `PublisherTime` varchar(64) DEFAULT NULL COMMENT '发布时间',
+                             `publisher_time` varchar(64) DEFAULT NULL COMMENT '发布时间',
                              `status` tinyint(4) NULL DEFAULT 1 COMMENT '可用状态',
                            `create_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
                            `create_by` varchar(555) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建人',
