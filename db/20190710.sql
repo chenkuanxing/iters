@@ -1,3 +1,68 @@
+/*工作日志模块表*/
+DROP TABLE IF EXISTS `s_journal`;
+CREATE TABLE `s_journal`  (
+                            `id` varchar(555) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '编号',
+                            `title` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '日志标题',
+                            `publisher` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '发布人',
+                            `publisher_time` datetime(0) NULL DEFAULT NULL COMMENT '发布时间',
+                            `status` tinyint(4) NULL DEFAULT 1 COMMENT '可用状态',
+                            `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+                            `create_by` varchar(555) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建人',
+                            `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+                            `update_by` varchar(555) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '更新人',
+                            PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '工作日志模块表' ROW_FORMAT = Dynamic;
+
+/*资源表*/
+DROP TABLE IF EXISTS `s_resource`;
+CREATE TABLE `s_resource`  (
+                             `id` varchar(555) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '编号',
+                             `name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '资源名称',
+                             `pid` varchar(555) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '父级编号',
+                             `url` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '链接地址',
+                             `sort` tinyint(4) NULL DEFAULT NULL COMMENT '序号',
+                             `remark` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '描述',
+                             `status` tinyint(4) NULL DEFAULT 1 COMMENT '可用状态',
+                             `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+                             `create_by` varchar(555) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建人',
+                             `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+                             `update_by` varchar(555) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '更新人',
+                             `resource_tag` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '资源标记',
+                             PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '资源表' ROW_FORMAT = Dynamic;
+
+/*角色表*/
+DROP TABLE IF EXISTS `s_role`;
+CREATE TABLE `s_role`  (
+                         `id` varchar(555) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '编号',
+                         `role_name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '角色名',
+                         `role_tag` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '角色标签',
+                         `status` tinyint(4) NULL DEFAULT 1 COMMENT '可用状态',
+                         `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+                         `create_by` varchar(555) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建人',
+                         `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+                         `update_by` varchar(555) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '更新人',
+                         `data_type` tinyint(4) NULL DEFAULT 0 COMMENT '0:默认权限 1：全部 2：部分',
+                         PRIMARY KEY (`id`) USING BTREE,
+                         UNIQUE INDEX `sys_role_role_name_uindex`(`role_name`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色表' ROW_FORMAT = Dynamic;
+
+/*角色资源关联表*/
+DROP TABLE IF EXISTS `s_role_resource`;
+CREATE TABLE `s_role_resource`  (
+                                  `id` varchar(555) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '编号',
+                                  `role_id` varchar(555) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '角色编号',
+                                  `resource_id` varchar(555) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '资源编号',
+                                  `checked` tinyint(4) NULL DEFAULT NULL COMMENT '2部分选中，1全选，0未选中',
+                                  `status` tinyint(4) NULL DEFAULT 1 COMMENT '可用状态',
+                                  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+                                  `create_by` varchar(555) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建人',
+                                  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+                                  `update_by` varchar(555) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '更新人',
+                                  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色资源关联表' ROW_FORMAT = Dynamic;
+
+/*用户信息*/
 DROP TABLE IF EXISTS `s_user`;
 CREATE TABLE `s_user`  (
                          `id` varchar(555) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户ID',
@@ -20,66 +85,3 @@ INSERT INTO `s_user` VALUES ('1', 'admin', '$2a$10$Sag0nPH949uilONl56kVNOZ5/fRJ2
 INSERT INTO `s_user` VALUES ('2', 'liuzhihui', '$2a$10$W10c/NssWlb8ew7n0c40hubYQpnw94j55djvQb7CSEGQ8gjpl3sNq', '刘志辉', 23, 'liuzhihui@qq.com', NULL, '2019-07-03 16:31:14', '-1', NULL, NULL, 1, NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;
-
-/*资源表*/
-DROP TABLE IF EXISTS `s_resource`;
-CREATE TABLE `s_resource`  (
-                             `id` varchar(555) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '编号',
-                             `name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '资源名称',
-                             `pid` varchar(555) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '父级编号',
-                             `url` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '链接地址',
-                             `sort` tinyint(4) NULL DEFAULT NULL COMMENT '序号',
-                             `remark` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '描述',
-                             `status` tinyint(4) NULL DEFAULT 1 COMMENT '可用状态',
-                             `create_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-                             `create_by` varchar(555) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建人',
-                             `update_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
-                             `update_by` varchar(555) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '更新人',
-                             `resource_tag` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '资源标记',
-                             PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '资源表' ROW_FORMAT = Dynamic;
-
-/*角色表*/
-DROP TABLE IF EXISTS `s_role`;
-CREATE TABLE `s_role`  (
-                         `id` varchar(555) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '编号',
-                         `role_name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '角色名',
-                         `role_tag` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '角色标签',
-                         `status` tinyint(4) NULL DEFAULT 1 COMMENT '可用状态',
-                         `create_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-                         `create_by` varchar(555) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建人',
-                         `update_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
-                         `update_by` varchar(555) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '更新人',
-                         `data_type` tinyint(4) NULL DEFAULT 0 COMMENT '0:默认权限 1：全部 2：部分',
-                         PRIMARY KEY (`id`) USING BTREE,
-                         UNIQUE INDEX `sys_role_role_name_uindex`(`role_name`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色表' ROW_FORMAT = Dynamic;
-
-/*角色资源关联表*/
-DROP TABLE IF EXISTS `s_role_resource`;
-CREATE TABLE `s_role_resource`  (
-                                  `id` varchar(555) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '编号',
-                                  `role_id` varchar(555) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '角色编号',
-                                  `resource_id` varchar(555) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '资源编号',
-                                  `checked` tinyint(4) NULL DEFAULT NULL COMMENT '2部分选中，1全选，0未选中',
-                                  `status` tinyint(4) NULL DEFAULT 1 COMMENT '可用状态',
-                                  `create_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-                                  `create_by` varchar(555) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建人',
-                                  `update_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
-                                  `update_by` varchar(555) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '更新人',
-                                  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色资源关联表' ROW_FORMAT = Dynamic;
-/*工作日志模块表*/
-DROP TABLE IF EXISTS `s_journal`;
-CREATE TABLE `s_journal` (
-                           `id` varchar(555) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '编号',
-                             `title` varchar(64) DEFAULT NULL COMMENT '日志标题',
-                             `publisher` varchar(64) DEFAULT NULL COMMENT '发布人',
-                             `publisher_time` varchar(64) DEFAULT NULL COMMENT '发布时间',
-                             `status` tinyint(4) NULL DEFAULT 1 COMMENT '可用状态',
-                           `create_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-                           `create_by` varchar(555) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建人',
-                           `update_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
-                           `update_by` varchar(555) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '更新人',
-                           PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '工作日志模块表' ROW_FORMAT = Dynamic;
