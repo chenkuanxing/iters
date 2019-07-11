@@ -72,7 +72,14 @@ CREATE TABLE `s_role_resource`  (
 /*工作日志模块表*/
 DROP TABLE IF EXISTS `s_journal`;
 CREATE TABLE `s_journal` (
+                           `id` varchar(555) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '编号',
                              `journalTitle` varchar(64) DEFAULT NULL COMMENT '日志标题',
                              `publisher` varchar(64) DEFAULT NULL COMMENT '发布人',
-                             `PublisherTime` varchar(64) DEFAULT NULL COMMENT '发布时间'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+                             `PublisherTime` varchar(64) DEFAULT NULL COMMENT '发布时间',
+                             `status` tinyint(4) NULL DEFAULT 1 COMMENT '可用状态',
+                           `create_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                           `create_by` varchar(555) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建人',
+                           `update_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
+                           `update_by` varchar(555) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '更新人',
+                           PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '工作日志模块表' ROW_FORMAT = Dynamic;
