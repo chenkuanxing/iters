@@ -50,11 +50,11 @@ public abstract class BaseEntity extends Model {
     private String lastChangedUser;
 
     /**
-     * 状态 1：正常 0：删除
+     * 状态 1：正常 -1：删除
      */
 
     @TableLogic
-    private Boolean status;
+    private Integer status;
 
 
     @Override

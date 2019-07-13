@@ -36,9 +36,7 @@ public class JournalController extends BaseController {
 
     @GetMapping(value = "/delete/{id}")
     private ResultDto delete(@PathVariable("id")String id){
-        Journal journal = journalService.getById(id);
-        journal.setStatus(Constants.status.FALSE);
-        return success(journalService.updateById(journal));
+        return success(journalService.removeById(id));
     }
 
 
