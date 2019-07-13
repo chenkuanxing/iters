@@ -1,7 +1,8 @@
 var workTitle, Publisher, currentID, workTime, flag = true;
-function Workload() {
+var $dataTableHot;
+    function Workload() {
     $(function () {
-        $('#table').bootstrapTable({
+        $dataTableHot = $('#table').bootstrapTable({
             method : 'get',
             url : "journal/listPage",//请求路径
             striped: true,
@@ -121,7 +122,7 @@ function delWork(id) {
             success: function(result) {
                 if (result.code == 100) {
                     alert("删除成功！")
-                    location.href = parent.location.href = 'work';
+                    $dataTableHot.bootstrapTable('refresh');
                 } else {
                     console.log(result.message);
                 }
