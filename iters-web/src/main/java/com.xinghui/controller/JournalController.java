@@ -1,13 +1,12 @@
 package com.xinghui.controller;
 
 import com.xinghui.ResultDto;
+import com.xinghui.common.Constants;
 import com.xinghui.dot.JournalDot;
+import com.xinghui.entity.Journal;
 import com.xinghui.service.JournalService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/journal")
@@ -33,6 +32,13 @@ public class JournalController extends BaseController {
     @PostMapping(value = {"/create", "/update"})
     public ResultDto create(JournalDot journalDot) {
         return success(journalService.create(journalDot));
+    }
+
+    @GetMapping(value = "/delete/{id}")
+    private ResultDto delete(@PathVariable("id")String id){
+        Journal journal = journalService.getById(id);
+        journal.setStatus(Constants.status.FALSE);
+        return success(journalService.updateById(journal));
     }
 
 

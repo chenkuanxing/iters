@@ -22,6 +22,7 @@ function Workload() {
                     publisher : Publisher = $("#person").val(),
                     publisherTime : workTime = $("#demo").val()
                 };
+
                 return temp;
             },
             responseHandler: function (res) {
@@ -31,17 +32,10 @@ function Workload() {
                     total : res.data.total,
                     rows : res.data.records
                 };
-                // return {
-                //     total:1,
-                //     rows:{"id":"12","title":"dddd","publisher":"1","createdTime":"2019-07-11 15:43:12","performTime":"2019-07-11 15:43:12","content":"dsgfdsg"}
-                // };
             },
             columns : [
                 {
-                    checkbox:"true",
-                    field: 'id',
-                    align: 'center',
-                    valign: 'middle'
+                    checkbox: "true",
                 },
                 {
                     title: '日志标题',
@@ -74,10 +68,11 @@ function Workload() {
                 ,
                 {
                     title: '操作',
-                    field: 'id',
                     align: 'center',
+
                     formatter: function (value, row) {
-                        var e = '<button button="#" mce_href="#" onclick="delWork(\'' + row.id + '\')">审批</button> '
+                        console.log("row="+row.id);
+                        var e = '<button button="#" mce_href="#" onclick="delWork(\'' + row.id + '\')">删除</button> '
                         return e;
                     }
                 }
@@ -117,25 +112,22 @@ function editWork(id) {
     openlayer()
     currentID = id;
 }
-// function outWork(id) {
-//     alert(id)
-//     var NoticeId = id;
-//     $.ajax({
-//         url: '../WorkRecord/DeleteWork?workId=' + NoticeId,
-//         type: 'GET',
-//         dataType: 'json',
-//         success: function (data) {
-//             if (data.data) {
-//                 alert("删除成功！")
-//                 // getNoticeTableData();
-//             } else {
-//                 alert("删除失败")
-//             }
-//         },
-//         error: function (err) {
-//         }
-//     });
-// }
+function delWork(id) {
+        $.ajax({
+            type: "GET",
+            url: "journal/delete/"+id,
+            dataType: "json",
+            success: function(result) {
+                if (result.code == 100) {
+                    alert("删除成功！")
+                    location.href = parent.location.href = 'work';
+                } else {
+                    console.log(result.message);
+                }
+            }
+        });
+
+ }
 // function getCurrentID() {
 //     return currentID;
 // }
