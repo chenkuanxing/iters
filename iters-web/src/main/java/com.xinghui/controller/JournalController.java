@@ -14,8 +14,6 @@ public class JournalController extends BaseController {
 
     @Autowired
     private JournalService journalService;
-
-
     /**
      * 查询日志列表
      */
@@ -33,7 +31,11 @@ public class JournalController extends BaseController {
     public ResultDto create(JournalDot journalDot) {
         return success(journalService.create(journalDot));
     }
-
+    /**
+     * 删除
+     *
+     * @return
+     */
     @GetMapping(value = "/delete/{id}")
     private ResultDto delete(@PathVariable("id")String id){
         return success(journalService.removeById(id));
