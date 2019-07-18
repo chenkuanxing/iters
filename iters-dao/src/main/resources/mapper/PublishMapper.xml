@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xinghui.mapper.PublishMapper">
+    <select id="listPage" resultType="com.xinghui.entity.Publish">
+        select a.*,b.user_name as publishName from s_publish a
+        left join s_user b on a.publish_by = b.id and b.status = 1
+        where a.status = 1
+        <if test="publishDot.title != null and publishDot.title != ''">
+            and a.title  LIKE  CONCAT('%',#{publishDot.title,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="publishDot.publishBy != null and publishDot.publishBy != ''">
+            and b.user_name  LIKE  CONCAT('%',#{publishDot.publishBy,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="publishDot.publishTime != null">
+            and DATE_FORMAT(a.publish_time,'yyyy-MM-dd') = DATE_FORMAT(#{publishDot.publishTime},'yyyy-MM-dd')
+        </if>
+    </select>
+</mapper>

@@ -7,6 +7,143 @@
     <link href="statics/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="statics/assets/css/tail.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="statics/assets/js/jquery.js"></script>
+    <style>
+        .partBox {
+            position: absolute;
+            background: #fff;
+            top: 100%;
+            z-index: 1;
+            border: 1px solid #ccc;
+            padding: 10px 20px;
+            white-space: nowrap;
+            left: 90px;
+            margin-top: 10px;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+        }
+        .grid-search .form-group>span {
+            width: 90px;
+        }
+        .l-modal-query{
+            width: 750px;
+            height: 500px;
+        }
+        .grid-search .form-group>input,
+        .grid-search .form-group>select {
+            width: 160px!important;
+        }
+        .formdiv{
+            margin-bottom: 20px;
+
+        }
+        .formdiv label{
+            margin-right: 5px;
+        }
+        .formdiv input{
+            border-radius: 5px;
+            width:150px;
+            height: 26px;
+            border:1px solid #d2d2d2;
+            padding:0 10px;
+        }
+        .formdiv select{
+            border-radius: 5px;
+            width:150px;
+            height: 26px;
+            border:1px solid #d2d2d2;
+            padding:0 10px;
+        }
+        textarea{
+            width:600px;
+            height:200px;
+            border-radius: 5px;
+            border:1px solid #d2d2d2;
+            padding:0 10px;
+            resize:none;
+        }
+        .checkbox{
+            width:500px;
+
+        }
+        .checkbox input{
+            width:15px;
+            height: 15px;
+            margin-right: 10px;
+            margin-bottom: 14px;
+            position:inherit;
+        }
+        .checkbox label{
+            width:80px;
+            height:20px;
+            line-height:20px;
+        }
+        .sendtime input[type=radio]{
+            width:15px;
+            height: 15px;
+        }
+        .radiobox input[type=radio]{
+            width:15px;
+            height: 15px;
+
+        }
+        .radiobox >div{
+            margin-right:30px;
+        }
+        .memberbox{
+            width:450px;
+            margin-left:10px;
+        }
+        .memberbox input[type=checkbox]{
+            width:15px;
+            height:15px;
+        }
+        .member{
+            min-width:70px;
+        }
+        .organizition{
+            width: 180px;
+            position: relative;
+            min-height: 100px;
+        }
+        #deptListTree{
+            width: 90px;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        #childtree{
+            width: 90px;
+            min-height: 100px;
+            position: absolute;
+            left: 20px;
+            top: 25px;
+        }
+        #deptListTree input[type=checkbox]{
+            width: 15px;
+            height: 15px;
+            float: left;
+            margin: 3px 3px 0 0;
+        }
+        #deptListTree div{
+            cursor:pointer;
+        }
+        #childtree input[type=checkbox]{
+            width: 15px;
+            height: 15px;
+            float: left;
+            margin: 3px 3px 0 0;
+        }
+        #childtree div{
+            cursor:pointer;
+        }
+        .memberlist{
+            wdith:450px;
+            margin-left:30px;
+        }
+        .memberlist span{
+            margin-right:30px;
+        }
+    </style>
     <script>
         function change() {
             var height01 = $(window).height();
@@ -16,8 +153,6 @@
 </head>
 
 <body style="border-radius: 8px" onload="change()">
-<!--<div class="title"><h2>通知详情</h2></div>-->
-<form id="form_demo" >
 <div class="top">
     <div>
         <div class="top_out">
@@ -37,9 +172,7 @@
                     <td>发布时间：</td>
                     <td  style="text-align: left"><input type="text" id="demo"></td>
                     <td>发布部门：</td>
-                    <td colspan = "3" style="text-align: left"><select id="part">
-
-                    </select></td>
+                    <td colspan = "3" style="text-align: left"><input  type="text" class="long_text" id="depId"></td>
                 </tr>
                 <tr>
                     <td style="line-height: 340px">发布内容：</td>
@@ -53,14 +186,31 @@
         <input type="submit" value="保存" class="btn">
         <button class="btn btn1"><a href="notice" target="right">返回</a></button>
     </div>
+
+    <!--<div class="l-modal-bg" id="l-modal-bg"></div>-->
+    <!--<div class="l-modal" id="stu-dep">-->
+        <!--<div class="l-modal-query" style="width:800px;">-->
+            <!--<div class="l-modal-close"></div>-->
+            <!--<div class="l-modal-title"></div>-->
+            <!--<div class="l-modal-content">-->
+
+            <!--</div>-->
+            <!--<div class="l-modal-btns">-->
+                <!--<button class="l-modal-sure l-modal-btn" id="sureCheck">确认</button>-->
+                <!--<button class="l-modal-cancel l-modal-btn">取消</button>-->
+            <!--</div>-->
+            <!--<div class="h40"></div>-->
+        <!--</div>-->
+    <!--</div>-->
 </div>
-</form>
+
 </body>
 <script type="text/javascript" src="statics/assets/js/jquery.js"></script>
 <script src="statics/assets/js/utf8-php/ueditor.config.js"></script>
 <script src="statics/assets/js/utf8-php/ueditor.all.min.js"></script>
 <script src="statics/assets/js/jquery-validation-1.14.0/dist/jquery.validate.min.js" charset="utf-8"></script>
 <script src="statics/assets/js/jquery-validation-1.14.0/dist/localization/messages_zh.js" charset="utf-8"></script>
+<script type="text/javascript" src="statics/assets/js/commom.js"></script>
 <script >
     var ue = UE.getEditor('editor');
     function isFocus(e){
@@ -169,7 +319,7 @@
         alert("")
     }
 </script>
-<script src="js/date/js/laydate.js"></script>
+<script src="statics/assets/js/date/js/laydate.js"></script>
 <script>
     var PROJECTID, TASKTYPE, TASKPHASE,  PERSONID
     !function () {
@@ -178,116 +328,7 @@
         laydate({ elem: '#demo1' });
         laydate({ elem: '#demo2' });//绑定元素
     }();
-    function init() {
-        if (parent.getCurrentID() != "") {
-            $.ajax({
-                url: '../TaskRecord/SearchTaskById?taskId=' + parent.getCurrentID(),
-                type: 'POST',
-                dataType: 'json',
-                success: function (result) {
-                    var data = result.data;
-                    if (data) {
-                        PROJECTID = data.PROJECTID
-                        PERSONID =data.PERSONID
-                        TASKPHASE = data.TASKPHASE;
-                        TASKTYPE = data.TASKTYPE;
-                        $("#tit").val(data.PROJECTNAME);
-                        $("#person").val(data.TASKPHASENAME);
-                        $("#part").val(data.STATE);
-
-                        $("#demo").val(getFormatTime(data.STARTTIME.substring(6,19)));
 
 
-                        $("#NOTE").val(data.NOTE);
-
-                      getPart();
-
-                    }
-                    else {
-                        alert("获取失败！");
-                    }
-                },
-                error: function (err) {
-                }
-            })
-
-        }
-        else {
-            getPart();
-        }
-    }
-    function NoticeSave() {
-        $.ajax({
-            type: "POST",
-            url: "../TaskRecord/UpdateTask",
-            data: {
-                TASKID: parent.getCurrentID(),
-                PROJECTID: PROJECTID,
-                STATE: $("#tit").val(),
-                STARTTIME: $("#demo").val(),
-
-                PERSONID: PERSONID,
-                NOTE: $("#NOTE").val(),
-                TASKTYPE: $("#part").val(),
-                TASKPHASE: $("#person").val(),
-
-            },
-            dataType: "json",
-            success: function (result) {
-                if (result.data) {
-                    alert("保存成功！！！");
-                    parent.getNoticeTableData();
-                    TaskCancel();
-                } else {
-                    alert("保存失败！！！")
-                }
-            }
-        })
-    }
-    function TaskCancel() {
-        var index = parent.layer.getFrameIndex(window.name)
-        parent.layer.close(index);
-    }
-    //初始化部门下拉菜单
-    function getPHASE() {
-        $.ajax({
-            url: '../Common/GetPhaseList',
-            type: 'GET',
-            dataType: 'json',
-            success: function (data) {
-                var PHASEValue = data.data;
-                if (PHASEValue.length > 0) {
-                    $("#part").html("");
-                    for (var i = 0; i < PHASEValue.length; i++) {
-                        if (TASKPHASE == PHASEValue[i].ID) {
-                            var html = "<Option value = '" + PHASEValue[i].ID + "'  selected = 'true'>" + PHASEValue[i].NAME + "</Option>";
-                        } else {
-                            var html = "<Option value = '" + PHASEValue[i].ID + "'>" + PHASEValue[i].NAME + "</Option>";
-                        };
-                        $("#part").append(html);
-                    }
-                }
-
-
-            },
-            error: function (err) {
-            }
-
-        })
-    }
-
-
-    //时间格式化函数
-    function getFormatTime(time) {
-        var time = new Date(parseInt(time));
-        var y = time.getFullYear();
-        var m = time.getMonth() + 1;
-        var d = time.getDate();
-        var h = time.getHours();
-        var mm = time.getMinutes();
-        var s = time.getSeconds();
-        return y + '-' + add0(m) + '-' + add0(d) + ' ' + add0(h) + ':' + add0(mm) + ':' + add0(s);
-    }
-    function add0(m) { return m < 10 ? '0' + m : m }
 </script>
 </html>
