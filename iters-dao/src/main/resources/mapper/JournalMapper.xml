@@ -9,7 +9,7 @@
             and a.title = #{journalDot.title}
         </if>
         <if test="journalDot.publisher != null and journalDot.publisher != ''">
-            and b.id = #{journalDot.publisher}
+            and b.user_name  LIKE  CONCAT('%',#{journalDot.publisher,jdbcType=VARCHAR},'%')
         </if>
     </select>
 </mapper>

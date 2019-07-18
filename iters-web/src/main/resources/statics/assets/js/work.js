@@ -105,7 +105,9 @@ var $dataTableHot;
 //         }
 //     })
 // }
-
+function getWorkTableData(){
+    $dataTableHot.bootstrapTable('refresh');
+}
 function addWork() {
     openlayer()
     currentID = "";
