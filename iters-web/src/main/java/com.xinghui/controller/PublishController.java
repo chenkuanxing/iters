@@ -4,10 +4,7 @@ import com.xinghui.ResultDto;
 import com.xinghui.dot.PublishDot;
 import com.xinghui.service.PublishService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/publish")
@@ -29,5 +26,25 @@ public class PublishController extends BaseController {
     @GetMapping(value = "/delete/{id}")
     private ResultDto delete(@PathVariable("id") String id) {
         return success(publishService.removeById(id));
+    }
+
+    /**
+     * 添加和更新
+     *
+     * @return
+     */
+    @PostMapping(value = "/create")
+    public ResultDto create(PublishDot publishDot) {
+        return success(publishService.create(publishDot));
+    }
+
+    /**
+     * 查询详情
+     *
+     * @return
+     */
+    @GetMapping(value = "/query/{id}")
+    public ResultDto query(@PathVariable("id") String id) {
+        return success(publishService.getById(id));
     }
 }

@@ -156,21 +156,22 @@
 <div class="top">
     <div>
         <div class="top_out">
+            <input type="text" id="id" name ="name" minlength="2"  required>
             <table class="table" >
                 <tbody>
                 <tr>
                     <td style="border-top: none">标题：<i class="i_start"></i> </td>
-                    <td  colspan = "6"  style="text-align: left;border-top: none"><input type="text" id="tit" name ="name" minlength="2"  required></td>
+                    <td  colspan = "6"  style="text-align: left;border-top: none"><input type="text" id="title" name ="name" minlength="2"  required></td>
                 </tr>
                 <tr>
                     <td>编号：<i class="i_start"></i> </td>
                     <td  style="text-align: left"><input type="text" id="no" name ="name" minlength="2"  required></td>
                     <td>发布人：</td>
-                    <td colspan = "3" style="text-align: left"><input type="text" class="long_text" id="person"></td>
+                    <td colspan = "3" style="text-align: left"><input type="text" class="long_text" id="publishBy"></td>
                 </tr>
                 <tr>
                     <td>发布时间：</td>
-                    <td  style="text-align: left"><input type="text" id="demo"></td>
+                    <td  style="text-align: left"><input type="text" id="publishTime"></td>
                     <td>发布部门：</td>
                     <td colspan = "3" style="text-align: left"><input  type="text" class="long_text" id="depId"></td>
                 </tr>
@@ -183,7 +184,7 @@
         </div>
     </div>
     <div class="bot_btn">
-        <input type="submit" value="保存" class="btn">
+        <input type="button" class="btn" onclick="button()" value="保存">
         <button class="btn btn1"><a href="notice" target="right">返回</a></button>
     </div>
 
@@ -324,11 +325,64 @@
     var PROJECTID, TASKTYPE, TASKPHASE,  PERSONID
     !function () {
         laydate.skin('danlan');//切换皮肤，请查看skins下面皮肤库
-        laydate({ elem: '#demo' });//绑定元素
+        laydate({ elem: '#publishTime',istime:true,format: 'YYYY-MM-DD hh:mm:ss'});//绑定元素
         laydate({ elem: '#demo1' });
         laydate({ elem: '#demo2' });//绑定元素
     }();
+    function button() {
+        var id = $('#no').val()
+        var title = $('#title').val();
+        var depId = $('#depId').val();
+        var content = UE.getEditor('editor').getContent()
+        console.log(content);
+        var publishBy = $('#publishBy').val();
+        var publishTime = $('#publishTime').val();
 
+        var data = {
+            title:title,depId:depId,content:content,publishBy:publishBy,publishTime:publishTime
+        }
+        if (!!id) {
+            data = {
+                id:id,title:title,depId:depId,content:content,publishBy:publishBy,publishTime:publishTime
+            }
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "publish/create",
+            data: data,
+            dataType: "json",
+            success: function (result) {
+                if (result.code == 100) {
+                    location.href = parent.location.href = 'notice';
+                } else {
+                    console.log(result.message);
+                }
+            }
+        });
+    }
+
+    var id = window.parent.document.getElementById("id").value;
+    $.ajax({
+        type: "GET",
+        url: "publish/query/"+id,
+        dataType: "json",
+        success: function (result) {
+            if (result.code == 100) {
+               $('#title').val(result.data.title);
+                $('#depId').val(result.data.depId);
+                $('#no').val(result.data.id);
+                $('#publishBy').val(result.data.publishBy);
+               $('#publishTime').val(result.data.publishTime);
+                UE.getEditor('editor').addListener("ready", function () {
+                    //赋值
+                    UE.getEditor('editor').setContent(result.data.content);
+                })
+            } else {
+                console.log(result.message);
+            }
+        }
+    });
 
 </script>
 </html>

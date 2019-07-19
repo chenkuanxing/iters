@@ -1,4 +1,5 @@
 var $dataTableHot;
+
 function Workload() {
     $(function () {
         $dataTableHot = $('#table').bootstrapTable({
@@ -19,7 +20,7 @@ function Workload() {
                     offset: params.offset, // SQL语句起始索引
                     //page : (params.offset / params.limit) + 1, //当前页码
                     title: $("#title").val(),
-                    publishBy:$("#publishBy").val(),
+                    publishBy: $("#publishBy").val(),
                     publishTime: $("#publishTime").val()
                 };
 
@@ -63,7 +64,8 @@ function Workload() {
                     align: 'center',
                     formatter: function (value, row) {
                         console.log("row=" + row.id);
-                        var e = '<button button="#" mce_href="#" onclick="delWork(\'' + row.id + '\')">删除</button> '
+                        var e = '<button button="#" mce_href="#" onclick="delWork(\'' + row.id + '\')">删除</button>' +
+                            '<button button="#" mce_href="#" onclick="openlayer(\'' + row.id + '\')">编辑</button> '
                         return e;
                     }
                 }
@@ -75,9 +77,9 @@ function Workload() {
 function delWork(id) {
     $.ajax({
         type: "GET",
-        url: "publish/delete/"+id,
+        url: "publish/delete/" + id,
         dataType: "json",
-        success: function(result) {
+        success: function (result) {
             if (result.code == 100) {
                 alert("删除成功！")
                 $dataTableHot.bootstrapTable('refresh');
@@ -87,6 +89,22 @@ function delWork(id) {
         }
     });
 
+}
+
+function openlayer(id) {
+    $('#id').val(id);
+    layer.open({
+        type: 2,
+        title: '通知信息',
+        shadeClose: true,
+        shade: 0.5,
+        skin: 'layui-layer-rim',
+        closeBtn: 2,
+        area: ['98%', '98%'],
+        shadeClose: true,
+        closeBtn: 2,
+        content: 'notic_tail'
+    });
 }
 
 function getNoticeTableData() {

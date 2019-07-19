@@ -7,4 +7,6 @@ import com.xinghui.entity.Publish;
 
 public interface PublishService extends IService<Publish> {
     Page<Publish> listPage(Integer offset, Integer limit, PublishDot publishDot);
+
+    Publish create(PublishDot publishDot);
 }

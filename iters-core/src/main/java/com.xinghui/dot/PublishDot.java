@@ -1,6 +1,5 @@
 package com.xinghui.dot;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -24,7 +23,7 @@ public class PublishDot {
     /**
      * 发布内容
      */
-    private Date content;
+    private String content;
     /**
      * 发布人
      */
