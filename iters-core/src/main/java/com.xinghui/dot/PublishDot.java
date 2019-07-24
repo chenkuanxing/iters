@@ -2,6 +2,7 @@ package com.xinghui.dot;
 
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.parameters.P;
 
 import java.util.Date;
 
@@ -31,6 +32,7 @@ public class PublishDot {
     /**
      * 发布时间
      */
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date publishTime;
+
+    private String publishTimes;
 }

@@ -10,11 +10,24 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 @Service
 public class PublishServiceImpl extends ServiceImpl<PublishMapper, Publish> implements PublishService {
     @Override
     public Page<Publish> listPage(Integer offset, Integer limit, PublishDot publishDot) {
         Page<Publish> page = new Page<>(offset, limit);
+        if (!StringUtils.isEmpty(publishDot.getPublishTimes())) {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            try {
+                Date parse = format.parse(publishDot.getPublishTimes());
+                publishDot.setPublishTime(parse);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
         return page.setRecords(baseMapper.listPage(page, publishDot));
     }
 

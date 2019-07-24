@@ -29,6 +29,7 @@ public class Publish extends BaseEntity {
     /**
      * 发布时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date publishTime;
 
     @TableField(exist = false)

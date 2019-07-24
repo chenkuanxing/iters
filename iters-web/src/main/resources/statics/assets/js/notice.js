@@ -21,7 +21,7 @@ function Workload() {
                     //page : (params.offset / params.limit) + 1, //当前页码
                     title: $("#title").val(),
                     publishBy: $("#publishBy").val(),
-                    publishTime: $("#publishTime").val()
+                    publishTimes: $("#publishTime").val()
                 };
 
                 return temp;
