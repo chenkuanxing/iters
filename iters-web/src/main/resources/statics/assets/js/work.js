@@ -21,7 +21,7 @@ var $dataTableHot;
                     //page : (params.offset / params.limit) + 1, //当前页码
                     title : workTitle = $("#tit").val(),
                     publisher : Publisher = $("#person").val(),
-                    publisherTime : workTime = $("#demo").val()
+                    createdTimes : workTime = $("#demo").val()
                 };
 
                 return temp;
@@ -108,15 +108,26 @@ var $dataTableHot;
 function getWorkTableData(){
     $dataTableHot.bootstrapTable('refresh');
 }
-function addWork() {
+function addWork() {debugger;
     openlayer()
     currentID = "";
 }
-function editWork(id) {
-    openlayer()
-    currentID = id;
+function editWork() {
+    $("input[name='btSelectItem']:checked").each(function() {debugger;
+        //var len = $("input:checkbox:checked").length;
+        //alert("你一共选中了"+len+"个复选框");
+        if($("input:checkbox:checked").length==1){
+            //var id = window.parent.document.getElementById("id").value;
+            openlayer()
+            currentID ="";
+        } else{
+            $dataTableHot.bootstrapTable('refresh');
+        }
+        //alert("成功选中！！！")
+    });
+
 }
-function delWork(id) {
+function delWork(id) {debugger;
         $.ajax({
             type: "GET",
             url: "journal/delete/"+id,
@@ -125,7 +136,7 @@ function delWork(id) {
                 if (result.code == 100) {
                     alert("删除成功！")
                     $dataTableHot.bootstrapTable('refresh');
-                } else {
+                } else {bootstrapTable
                     console.log(result.message);
                 }
             }

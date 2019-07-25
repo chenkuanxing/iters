@@ -373,7 +373,7 @@
                 $('#depId').val(result.data.depId);
                 $('#no').val(result.data.id);
                 $('#publishBy').val(result.data.publishBy);
-               $('#publishTime').val(result.data.publishTime);
+               $('#publishTime').val(result.data.publishTime);//这里传值有问题
                 UE.getEditor('editor').addListener("ready", function () {
                     //赋值
                     UE.getEditor('editor').setContent(result.data.content);

@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xinghui.mapper.JournalMapper">
-    <select id="listPage" resultType="com.xinghui.entity.Journal">
-        select a.*,b.user_name as publisherName  from s_journal a
-        left join s_user b on a.publisher = b.id and b.status = 1
-        where a.status = 1
-        <if test="journalDot.title != null and journalDot.title != ''">
-            and a.title = #{journalDot.title}
-        </if>
-        <if test="journalDot.publisher != null and journalDot.publisher != ''">
-            and b.user_name  LIKE  CONCAT('%',#{journalDot.publisher,jdbcType=VARCHAR},'%')
-        </if>
-    </select>
+<select id="listPage" resultType="com.xinghui.entity.Journal">
+    select a.*,b.user_name as publisherName  from s_journal a
+    left join s_user b on a.publisher = b.id and b.status = 1
+    where a.status = 1
+    <if test="journalDot.title != null and journalDot.title != ''">
+        and a.title = #{journalDot.title}
+    </if>
+    <if test="journalDot.publisher != null and journalDot.publisher != ''">
+        and b.user_name  LIKE  CONCAT('%',#{journalDot.publisher,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="journalDot.createdTime != null">
+        and DATE_FORMAT(a.created_time,'%Y-%m-%d') = DATE_FORMAT(#{journalDot.createdTime},'%Y-%m-%d')
+    </if>
+</select>
 </mapper>
