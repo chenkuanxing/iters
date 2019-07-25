@@ -2,7 +2,9 @@ package com.xinghui.controller;
 
 import com.xinghui.ResultDto;
 import com.xinghui.dot.PublishDot;
+import com.xinghui.entity.Publish;
 import com.xinghui.service.PublishService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,6 +47,8 @@ public class PublishController extends BaseController {
      */
     @GetMapping(value = "/query/{id}")
     public ResultDto query(@PathVariable("id") String id) {
-        return success(publishService.getById(id));
+        PublishDot publishDot = new PublishDot();
+        BeanUtils.copyProperties(publishService.getById(id),publishDot);
+        return success(publishDot);
     }
 }
