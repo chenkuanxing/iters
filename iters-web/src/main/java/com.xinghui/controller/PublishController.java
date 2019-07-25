@@ -2,7 +2,9 @@ package com.xinghui.controller;
 
 import com.xinghui.ResultDto;
 import com.xinghui.dot.PublishDot;
+import com.xinghui.entity.Department;
 import com.xinghui.entity.Publish;
+import com.xinghui.service.DepartmentService;
 import com.xinghui.service.PublishService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,9 @@ public class PublishController extends BaseController {
 
     @Autowired
     private PublishService publishService;
+
+    @Autowired
+    private DepartmentService departmentService;
 
     /**
      * 查询公告列表
@@ -49,6 +54,9 @@ public class PublishController extends BaseController {
     public ResultDto query(@PathVariable("id") String id) {
         PublishDot publishDot = new PublishDot();
         BeanUtils.copyProperties(publishService.getById(id),publishDot);
+        publishDot.setDepName(departmentService.getById(publishDot.getDepId()).getName());
         return success(publishDot);
     }
+
+
 }

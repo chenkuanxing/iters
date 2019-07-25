@@ -35,4 +35,8 @@ public class PublishDot {
     private Date publishTime;
 
     private String publishTimes;
+    /**
+     * 部门名称
+     */
+    private String depName;
 }

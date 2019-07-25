@@ -1,0 +1,136 @@
+.clear:after {
+    content: "";
+    display: block;
+    height: 0;
+    visibility: hidden;
+    clear: both;
+}
+.left{
+float:left;
+}
+.right{
+float:right;
+}
+
+.l-modal-bg,
+.l-modal {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 10000;
+    transition: all .3s;
+    -webkit-transition: all .3s;
+    display: none;
+    opacity: 0;
+    filter: Alpha(opacity=0)
+}
+
+.l-modal-bg {
+    background: #000;
+}
+
+.l-modal {
+    font-size: 0;
+    text-align: center;
+    transform: scale3d(0.8, 0.8, 0.8);
+    -webkit-transform: scale3d(0.8, 0.8, 0.8);
+}
+
+.l-modal-bg.active {
+    opacity: 0.4;
+    filter: Alpha(opacity=40)
+}
+
+.l-modal.active {
+    transform: scale3d(1, 1, 1);
+    -webkit-transform: scale3d(1, 1, 1);
+    opacity: 1;
+    filter: Alpha(opacity=100)
+}
+
+.l-modal:before {
+    content: '';
+    display: inline-block;
+    width: 0;
+    height: 100%;
+    vertical-align: middle;
+}
+
+.l-modal>div {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 14px;
+    background: #fff;
+    border-radius: 7px;
+    max-height: 90%;
+    overflow: auto;
+    position: relative;
+}
+
+.l-modal .l-modal-close {
+    background-image: url("../image/icon.png");
+    position: absolute;
+    right: 16px;
+    top: 16px;
+    z-index: 1;
+    background-position: 1px -40px;
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+    opacity: 0.4;
+    transition: all .3s;
+    -webkit-transition: all .3s;
+}
+
+.l-modal .l-modal-close:hover {
+    opacity: 0.7;
+}
+
+.l-modal-query {
+    min-width: 320px;
+
+}
+
+.l-modal-title {
+    height: 68px;
+    line-height: 68px;
+    margin-top: -10px;
+    font-size: 17px;
+    color: #1e1e1e;
+    text-align: center;
+}
+
+.l-modal-content {
+    padding: 0 50px;
+    color: #1e1e1e;
+    text-align: left;
+}
+
+.l-modal-btns {
+    text-align: center;
+    margin: 30px 0 40px;
+}
+
+.l-modal-btn {
+    width: 60px;
+    height: 30px;
+    line-height: 28px;
+    color: #fff;
+    font-size: 14px;
+    border-radius: 5px;
+    outline: none;
+    cursor: pointer;
+}
+
+.l-modal-sure {
+    background: #4485fd;
+    border: 1px solid #4485fd;
+}
+
+.l-modal-cancel {
+    background: #C8C8C8;
+    border: 1px solid #C8C8C8;
+    margin-left: 20px;
+}

@@ -3,6 +3,7 @@ package com.xinghui.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.xinghui.ResultDto;
 import com.xinghui.common.Constants;
+import com.xinghui.entity.Department;
 import com.xinghui.entity.User;
 import com.xinghui.security.SecurityUtils;
 import com.xinghui.service.DepartmentService;
@@ -25,8 +26,8 @@ public class DepartmentController extends BaseController {
      *
      * @return
      */
-    @GetMapping(value = "/listPage")
-    public ResultDto listPage() {
-        return success();
+    @GetMapping(value = "/listTree")
+    public ResultDto listTree() {
+        return success(departmentService.listTree());
     }
 }
