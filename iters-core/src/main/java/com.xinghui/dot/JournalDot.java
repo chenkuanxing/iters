@@ -31,6 +31,11 @@ public class JournalDot {
      *执行时间
      */
     private Date performTime;
+
+    /**
+     *发布时间(String类型)
+     */
+    private String createdTimes;
     /**
      * 执行人
      */

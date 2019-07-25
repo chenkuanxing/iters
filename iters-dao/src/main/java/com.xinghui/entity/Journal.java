@@ -2,6 +2,7 @@ package com.xinghui.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.util.Date;
@@ -28,6 +29,7 @@ public class Journal extends BaseEntity{
     /**
      *执行时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date performTime;
 
     @TableField(exist = false)
