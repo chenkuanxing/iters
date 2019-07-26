@@ -122,6 +122,7 @@ function editWork() {
             currentID ="";
         } else{
             $dataTableHot.bootstrapTable('refresh');
+
         }
         //alert("成功选中！！！")
     });
