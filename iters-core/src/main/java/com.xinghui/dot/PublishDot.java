@@ -39,4 +39,5 @@ public class PublishDot {
      * 部门名称
      */
     private String depName;
+    private String publishName;
 }

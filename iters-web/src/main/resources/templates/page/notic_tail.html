@@ -207,6 +207,25 @@
             <div class="h40"></div>
         </div>
     </div>
+    <div class="l-modal" id="stu-user">
+        <div class="l-modal-query" style="width:800px;">
+            <div class="l-modal-close"></div>
+            <div class="l-modal-title"></div>
+            <div class="l-modal-content">
+                <div style="width: 60%;float: left">
+                    <ul  id="userZTree" class="ztree"></ul>
+                    <div class="l-modal-btns">
+                        <button class="l-modal-sure l-modal-btn" id="addUserCheck">确认</button>
+                        <button class="l-modal-cancel l-modal-btn">取消</button>
+                    </div>
+                    <div class="h40"></div>
+                </div>
+                <div style="width: 38%;float: right" id="userList">
+                </div>
+            </div>
+
+        </div>
+    </div>
 </div>
 
 </body>
@@ -340,7 +359,7 @@
         var depId = $('#depId').attr("data-id");
         var content = UE.getEditor('editor').getContent()
         console.log(content);
-        var publishBy = $('#publishBy').val();
+        var publishBy = $('#publishBy').attr("data-id");
         var publishTime = $('#publishTime').val();
 
         var data = {
@@ -379,7 +398,8 @@
                     $('#depId').val(result.data.depName);
                     $('#depId').attr("data-id",result.data.depId);
                     $('#no').val(result.data.id);
-                    $('#publishBy').val(result.data.publishBy);
+                    $('#publishBy').val(result.data.publishName);
+                    $('#publishBy').attr("data-id",result.data.publishBy);
                     $('#publishTime').val(result.data.publishTime);
                     UE.getEditor('editor').addListener("ready", function () {
                         //赋值
@@ -391,6 +411,28 @@
             }
         });
     }
+
+    var setting1 = {
+        view: {
+            dblClickExpand: false,//双击节点时，是否自动展开父节点的标识
+            showLine: true,//是否显示节点之间的连线
+            fontCss:{'color':'black','font-weight':'bold'},//字体样式函数
+            selectedMulti: true //设置是否允许同时选中多个节点
+        },
+        data: {
+            simpleData: {//简单数据模式
+                enable:true,
+                idKey: "id",
+                pIdKey: "parentId",
+                name: "name",
+                rootPId: null
+            }
+        },
+        callback:{
+            onClick : zTreeOnClick
+        }
+    };
+
     var setting = {
         view: {
             dblClickExpand: false,//双击节点时，是否自动展开父节点的标识
@@ -415,7 +457,6 @@
         callback:{
             onCheck: onCheck
         }
-
     };
 
     $(document).ready(function() {
@@ -434,6 +475,22 @@
 
     });
 
+    $(document).ready(function() {
+        $.ajax({
+            type: "GET",
+            url: "department/listTree",
+            dataType: "json",
+            success: function (result) {
+                if (result.code == 100) {
+                    $.fn.zTree.init($("#userZTree"), setting1, result.data);
+                } else {
+                    console.log(result.message);
+                }
+            }
+        });
+
+    });
+
     function onCheck(e,treeId,treeNode){
         var treeObj=$.fn.zTree.getZTreeObj("regionZTree"),
             nodes=treeObj.getCheckedNodes(true),
@@ -442,6 +499,27 @@
             $('#regionZTree').attr("data-id",nodes[i].id);
             $('#regionZTree').attr("data-name",nodes[i].name);
         }
+    }
+
+    // 单击事件，向后台发起请求
+    function zTreeOnClick(event, treeId, treeNode) {
+        $.ajax({
+            type: "POST",
+            url: "user/getBydepId/"+treeNode.id,
+            dataType: "json",
+            success: function (result) {
+                if (result.code == 100) {
+                    var html='';
+                    $.each(result.data, function (i, value) {
+                        $('#userList').find("label").remove();
+                        html = html+"<label style='width: 50%;'><input style='width: 13px;height: 13px' name='radio' data-userName='"+value.userName+"' type='radio' value='"+value.id+"'><span style='margin-right: 70px'>"+value.userName+"</span></label>";
+                    })
+                    $('#userList').append(html);
+                } else {
+                    console.log(result.message);
+                }
+            }
+        });
     }
 
 </script>

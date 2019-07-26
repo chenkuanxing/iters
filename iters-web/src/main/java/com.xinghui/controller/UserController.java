@@ -7,10 +7,7 @@ import com.xinghui.entity.User;
 import com.xinghui.security.SecurityUtils;
 import com.xinghui.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
@@ -39,5 +36,14 @@ public class UserController extends BaseController {
         return success(userService.updatePass(oldPassword, newPassword, password));
     }
 
+    /**
+     * 根据部门编号查询人员列表
+     *
+     * @return
+     */
+    @PostMapping(value = "/getBydepId/{id}")
+    public ResultDto getBydepId(@PathVariable("id") String id) {
+        return success(userService.list(new QueryWrapper<User>().lambda().eq(User::getDepId,id).eq(User::getStatus,Constants.status.TRUE)));
+    }
 
 }

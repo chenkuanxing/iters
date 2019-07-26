@@ -6,6 +6,7 @@ import com.xinghui.entity.Department;
 import com.xinghui.entity.Publish;
 import com.xinghui.service.DepartmentService;
 import com.xinghui.service.PublishService;
+import com.xinghui.service.UserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,9 @@ public class PublishController extends BaseController {
 
     @Autowired
     private DepartmentService departmentService;
+
+    @Autowired
+    private UserService userService;
 
     /**
      * 查询公告列表
@@ -55,6 +59,7 @@ public class PublishController extends BaseController {
         PublishDot publishDot = new PublishDot();
         BeanUtils.copyProperties(publishService.getById(id),publishDot);
         publishDot.setDepName(departmentService.getById(publishDot.getDepId()).getName());
+        publishDot.setPublishName(userService.getById(publishDot.getPublishBy()).getUserName());
         return success(publishDot);
     }
 

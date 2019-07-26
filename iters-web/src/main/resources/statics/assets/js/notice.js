@@ -1,7 +1,7 @@
 var $dataTableHot;
 
 function Workload() {
-    $(function () {debugger;
+    $(function () {
         $dataTableHot = $('#table').bootstrapTable({
             method: 'get',
             url: "publish/listPage",//请求路径

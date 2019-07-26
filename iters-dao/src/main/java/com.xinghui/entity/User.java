@@ -35,4 +35,8 @@ public class User extends BaseEntity{
      * 角色编号
      */
     private String roleId;
+    /**
+     * 部门编号
+     */
+    private String depId;
 }
