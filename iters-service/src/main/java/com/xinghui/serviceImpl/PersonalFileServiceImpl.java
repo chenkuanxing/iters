@@ -20,7 +20,7 @@ import java.util.List;
 @Service
 public class PersonalFileServiceImpl extends ServiceImpl<PersonalFileMapper, PersonalFile> implements PersonalFileService {
 
-    @Value("${file.filepath}")
+    @Value("${file.filepaths}")
     private String filepath;
 
     @Override
