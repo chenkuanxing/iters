@@ -26,8 +26,8 @@
                     <td  colspan = "6"  style="text-align: left;border-top: none"><input type="text" id="title" name ="name" minlength="2"  required></td>
                 </tr>
                 <tr>
-                    <td>日志概要：<i class="i_start"></i></td>
-                    <td  style="text-align: left"><input type="text" id="titleGai"  name ="name" minlength="2"  required></td>
+                    <td>编号：<i class="i_start"></i></td>
+                    <td  style="text-align: left"><input type="text" id="no"  name ="name" minlength="2"  required></td>
                     <td>发布人：</td>
                     <td colspan = "3" style="text-align: left"><input type="text" id="publisher" class="long_text"></td>
                 </tr>
@@ -51,7 +51,7 @@
     </div>
 </div>
 </body>
-<script type="text/javascript" src="statics/assets/js/jquery.js"></script>
+<script type="text/javascript" src="statics/libs/jquery.min.js"></script>
 <script src="statics/assets/js/utf8-php/ueditor.config.js"></script>
 <script src="statics/assets/js/utf8-php/ueditor.all.min.js"></script>
 <script src="statics/assets/js/date/js/laydate.js"></script>
@@ -171,53 +171,59 @@
 
     /*日志模块添加jquery逻辑代码*/
     function button() {debugger;
+        var id = $('#no').val()
         var title = $('#title').val();
-        if(title==""||title==null){
-            alert("日志标题不能为空！")
-        }
-        var titleGai = $('#titleGai').val();
-        if(titleGai==""||titleGai==null){
-            alert("日志概要不能为空！")
-        }
         var publisher = $('#publisher').val();
-        if(publisher==""||publisher==null){
-            alert("发布人不能为空！")
-        }
-        console.log(content);
+
         var performTime = $('#performTime').val();
-        if(performTime==""||performTime==null){
-            alert("执行时间不能为空！")
-        }
         var performBy = $('#performBy').val();
-        if(performBy==""||performBy==null){
-            alert("执行人不能为空！")
-        }
-        var content = UE.getEditor('editor').getContent()
-        if(content==""||content==null){
-            alert("发布内容不能为空！")
-        }
+        var content = UE.getEditor('editor').getContent();
+        console.log(content);
         var data = {
                 title:title,publisher:publisher,content:content,performTime:performTime,performBy:performBy
             }
 
-        if(title!=""&&titleGai!=""&&publisher!=""&&performTime!=""&&performBy!=""&&content!="") {
-            $.ajax({
-                type: "POST",
-                url: "journal/create",
-                data: data,
-                dataType: "json",
-                success: function (result) {
-                    if (result.code == 100) {
-                        location.href = parent.location.href = 'work';
-                    } else {
-                        console.log(result.message);
-                    }
-                }
-            });
-        }else {
-            alert("添加失败请确保您输入信息是否完整！")
+        if (!!id) {
+            data = {
+              id:id,title:title,publisher:publisher,content:content,performTime:performTime,performBy:performBy
+          }
         }
-
+        $.ajax({
+            type: "POST",
+            url: "journal/create",
+            data: data,
+            dataType: "json",
+            success: function (result) {
+                if (result.code == 100) {
+                    location.href = parent.location.href = 'work';
+                } else {
+                    console.log(result.message);
+                }
+            }
+        });
+    }
+    var id = window.parent.document.getElementById("id").value;
+    if (!!id) {debugger;
+        $.ajax({
+            type: "GET",
+            url: "journal/query/" + id,
+            dataType: "json",
+            success: function (result) {
+                if (result.code == 100) {
+                    $('#title').val(result.data.title);
+                    $('#publisher').val(result.data.publisher);
+                    $('#no').val(result.data.id);
+                    $('#performBy').val(result.data.performBy);
+                    $('#performTime').val(result.data.performTime);
+                    UE.getEditor('editor').addListener("ready", function () {
+                        //赋值
+                        UE.getEditor('editor').setContent(result.data.content);
+                    })
+                } else {
+                    console.log(result.message);
+                }
+            }
+        });
     }
 
 </script>

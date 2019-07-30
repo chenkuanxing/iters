@@ -25,9 +25,9 @@ public class AdminUserDetailsService implements UserDetailsService {
 
     @Autowired
     private UserService userService;
-
     @Autowired
     private RoleService roleService;
+
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
