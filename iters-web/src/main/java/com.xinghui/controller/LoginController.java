@@ -1,9 +1,12 @@
 package com.xinghui.controller;
 
+import com.xinghui.service.PersonalFileService;
 import com.xinghui.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/")
@@ -11,6 +14,9 @@ public class LoginController extends BaseController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private PersonalFileService personalFileService;
 
     @RequestMapping(value = {"/login", "/"})
     public String loginPage() {
@@ -130,8 +136,10 @@ public class LoginController extends BaseController {
     }
 
     @RequestMapping("/myfile_data")
-    public String myfileData() {
-        return "page/myfile_data";
+    public ModelAndView myfileData(String id) {
+        ModelAndView modelAndView = new ModelAndView("page/myfile_data");
+        modelAndView.addObject("personalFile",personalFileService.getById(id));
+        return modelAndView;
     }
 
     @RequestMapping("/myleave")

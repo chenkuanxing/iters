@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xinghui.mapper.FileManageMapper">
+    <select id="listPage" resultType="com.xinghui.entity.FileManage">
+        select * from s_file_manage a where status = 1
+        <if test="fileManageDot.type != null and fileManageDot.type != ''">
+            and a.type = #{fileManageDot.type}
+        </if>
+        <if test="fileManageDot.fileType != null and fileManageDot.fileType != ''">
+            and a.file_type = #{fileManageDot.fileType}
+        </if>
+        <if test="fileManageDot.name != null and fileManageDot.name != ''">
+            and a.name = LIKE  CONCAT('%',#{fileManageDot.name,jdbcType=VARCHAR},'%')
+        </if>
+    </select>
+</mapper>

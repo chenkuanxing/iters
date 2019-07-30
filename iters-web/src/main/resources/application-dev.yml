@@ -24,7 +24,7 @@ spring:
       driver-class-name: com.mysql.jdbc.Driver
       url: jdbc:mysql://127.0.0.1:3306/iters?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&zeroDateTimeBehavior=convertToNull&serverTimezone=PRC&useSSL=false
       username: root
-      password: 12345678
+      password: 123456
       initial-size: 2
       min-idle: 2
       max-active: 30
@@ -37,6 +37,10 @@ spring:
       connection-init-sqls: SET NAMES utf8mb4;
   thymeleaf:
     prefix: classpath:/templates/
+  multipart:
+    enabled: true
+    max-file-size: 20MB
+    max-request-size: 20MB
 #mybatis
 mybatis-plus:
   configuration:
@@ -57,5 +61,8 @@ mybatis-plus:
 logging:
   level:
     com:
-      mainsion: debug
-      xxl: warn
+      xinghui: debug
+
+file:
+  filepath: /iters-web/src/main/resources/statics/assets/images/
+  filepaths: /iters-web/src/main/resources/statics/assets/fileUpload/

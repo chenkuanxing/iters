@@ -259,3 +259,41 @@ INSERT INTO `s_user` VALUES ('1', 'admin', '$2a$10$Sag0nPH949uilONl56kVNOZ5/fRJ2
 INSERT INTO `s_user` VALUES ('2', 'liuzhihui', '$2a$10$W10c/NssWlb8ew7n0c40hubYQpnw94j55djvQb7CSEGQ8gjpl3sNq', '刘志辉', 23, 'liuzhihui@qq.com', NULL, NULL, '2019-07-03 16:31:14', '-1', NULL, NULL, 1, NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+
+DROP TABLE IF EXISTS `s_file_manage`;
+CREATE TABLE `s_file_manage`  (
+                                `id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '编号',
+                                `name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '文件名称',
+                                `file_type` tinyint(4) NULL DEFAULT NULL COMMENT '1:个人档案  2：公共档案',
+                                `type` tinyint(4) NULL DEFAULT NULL COMMENT '文件类型(1:私人 2:工作 3:项目)',
+                                `url` varchar(122) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '文件路径',
+                                `size` varchar(22) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '文件大小',
+                                `format` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '文件格式',
+                                `status` tinyint(4) NULL DEFAULT 1 COMMENT '可用状态',
+                                `created_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间（发布时间）',
+                                `created_user` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建人',
+                                `last_changed` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+                                `last_changed_user` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '更新人',
+                                PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '文件表' ROW_FORMAT = Dynamic;
+
+
+DROP TABLE IF EXISTS `s_personal_file`;
+CREATE TABLE `s_personal_file`  (
+                                  `id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '编号',
+                                  `name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '文件名称',
+                                  `file_type` tinyint(4) NULL DEFAULT NULL COMMENT '1:个人档案  2：公共档案',
+                                  `type` tinyint(4) NULL DEFAULT NULL COMMENT '文件类型',
+                                  `url` varchar(122) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '文件路径',
+                                  `descs` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '备注',
+                                  `is_valid` tinyint(4) NULL DEFAULT NULL COMMENT '是否有效',
+                                  `status` tinyint(4) NULL DEFAULT 1 COMMENT '可用状态',
+                                  `created_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间（发布时间）',
+                                  `created_user` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建人',
+                                  `last_changed` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+                                  `last_changed_user` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '更新人',
+                                  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '档案表' ROW_FORMAT = Dynamic;
+
+SET FOREIGN_KEY_CHECKS = 1;
