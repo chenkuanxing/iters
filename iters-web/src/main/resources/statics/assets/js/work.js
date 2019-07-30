@@ -73,7 +73,8 @@ var $dataTableHot;
 
                     formatter: function (value, row) {
                         console.log("row="+row.id);
-                        var e = '<button button="#" mce_href="#" onclick="delWork(\'' + row.id + '\')">删除</button> '
+                        var e = '<button button="#" mce_href="#" onclick="delWork(\'' + row.id + '\')">删除</button>' +
+                            '<button button="#" mce_href="#" onclick="openlayer(\'' + row.id + '\')">编辑</button> '
                         return e;
                     }
                 }
@@ -112,13 +113,14 @@ function addWork() {debugger;
     openlayer()
     currentID = "";
 }
-function editWork() {
+/*function openlayer(id) {debugger;
+    $('#id').val(id);
     $("input[name='btSelectItem']:checked").each(function() {debugger;
         //var len = $("input:checkbox:checked").length;
         //alert("你一共选中了"+len+"个复选框");
         if($("input:checkbox:checked").length==1){
             //var id = window.parent.document.getElementById("id").value;
-            openlayer()
+            openlayer(id)
             currentID ="";
         } else{
             $dataTableHot.bootstrapTable('refresh');
@@ -127,6 +129,23 @@ function editWork() {
     });
 
 }
+*/
+function openlayer(id) {debugger;
+    $('#id').val(id);
+    layer.open({
+        type: 2,
+        title: '通知信息',
+        shadeClose: true,
+        shade: 0.5,
+        skin: 'layui-layer-rim',
+        closeBtn: 2,
+        area: ['98%', '98%'],
+        shadeClose: true,
+        closeBtn: 2,
+        content: 'work_tail'
+    });
+}
+
 function delWork(id) {debugger;
         $.ajax({
             type: "GET",

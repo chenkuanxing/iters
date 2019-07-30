@@ -33,11 +33,16 @@ public class PublishDot {
      * 发布时间
      */
     private Date publishTime;
-
+    /**
+     * 发布时间格式转换
+     */
     private String publishTimes;
     /**
      * 部门名称
      */
     private String depName;
+    /**
+     * 发布人姓名
+     */
     private String publishName;
 }

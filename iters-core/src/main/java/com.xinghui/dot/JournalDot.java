@@ -40,4 +40,12 @@ public class JournalDot {
      * 执行人
      */
     private String performBy;
+    /**
+     * 发布人姓名
+     */
+    private String publishName;
+    /**
+     * 执行人姓名
+     */
+    private String performByName;
 }
