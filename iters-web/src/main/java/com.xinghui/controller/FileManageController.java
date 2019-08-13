@@ -31,8 +31,8 @@ public class FileManageController extends BaseController {
      * @return
      */
     @PostMapping(value = "/fileUpload/{type}/{fileType}")
-    public ResultDto fileUpload(MultipartFile file, @PathVariable("type") Integer type,@PathVariable("fileType") Integer fileType) {
-        return success(fileManageService.fileUpload(file, type,fileType));
+    public ResultDto fileUpload(MultipartFile file, @PathVariable("type") Integer type, @PathVariable("fileType") Integer fileType) {
+        return success(fileManageService.fileUpload(file, type, fileType));
     }
 
     /**

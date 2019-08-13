@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 public interface PersonalFileService extends IService<PersonalFile> {
+
     boolean create(PersonalFileDot personalFileDot);
 
     String fileUpload(MultipartFile file);

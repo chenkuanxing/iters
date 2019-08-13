@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xinghui.dot.FileManageDot;
 import com.xinghui.entity.FileManage;
+import com.xinghui.exception.CustException;
 import com.xinghui.mapper.FileManageMapper;
 import com.xinghui.service.FileManageService;
 import com.xinghui.utils.FileUtils;
@@ -11,15 +12,21 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URL;
+import java.net.URLConnection;
+import java.util.UUID;
 
 @Service
 public class FileManageServiceImpl extends ServiceImpl<FileManageMapper, FileManage> implements FileManageService {
 
     @Value("${file.filepaths}")
     private String filepath;
+
+    @Value("${file.uploadpath}")
+    private String uploadpath;
 
     @Override
     public Page<FileManage> listPage(Integer offset, Integer limit, FileManageDot fileManageDot) {
@@ -41,16 +48,12 @@ public class FileManageServiceImpl extends ServiceImpl<FileManageMapper, FileMan
         fileManage.setFileType(fileType);
         fileManage.setSize(String.valueOf(size));
         // 设置文件存储路径
-        URL save = Thread.currentThread().getContextClassLoader().getResource("");
-        String str = save.toString();
-        str = str.substring(5, str.length());
-        str = str.replaceAll("%20", " ");
-        int num = str.indexOf("iters");//wgbs 为项目名，应用到不同的项目中，这个需要修改！
-        str = str.substring(0, num + "iters".length());
+
         String filePath = filepath;
-        String path = str + filePath + fileName;
+        String newFileName = UUID.randomUUID().toString() + suffixName;
+        String path = filePath + newFileName;
         fileManage.setUrl(path);
-        FileUtils.fileUpload(file, filepath);
+        FileUtils.fileUpload(file, uploadpath, newFileName);
         return this.save(fileManage);
     }
 
@@ -63,8 +66,11 @@ public class FileManageServiceImpl extends ServiceImpl<FileManageMapper, FileMan
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        String path = fileManage.getUrl().substring(1);
-        File file = new File(path);
+        String replace = uploadpath.replace("\\:", ":").replace("\\\\", "\\").replace("&", "\\");
+
+        String path = fileManage.getUrl().replace(filepath, "");
+
+        File file = new File(replace+"/"+path);
         resp.reset();
         resp.setContentType("application/octet-stream");
         resp.setCharacterEncoding("utf-8");
@@ -96,7 +102,9 @@ public class FileManageServiceImpl extends ServiceImpl<FileManageMapper, FileMan
     public boolean delete(String id) {
         FileManage fileManage = this.getById(id);
         String url = fileManage.getUrl();
-        File file = new File(url);
+        String replaces = uploadpath.replace("\\:", ":").replace("\\\\", "\\").replace("&", "\\");
+        String replace = url.replace(filepath, "");
+        File file = new File(replaces+"/"+replace);
         file.delete();
         return this.removeById(id);
     }

@@ -24,7 +24,7 @@ spring:
       driver-class-name: com.mysql.jdbc.Driver
       url: jdbc:mysql://127.0.0.1:3306/iters?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&zeroDateTimeBehavior=convertToNull&serverTimezone=PRC&useSSL=false
       username: root
-      password: 12345678
+      password: 123456
       initial-size: 2
       min-idle: 2
       max-active: 30
@@ -64,4 +64,5 @@ logging:
       xinghui: debug
 
 file:
-  filepaths: /iters-web/src/main/resources/statics/assets/fileUpload/
+  filepaths: http://127.0.0.1:88/staticUp/
+  uploadpath: D\:\\Upload&staticUp

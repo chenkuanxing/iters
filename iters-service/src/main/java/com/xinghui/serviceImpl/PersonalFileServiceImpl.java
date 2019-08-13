@@ -16,12 +16,16 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.net.URL;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class PersonalFileServiceImpl extends ServiceImpl<PersonalFileMapper, PersonalFile> implements PersonalFileService {
 
     @Value("${file.filepaths}")
     private String filepath;
+
+    @Value("${file.uploadpath}")
+    private String uploadpath;
 
     @Override
     public boolean create(PersonalFileDot personalFileDot) {
@@ -38,14 +42,13 @@ public class PersonalFileServiceImpl extends ServiceImpl<PersonalFileMapper, Per
 
     @Override
     public String fileUpload(MultipartFile file) {
-        URL save = Thread.currentThread().getContextClassLoader().getResource("");
-        String str = save.toString();
-        str = str.substring(5, str.length());
-        str = str.replaceAll("%20", " ");
-        int num = str.indexOf("iters");//wgbs 为项目名，应用到不同的项目中，这个需要修改！
-        str = str.substring(0, num + "iters".length());
-        FileUtils.fileUpload(file, filepath);
+        String fileName = file.getOriginalFilename();
+        // 获取文件的后缀名
+        String suffixName = fileName.substring(fileName.lastIndexOf("."));
         String filePath = filepath;
-        return str + filePath + file.getOriginalFilename();
+        String newFileName = UUID.randomUUID().toString() + suffixName;
+        String path = filePath + newFileName;
+        FileUtils.fileUpload(file, uploadpath,newFileName);
+        return path;
     }
 }
