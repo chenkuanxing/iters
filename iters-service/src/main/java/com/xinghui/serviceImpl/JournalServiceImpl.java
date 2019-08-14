@@ -1,22 +1,31 @@
 package com.xinghui.serviceImpl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.xinghui.common.Constants;
 import com.xinghui.dot.JournalDot;
 import com.xinghui.entity.Journal;
 import com.xinghui.mapper.JournalMapper;
 import com.xinghui.service.JournalService;
+import com.xinghui.utils.ExcelUtil;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.io.ByteArrayOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class JournalServiceImpl extends ServiceImpl<JournalMapper, Journal> implements JournalService {
 
+    @Autowired
+    private ExcelUtil excelUtil;
     @Override
     public Journal create(JournalDot journalDot) {
         Journal journal = new Journal();
@@ -40,5 +49,18 @@ public class JournalServiceImpl extends ServiceImpl<JournalMapper, Journal> impl
             }
         }
         return page.setRecords(baseMapper.listPage(page, journalDot));
+    }
+
+    @Override
+    public byte[] export() throws Exception {
+        List<Journal> journalList = this.list(new QueryWrapper<Journal>().lambda().eq(Journal::getStatus, Constants.status.TRUE));
+        String name = "日志表";
+        ByteArrayOutputStream outputStream = excelUtil.getExcel(name, Journal.class, journalList);
+        return outputStream.toByteArray();
+    }
+
+    @Override
+    public List<JournalDot> getlist() {
+        return baseMapper.getlist();
     }
 }

@@ -113,6 +113,12 @@ function addWork() {debugger;
     openlayer()
     currentID = "";
 }
+
+function outWork() {
+    alert("导出成功！");
+    window.open("journal/export");
+}
+
 /*function openlayer(id) {debugger;
     $('#id').val(id);
     $("input[name='btSelectItem']:checked").each(function() {debugger;
@@ -160,6 +166,7 @@ function delWork(id) {debugger;
                 }
             }
         });
+
 
  }
 // function getCurrentID() {

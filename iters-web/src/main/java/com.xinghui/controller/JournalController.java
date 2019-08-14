@@ -1,17 +1,22 @@
 package com.xinghui.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.xinghui.ResultDto;
-import com.xinghui.entity.Department;
-import com.xinghui.entity.Journal;
 import com.xinghui.common.Constants;
 import com.xinghui.dot.JournalDot;
 import com.xinghui.entity.Journal;
 import com.xinghui.service.DepartmentService;
 import com.xinghui.service.JournalService;
 import com.xinghui.service.UserService;
+import com.xinghui.utils.ExcelUtil;
+import com.xinghui.utils.ExcelUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @RestController
 @RequestMapping("/journal")
@@ -26,6 +31,8 @@ public class JournalController extends BaseController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private ExcelUtil excelUtil;
     /**
      * 查询日志列表
      */
@@ -42,6 +49,12 @@ public class JournalController extends BaseController {
     @PostMapping(value = "/create")
     public ResultDto create(JournalDot journalDot) {
         return success(journalService.create(journalDot));
+    }
+
+    @GetMapping(value = "/export")
+    public void export(HttpServletRequest request, HttpServletResponse response) throws Exception {
+            List<JournalDot> journalList = journalService.getlist();
+            ExcelUtils.exportExcel(journalList, "员工日志", "员工日志", JournalDot.class, "员工日志.xls", response);
     }
 
     /**

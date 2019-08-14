@@ -6,9 +6,14 @@ import com.xinghui.dot.JournalDot;
 import com.xinghui.entity.Journal;
 
 import java.util.Date;
+import java.util.List;
 
 public interface JournalService extends IService<Journal> {
     Journal create(JournalDot journalDot);
 
     Page<Journal> listPage(Integer offset, Integer limit,JournalDot journalDot);
+
+    byte[] export() throws Exception;
+
+    List<JournalDot> getlist();
 }
