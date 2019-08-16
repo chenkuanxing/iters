@@ -20,6 +20,10 @@ public class Journal extends BaseEntity{
      */
     private String publisher;
     /**
+     * 发布部门
+     */
+    private String publishDep;
+    /**
      * 执行人
      */
     private String performBy;

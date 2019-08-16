@@ -17,7 +17,7 @@ function Workload() {
             queryParams: function (params) {//x
                 var temp = {//如果是在服务器端实现分页，limit、offset这两个参数是必须的
                     limit: params.limit, // 每页显示数量
-                    offset: params.offset, // SQL语句起始索引
+                    offset: (params.offset / params.limit) + 1, // SQL语句起始索引
                     //page : (params.offset / params.limit) + 1, //当前页码
                     title: $("#title").val(),
                     publishBy: $("#publishBy").val(),

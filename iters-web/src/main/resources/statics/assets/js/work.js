@@ -13,11 +13,15 @@ var $dataTableHot;
             pageNumber: 1,
             search: false, //显示搜索框
             sidePagination:"server",
-            contentType: "application/x-www-form-urlencoded",
+            contentType: "application/x-www-form-urlencoded",//一种编码。好像在post请求的时候需要用到。这里用的get请求，注释掉这句话也能拿到数据
+            responseHandler: function (res) {
+                //如果后台返回的json格式不是{rows:[{...},{...}],total:100},可以在这块处理成这样的格式
+                return res;
+            },
             queryParams : function(params) {//x
                 var temp = {//如果是在服务器端实现分页，limit、offset这两个参数是必须的
                     limit : params.limit, // 每页显示数量
-                    offset : params.offset, // SQL语句起始索引
+                    offset : (params.offset / params.limit) + 1, // SQL语句起始索引
                     //page : (params.offset / params.limit) + 1, //当前页码
                     title : workTitle = $("#tit").val(),
                     publisher : Publisher = $("#person").val(),
@@ -52,6 +56,12 @@ var $dataTableHot;
                 {
                     title: '发布时间',
                     field: 'createdTime',
+                    align: 'center',
+                    valign: 'middle'
+                },
+                {
+                    title: '发布部门',
+                    field: 'publishDep',
                     align: 'center',
                     valign: 'middle'
                 },
@@ -166,8 +176,6 @@ function delWork(id) {debugger;
                 }
             }
         });
-
-
  }
 // function getCurrentID() {
 //     return currentID;

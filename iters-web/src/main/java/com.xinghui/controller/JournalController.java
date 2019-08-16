@@ -38,6 +38,8 @@ public class JournalController extends BaseController {
      */
     @GetMapping(value = "/listPage")
     public ResultDto listPage(Integer offset, Integer limit, JournalDot journalDot) {
+        System.out.println(limit);
+        System.out.println(offset);
         return success(journalService.listPage(offset, limit, journalDot));
     }
 

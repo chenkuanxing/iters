@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>酒店日统计</title>
+<title>部门发布文章统计</title>
 
 
     <link href="statics/assets/css/all.css" rel="stylesheet" type="text/css">
@@ -17,14 +17,14 @@
         <table class="book_table" border="1" cellpadding="10">
     <tr>
         <td class="tr_color" colspan="4">
-      区域日汇总表
+      部门发表文章总表
     </td>
 
 
     </tr>
     <tr>
-        <td><label class="td_label">电子通行总数</label></td>
-        <td colspan="3">1200次</td>
+        <td><label class="td_label">所有部门发表文章的总数</label></td>
+        <td colspan="3">2000篇</td>
     </tr>
     <tr>
         <td><label class="td_label">开始时间</label></td>
@@ -33,10 +33,10 @@
         <td >2016年12月10日</td>
     </tr>
     <tr>
-        <td><label class="td_label">电子通行单最多区域</label></td>
-        <td  style="color: red" >xxxx酒店（210次）</td>
-        <td><label class="td_label">电子通行单最少区域</label></td>
-        <td  style="color: red" >xxxx酒店（21次）</td>
+        <td><label class="td_label">发表文章最多的部门</label></td>
+        <td  style="color: red" >运营部（210篇）</td>
+        <td><label class="td_label">发表文章最多的部门</label></td>
+        <td  style="color: red" >开发部（10篇）</td>
 
     </tr>
 
@@ -55,7 +55,7 @@
         option = {
             title: {
                 x: 'center',
-                text: '区域日统计图',
+                text: '部门发表文章每日统计',
 
             },
             tooltip: {
@@ -72,7 +72,7 @@
                 {
                     type: 'category',
                     show: true,
-                    data: ['区域一', '区域二', '区域三', '区域四', '区域五', '区域六', '区域七']
+                    data: ['开发部', '销售部', '记者部', '运营部', '设计部', '摄影部', '市场部']
                 }
             ],
             yAxis: [
@@ -83,7 +83,7 @@
             ],
             series: [
                 {
-                    name: '酒店统计图',
+                    name: '部门文章统计图',
                     type: 'bar',
                     itemStyle: {
                         normal: {

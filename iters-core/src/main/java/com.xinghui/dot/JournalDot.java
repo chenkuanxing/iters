@@ -32,6 +32,11 @@ public class JournalDot {
     @Excel(name = "发布内容", orderNum = "1", width = 35, mergeVertical = true)
     private String content;
     /**
+     * 发布部门
+     */
+    @Excel(name = "发布部门", orderNum = "1", width = 15, mergeVertical = true)
+    private String publishDep;
+    /**
      * 执行时间
      */
     @Excel(name = "执行时间", orderNum = "1", width = 15, mergeVertical = true)
@@ -55,5 +60,6 @@ public class JournalDot {
      */
     @Excel(name = "执行人", orderNum = "1", width = 15, mergeVertical = true)
     private String performByName;
+
 
 }
