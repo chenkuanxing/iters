@@ -117,13 +117,16 @@ var $dataTableHot;
 //     })
 // }
 function getWorkTableData(){
-    $dataTableHot.bootstrapTable('refresh');
+
 }
 function addWork() {debugger;
     openlayer()
     currentID = "";
 }
-
+function clickStatistics(){debugger;
+    alert("统计成功！");
+    location.href = parent.location.href ='journal/staticCountNumber';
+}
 function outWork() {
     alert("导出成功！");
     window.open("journal/export");

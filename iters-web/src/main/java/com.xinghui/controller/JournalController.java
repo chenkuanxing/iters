@@ -12,13 +12,16 @@ import com.xinghui.utils.ExcelUtil;
 import com.xinghui.utils.ExcelUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
+@Controller
 @RequestMapping("/journal")
 public class JournalController extends BaseController {
 
@@ -33,6 +36,16 @@ public class JournalController extends BaseController {
 
     @Autowired
     private ExcelUtil excelUtil;
+
+    @GetMapping("/staticCountNumber")
+    public ModelAndView staticCountNumber(JournalDot journalDot){
+        ModelAndView mv = new ModelAndView();
+        List<JournalDot> count = journalService.departmentArticleAllCount();
+        mv.addObject("count",count);
+        mv.setViewName("page/locationStatic");
+        System.out.print(count);
+        return mv;
+    }
     /**
      * 查询日志列表
      */

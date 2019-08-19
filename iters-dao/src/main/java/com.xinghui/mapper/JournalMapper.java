@@ -13,4 +13,6 @@ public interface JournalMapper extends BaseMapper<Journal> {
     List<Journal> listPage(Page page, @Param("journalDot") JournalDot journalDot);
 
     List<JournalDot> getlist();
+
+    List<JournalDot> departmentArticleAllCount();
 }

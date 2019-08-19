@@ -63,4 +63,8 @@ public class JournalServiceImpl extends ServiceImpl<JournalMapper, Journal> impl
     public List<JournalDot> getlist() {
         return baseMapper.getlist();
     }
+    @Override
+    public List<JournalDot> departmentArticleAllCount() {
+        return baseMapper.departmentArticleAllCount();
+    }
 }
