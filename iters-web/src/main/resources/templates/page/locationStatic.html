@@ -52,6 +52,18 @@
 <script src="statics/assets/js/locationStatic.js"></script>
 <script src="statics/assets/js/work.js"></script>
 <script >
+    $.ajax({
+        type: "GET",
+        url: "journal/staticCountNumberAll",
+        dataType: "json",
+        success: function (result) {
+            if (result.code == 100) {
+                alert(result.data.count); d
+            } else {
+                console.log(result.message);
+            }
+        }
+    });
     $(function(){
         var myChart = echarts.init($("#chart")[0]);
         option = {
@@ -136,5 +148,6 @@
         myChart.setOption(option);
     });
 </script>
+
 </body>
 </html>
