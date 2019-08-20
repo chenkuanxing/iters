@@ -20,7 +20,16 @@
     left join s_user c on a.perform_by = c.id
     where a.status = 1
     </select>
+
     <select id="departmentArticleAllCount" resultType="com.xinghui.dot.JournalDot">
+        select
+ 			count(*) title
+ 		from
+ 			s_journal
+ 		where
+ 			status=1
+    </select>
+    <select id="departmentArticleAllCountNum" resultType="com.xinghui.dot.JournalDot">
         select
  			count(*) title
  		from

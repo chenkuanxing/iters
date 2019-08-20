@@ -46,6 +46,12 @@ public class JournalController extends BaseController {
         System.out.print(count);
         return mv;
     }
+    @GetMapping("/staticCountNumberAll")
+    public ResultDto departmentArticleAllCountNum(JournalDot journalDot){
+        List<JournalDot> count = journalService.departmentArticleAllCountNum();
+        System.out.print(count);
+        return success(count);
+    }
     /**
      * 查询日志列表
      */

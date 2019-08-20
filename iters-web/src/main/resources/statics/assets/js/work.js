@@ -125,7 +125,19 @@ function addWork() {debugger;
 }
 function clickStatistics(){debugger;
     alert("统计成功！");
-    location.href = parent.location.href ='journal/staticCountNumber';
+    $.ajax({
+        type: "GET",
+        url: "journal/staticCountNumberAll",
+        dataType: "json",
+        success: function (result) {
+            if (result.code == 100) {
+
+            } else {
+                console.log(result.message);
+            }
+        }
+    });
+
 }
 function outWork() {
     alert("导出成功！");

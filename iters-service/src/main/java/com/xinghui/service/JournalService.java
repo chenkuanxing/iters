@@ -11,6 +11,8 @@ public interface JournalService extends IService<Journal> {
 
     List<JournalDot> departmentArticleAllCount();
 
+    List<JournalDot> departmentArticleAllCountNum();
+
     Page<Journal> listPage(Integer offset, Integer limit, JournalDot journalDot);
 
     byte[] export() throws Exception;
