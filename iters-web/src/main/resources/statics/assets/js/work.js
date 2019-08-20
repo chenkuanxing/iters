@@ -123,22 +123,6 @@ function addWork() {debugger;
     openlayer()
     currentID = "";
 }
-function clickStatistics(){debugger;
-    alert("统计成功！");
-    $.ajax({
-        type: "GET",
-        url: "journal/staticCountNumberAll",
-        dataType: "json",
-        success: function (result) {
-            if (result.code == 100) {
-
-            } else {
-                console.log(result.message);
-            }
-        }
-    });
-
-}
 function outWork() {
     alert("导出成功！");
     window.open("journal/export");

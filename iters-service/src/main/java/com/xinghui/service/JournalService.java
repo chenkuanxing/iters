@@ -11,7 +11,7 @@ public interface JournalService extends IService<Journal> {
 
     List<JournalDot> departmentArticleAllCount();
 
-    List<JournalDot> departmentArticleAllCountNum();
+    Integer departmentArticleAllCountNum();
 
     Page<Journal> listPage(Integer offset, Integer limit, JournalDot journalDot);
 

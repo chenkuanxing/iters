@@ -67,7 +67,7 @@ public class JournalServiceImpl extends ServiceImpl<JournalMapper, Journal> impl
     public List<JournalDot> departmentArticleAllCount() {
         return baseMapper.departmentArticleAllCount();
     }
-    public List<JournalDot> departmentArticleAllCountNum() {
+    public Integer  departmentArticleAllCountNum() {
         return baseMapper.departmentArticleAllCountNum();
     }
 }

@@ -29,7 +29,7 @@
  		where
  			status=1
     </select>
-    <select id="departmentArticleAllCountNum" resultType="com.xinghui.dot.JournalDot">
+    <select id="departmentArticleAllCountNum" resultType="java.lang.Integer">
         select
  			count(*) title
  		from
