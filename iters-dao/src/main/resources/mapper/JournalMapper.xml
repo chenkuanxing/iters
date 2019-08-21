@@ -25,7 +25,7 @@
         SELECT count(1) as count,t.name from s_journal a
 left join (SELECT b.*,c.`name` from s_user b left join s_department c on c.id = b.dep_id where b.status = 1)t on t.id = a.publisher where a.status = 1
         <if test="begin != null">
-            and (DATE_FORMAT(a.created_time,'%Y-%m-%d') &gt;= DATE_FORMAT(#{begin},'%Y-%m-%d') or
+            and (DATE_FORMAT(a.created_time,'%Y-%m-%d') &gt;= DATE_FORMAT(#{begin},'%Y-%m-%d') and
             DATE_FORMAT(a.created_time,'%Y-%m-%d') &lt;= DATE_FORMAT(#{end},'%Y-%m-%d'))
         </if>
         <if test="begin == null">
