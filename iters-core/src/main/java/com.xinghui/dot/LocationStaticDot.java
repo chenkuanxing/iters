@@ -7,7 +7,7 @@ public class LocationStaticDot {
     /**
      * 部门发表文章数目
      */
-    private String count;
+    private Integer count;
     /**
      * 部门姓名
      */
