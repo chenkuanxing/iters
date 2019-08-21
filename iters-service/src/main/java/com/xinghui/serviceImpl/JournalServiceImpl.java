@@ -20,6 +20,7 @@ import org.springframework.util.StringUtils;
 import java.io.ByteArrayOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -67,20 +68,33 @@ public class JournalServiceImpl extends ServiceImpl<JournalMapper, Journal> impl
     }
 
     @Override
-    public LocationCountDot departmentArticleSum() {
+    public LocationCountDot departmentArticleSum(String beginTime, String endTime) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         LocationCountDot locationCountDot = new LocationCountDot();
-        List<LocationStaticDot> locationStaticDots = baseMapper.departmentArticleSum();
-        if (!CollectionUtils.isEmpty(locationStaticDots)) {
-            Integer sum = 0;
-            for (LocationStaticDot locationStaticDot:locationStaticDots){
-                sum = sum + Integer.valueOf(locationStaticDot.getCount());
+        try {
+            if (StringUtils.isEmpty(endTime)){
+                endTime = format.format(new Date());
             }
-            locationCountDot.setLocationStaticDotList(locationStaticDots);
-            locationCountDot.setSum(sum);
-            LocationStaticDot locationStaticDot = locationStaticDots.get(0);
-            LocationStaticDot locationStaticDot1 = locationStaticDots.get(locationStaticDots.size() - 1);
-            locationCountDot.setMax(locationStaticDot.getName()+"("+locationStaticDot.getCount()+"篇)");
-            locationCountDot.setMin(locationStaticDot1.getName()+"("+locationStaticDot1.getCount()+"篇)");
+            Date begin = null;
+            if (!StringUtils.isEmpty(beginTime)) {
+                begin = format.parse(beginTime);
+            }
+            Date end = format.parse(endTime);
+            List<LocationStaticDot> locationStaticDots = baseMapper.departmentArticleSum(begin,end);
+            if (!CollectionUtils.isEmpty(locationStaticDots)) {
+                Integer sum = 0;
+                for (LocationStaticDot locationStaticDot : locationStaticDots) {
+                    sum = sum + Integer.valueOf(locationStaticDot.getCount());
+                }
+                locationCountDot.setLocationStaticDotList(locationStaticDots);
+                locationCountDot.setSum(sum);
+                LocationStaticDot locationStaticDot = locationStaticDots.get(0);
+                LocationStaticDot locationStaticDot1 = locationStaticDots.get(locationStaticDots.size() - 1);
+                locationCountDot.setMax(locationStaticDot.getName() + "(" + locationStaticDot.getCount() + "篇)");
+                locationCountDot.setMin(locationStaticDot1.getName() + "(" + locationStaticDot1.getCount() + "篇)");
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
         return locationCountDot;
     }
