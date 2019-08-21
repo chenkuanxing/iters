@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xinghui.common.Constants;
 import com.xinghui.dot.JournalDot;
+import com.xinghui.dot.LocationCountDot;
 import com.xinghui.dot.LocationStaticDot;
 import com.xinghui.entity.Journal;
 import com.xinghui.mapper.JournalMapper;
@@ -13,6 +14,7 @@ import com.xinghui.utils.ExcelUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.io.ByteArrayOutputStream;
@@ -65,7 +67,21 @@ public class JournalServiceImpl extends ServiceImpl<JournalMapper, Journal> impl
     }
 
     @Override
-    public List<LocationStaticDot> departmentArticleSum() {
-        return baseMapper.departmentArticleSum();
+    public LocationCountDot departmentArticleSum() {
+        LocationCountDot locationCountDot = new LocationCountDot();
+        List<LocationStaticDot> locationStaticDots = baseMapper.departmentArticleSum();
+        if (!CollectionUtils.isEmpty(locationStaticDots)) {
+            Integer sum = 0;
+            for (LocationStaticDot locationStaticDot:locationStaticDots){
+                sum = sum + Integer.valueOf(locationStaticDot.getCount());
+            }
+            locationCountDot.setLocationStaticDotList(locationStaticDots);
+            locationCountDot.setSum(sum);
+            LocationStaticDot locationStaticDot = locationStaticDots.get(0);
+            LocationStaticDot locationStaticDot1 = locationStaticDots.get(locationStaticDots.size() - 1);
+            locationCountDot.setMax(locationStaticDot.getName()+"("+locationStaticDot.getCount()+"篇)");
+            locationCountDot.setMin(locationStaticDot1.getName()+"("+locationStaticDot1.getCount()+"篇)");
+        }
+        return locationCountDot;
     }
 }

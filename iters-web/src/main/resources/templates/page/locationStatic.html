@@ -34,9 +34,9 @@
     </tr>
     <tr>
         <td><label class="td_label">发表文章最多的部门</label></td>
-        <td  style="color: red" >运营部（210篇）</td>
+        <td  style="color: red" id="max"></td>
         <td><label class="td_label">发表文章最少的部门</label></td>
-        <td  style="color: red" >开发部（10篇）</td>
+        <td  style="color: red" id="min"></td>
 
     </tr>
 
@@ -65,7 +65,7 @@
             dataType: "json",
             success: function (result) {
                 if (result.code == 100) {
-                    $.each(result.data, function (index, value){
+                    $.each(result.data.locationStaticDotList, function (index, value){
                         count[index] = value.count;
                         if (index == 0){
                             name = value.name;
@@ -80,7 +80,9 @@
                     }
                     console.log(count);
                     console.log(names);
-                    // $("#dep_Num").append(counts+"篇");
+                    $("#dep_Num").append(result.data.sum+"篇");
+                    $("#max").append(result.data.max);
+                    $("#min").append(result.data.min);
                 } else {
                     console.log(result.message);
                 }
