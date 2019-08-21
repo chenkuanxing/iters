@@ -59,12 +59,12 @@ var $dataTableHot;
                     align: 'center',
                     valign: 'middle'
                 },
-                {
-                    title: '发布部门',
-                    field: 'publishDep',
-                    align: 'center',
-                    valign: 'middle'
-                },
+                // {
+                //     title: '发布部门',
+                //     field: 'publishDep',
+                //     align: 'center',
+                //     valign: 'middle'
+                // },
                 {
                     title: '执行时间',
                     field: 'performTime',

@@ -5,8 +5,9 @@
     <title>工作详情</title>
     <link href="statics/assets/css/tail.css" rel="stylesheet" type="text/css" />
     <link href="statics/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-
+    <link href="statics/assets/css/common.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="statics/assets/js/jquery.js"></script>
+    <link href="statics/plugins/ztree/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" type="text/css" />
     <script>
         function change() {
             var height01 = $(window).height();
@@ -18,6 +19,7 @@
 <body style="border-radius: 8px" onload="change()">
 <div class="top">
     <div>
+        <input type="text" style="display: none" id="userId">
         <div class="top_out">
             <table class="table" >
                 <tbody>
@@ -49,12 +51,34 @@
         <input type="button" class="btn" id="editButton" onclick="button()" value="保存">
         <button class="btn btn1"><a href="work" target="right">返回</a></button>
     </div>
+    <div class="l-modal-bg" id="l-modal-bg"></div>
+    <div class="l-modal" id="stu-user">
+        <div class="l-modal-query" style="width:800px;">
+            <div class="l-modal-close"></div>
+            <div class="l-modal-title"></div>
+            <div class="l-modal-content">
+                <div style="width: 60%;float: left">
+                    <ul  id="userZTree" class="ztree"></ul>
+                    <div class="l-modal-btns">
+                        <button class="l-modal-sure l-modal-btn" id="addUserCheck">确认</button>
+                        <button class="l-modal-cancel l-modal-btn">取消</button>
+                    </div>
+                    <div class="h40"></div>
+                </div>
+                <div style="width: 38%;float: right" id="userList">
+                </div>
+            </div>
+
+        </div>
+    </div>
 </div>
 </body>
 <script type="text/javascript" src="statics/libs/jquery.min.js"></script>
+<script type="text/javascript" src="statics/plugins/ztree/jquery.ztree.all.min.js"></script>
 <script src="statics/assets/js/utf8-php/ueditor.config.js"></script>
 <script src="statics/assets/js/utf8-php/ueditor.all.min.js"></script>
 <script src="statics/assets/js/date/js/laydate.js"></script>
+<script type="text/javascript" src="statics/assets/js/commom.js"></script>
 <script >
     var ue = UE.getEditor('editor');
     function isFocus(e){
@@ -173,10 +197,9 @@
     function button() {
         var id = $('#no').val()
         var title = $('#title').val();
-        var publisher = $('#publisher').val();
-
+        var publisher = $('#publisher').attr("data-id");
         var performTime = $('#performTime').val();
-        var performBy = $('#performBy').val();
+        var performBy = $('#performBy').attr("data-id");
         var content = UE.getEditor('editor').getContent();
         console.log(content);
         var data = {
@@ -211,9 +234,16 @@
             success: function (result) {
                 if (result.code == 100) {
                     $('#title').val(result.data.title);
-                    $('#publisher').val(result.data.publisher);
+                    // $('#publisher').val(result.data.publisher);
+
+                    $('#publisher').val(result.data.publishName);
+                    $('#publisher').attr("data-id",result.data.publisher);
+
                     $('#no').val(result.data.id);
-                    $('#performBy').val(result.data.performBy);
+                    // $('#performBy').val(result.data.performBy);
+                    $('#performBy').val(result.data.performByName);
+                    $('#performBy').attr("data-id",result.data.performBy);
+
                     $('#performTime').val(result.data.performTime);
                     UE.getEditor('editor').addListener("ready", function () {
                         //赋值
