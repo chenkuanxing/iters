@@ -56,6 +56,8 @@
     var count = [];
     var name;
     var names = [];
+    var countsNum=0;
+    var counts;
     $(function(){
 
         $.ajax({
@@ -67,6 +69,8 @@
                 if (result.code == 100) {
                     $.each(result.data, function (index, value){
                         count[index] = value.count;
+                        counts=value.count;
+                        countsNum=counts+countsNum;
                         if (index == 0){
                             name = value.name;
                         } else {
@@ -80,11 +84,13 @@
                     }
                     console.log(count);
                     console.log(names);
-                    // $("#dep_Num").append(counts+"篇");
+                    console.log(countsNum);
+                    $("#dep_Num").append(countsNum+"篇");
                 } else {
                     console.log(result.message);
                 }
             }
+
         });
         var myChart = echarts.init($("#chart")[0]);
 
