@@ -24,7 +24,7 @@
     </tr>
     <tr>
         <td><label class="td_label">所有部门发表文章的总数</label></td>
-        <td colspan="3" id="dep_Num" >篇</td>
+        <td colspan="3"id="dep_Num"></td>
     </tr>
     <tr>
         <td><label class="td_label">开始时间</label></td>
@@ -35,7 +35,7 @@
     <tr>
         <td><label class="td_label">发表文章最多的部门</label></td>
         <td  style="color: red" >运营部（210篇）</td>
-        <td><label class="td_label">发表文章最多的部门</label></td>
+        <td><label class="td_label">发表文章最少的部门</label></td>
         <td  style="color: red" >开发部（10篇）</td>
 
     </tr>
@@ -52,19 +52,28 @@
 <script src="statics/assets/js/locationStatic.js"></script>
 <script src="statics/assets/js/work.js"></script>
 <script >
-    $.ajax({
-        type: "GET",
-        url: "journal/staticCountNumberAll",
-        dataType: "json",
-        success: function (result) {
-            if (result.code == 100) {
-                alert(result.data.count); d
-            } else {
-                console.log(result.message);
-            }
-        }
-    });
+
     $(function(){
+        var count = new Array();
+        var name = new Array();
+        $.ajax({
+            type: "GET",
+            url: "locationStatic/staticCountNumberAll",
+            dataType: "json",
+            success: function (result) {
+                if (result.code == 100) {
+                    $.each(result.data, function (index, value){
+                        count[index] = value.count;
+                        name[index] = value.name;
+                    })
+                    alert(count);
+                    alert(name);
+                    // $("#dep_Num").append(counts+"篇");
+                } else {
+                    console.log(result.message);
+                }
+            }
+        });
         var myChart = echarts.init($("#chart")[0]);
         option = {
             title: {
@@ -86,7 +95,7 @@
                 {
                     type: 'category',
                     show: true,
-                    data: ['开发部', '销售部', '记者部', '运营部', '设计部', '摄影部', '市场部']
+                    data: name
                 }
             ],
             yAxis: [
@@ -117,7 +126,7 @@
                             }
                         }
                     },
-                    data: [20,10,10,4,12,5,6,5,25,23,7],
+                    data: count,
                     markPoint: {
                         tooltip: {
                             trigger: 'item',

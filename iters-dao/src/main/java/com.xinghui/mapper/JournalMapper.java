@@ -4,6 +4,7 @@ package com.xinghui.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xinghui.dot.JournalDot;
+import com.xinghui.dot.LocationStaticDot;
 import com.xinghui.entity.Journal;
 import org.apache.ibatis.annotations.Param;
 
@@ -17,4 +18,6 @@ public interface JournalMapper extends BaseMapper<Journal> {
     List<JournalDot> departmentArticleAllCount();
 
     Integer departmentArticleAllCountNum();
+
+    List<LocationStaticDot> departmentArticleSum();
 }

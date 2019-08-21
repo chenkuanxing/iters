@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xinghui.common.Constants;
 import com.xinghui.dot.JournalDot;
+import com.xinghui.dot.LocationStaticDot;
 import com.xinghui.entity.Journal;
 import com.xinghui.mapper.JournalMapper;
 import com.xinghui.service.JournalService;
@@ -63,10 +64,17 @@ public class JournalServiceImpl extends ServiceImpl<JournalMapper, Journal> impl
     public List<JournalDot> getlist() {
         return baseMapper.getlist();
     }
+
+    @Override
+    public List<LocationStaticDot> departmentArticleSum() {
+        return baseMapper.departmentArticleSum();
+    }
+
     @Override
     public List<JournalDot> departmentArticleAllCount() {
         return baseMapper.departmentArticleAllCount();
     }
+
     public Integer  departmentArticleAllCountNum() {
         return baseMapper.departmentArticleAllCountNum();
     }
