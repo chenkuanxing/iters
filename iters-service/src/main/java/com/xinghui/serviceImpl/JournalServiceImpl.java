@@ -92,6 +92,7 @@ public class JournalServiceImpl extends ServiceImpl<JournalMapper, Journal> impl
                 LocationStaticDot locationStaticDot1 = locationStaticDots.get(locationStaticDots.size() - 1);
                 locationCountDot.setMax(locationStaticDot.getName() + "(" + locationStaticDot.getCount() + "篇)");
                 locationCountDot.setMin(locationStaticDot1.getName() + "(" + locationStaticDot1.getCount() + "篇)");
+                System.out.println(locationCountDot);
             }
         } catch (ParseException e) {
             e.printStackTrace();
