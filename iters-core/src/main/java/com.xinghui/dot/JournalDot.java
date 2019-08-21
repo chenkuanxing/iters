@@ -31,11 +31,11 @@ public class JournalDot {
      */
     @Excel(name = "发布内容", orderNum = "1", width = 35, mergeVertical = true)
     private String content;
-    /**
-     * 发布部门
-     */
-    @Excel(name = "发布部门", orderNum = "1", width = 15, mergeVertical = true)
-    private String publishDep;
+//    /**
+//     * 发布部门
+//     */
+//    @Excel(name = "发布部门", orderNum = "1", width = 15, mergeVertical = true)
+//    private String publishDep;
     /**
      * 执行时间
      */
