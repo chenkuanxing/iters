@@ -18,5 +18,5 @@ public interface JournalService extends IService<Journal> {
 
     List<JournalDot> getlist();
 
-    LocationCountDot departmentArticleSum();
+    LocationCountDot departmentArticleSum(String beginTime, String endTime);
 }

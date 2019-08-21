@@ -8,6 +8,7 @@ import com.xinghui.dot.LocationStaticDot;
 import com.xinghui.entity.Journal;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
 import java.util.List;
 
 public interface JournalMapper extends BaseMapper<Journal> {
@@ -15,5 +16,5 @@ public interface JournalMapper extends BaseMapper<Journal> {
 
     List<JournalDot> getlist();
 
-    List<LocationStaticDot> departmentArticleSum();
+    List<LocationStaticDot> departmentArticleSum(@Param("begin") Date begin, @Param("end") Date end);
 }
