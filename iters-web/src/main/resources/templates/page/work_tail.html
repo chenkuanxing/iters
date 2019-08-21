@@ -170,7 +170,7 @@
     }();
 
     /*日志模块添加jquery逻辑代码*/
-    function button() {debugger;
+    function button() {
         var id = $('#no').val()
         var title = $('#title').val();
         var publisher = $('#publisher').val();
@@ -203,7 +203,7 @@
         });
     }
     var id = window.parent.document.getElementById("id").value;
-    if (!!id) {debugger;
+    if (!!id) {
         $.ajax({
             type: "GET",
             url: "journal/query/" + id,

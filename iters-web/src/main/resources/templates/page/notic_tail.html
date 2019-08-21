@@ -353,7 +353,7 @@
         laydate({ elem: '#demo1' });
         laydate({ elem: '#demo2' });//绑定元素
     }();
-    function button() {debugger;
+    function button() {
         var id = $('#no').val()
         var title = $('#title').val();
         var depId = $('#depId').attr("data-id");
@@ -386,7 +386,7 @@
         });
     }
     var id = window.parent.document.getElementById("id").value;
-    if (!!id) {debugger;
+    if (!!id) {
         $.ajax({
             type: "GET",
             url: "publish/query/" + id,

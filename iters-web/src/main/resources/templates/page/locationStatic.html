@@ -53,21 +53,33 @@
 <script src="statics/assets/js/work.js"></script>
 <script >
 
+    var count = [];
+    var name;
+    var names = [];
     $(function(){
-        var count = new Array();
-        var name = new Array();
+
         $.ajax({
             type: "GET",
+            async: false,
             url: "locationStatic/staticCountNumberAll",
             dataType: "json",
             success: function (result) {
                 if (result.code == 100) {
                     $.each(result.data, function (index, value){
                         count[index] = value.count;
-                        name[index] = value.name;
+                        if (index == 0){
+                            name = value.name;
+                        } else {
+                            name = name + "," +  value.name;
+                        }
                     })
-                    alert(count);
-                    alert(name);
+                    if (name.indexOf(",") >= 0 ) {
+                        names = name.split(",")
+                    }else {
+                        names = [name]
+                    }
+                    console.log(count);
+                    console.log(names);
                     // $("#dep_Num").append(counts+"篇");
                 } else {
                     console.log(result.message);
@@ -75,6 +87,7 @@
             }
         });
         var myChart = echarts.init($("#chart")[0]);
+
         option = {
             title: {
                 x: 'center',
@@ -95,9 +108,10 @@
                 {
                     type: 'category',
                     show: true,
-                    data: name
+                    data: names
                 }
             ],
+
             yAxis: [
                 {
                     type: 'value',

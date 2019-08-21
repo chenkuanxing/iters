@@ -21,22 +21,6 @@
     where a.status = 1
     </select>
 
-    <select id="departmentArticleAllCount" resultType="com.xinghui.dot.JournalDot">
-        select
- 			count(*) title
- 		from
- 			s_journal
- 		where
- 			status=1
-    </select>
-    <select id="departmentArticleAllCountNum" resultType="java.lang.Integer">
-        select
- 			count(*) title
- 		from
- 			s_journal
- 		where
- 			status=1
-    </select>
     <select id="departmentArticleSum" resultType="com.xinghui.dot.LocationStaticDot">
         SELECT count(1) as count,t.name from s_journal a
 left join (SELECT b.*,c.`name` from s_user b left join s_department c on c.id = b.dep_id where b.status = 1)t on t.id = a.publisher where a.status = 1  GROUP BY t.name ORDER BY  count desc

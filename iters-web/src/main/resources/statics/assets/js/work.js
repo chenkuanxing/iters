@@ -119,7 +119,7 @@ var $dataTableHot;
 function getWorkTableData(){
 
 }
-function addWork() {debugger;
+function addWork() {
     openlayer()
     currentID = "";
 }
@@ -145,7 +145,7 @@ function outWork() {
 
 }
 */
-function openlayer(id) {debugger;
+function openlayer(id) {
     $('#id').val(id);
     layer.open({
         type: 2,
@@ -161,7 +161,7 @@ function openlayer(id) {debugger;
     });
 }
 
-function delWork(id) {debugger;
+function delWork(id) {
         $.ajax({
             type: "GET",
             url: "journal/delete/"+id,

@@ -91,7 +91,7 @@ function delWork(id) {
 
 }
 
-function openlayer(id) {debugger;
+function openlayer(id) {
     $('#id').val(id);
     layer.open({
         type: 2,

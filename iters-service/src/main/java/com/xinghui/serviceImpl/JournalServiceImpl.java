@@ -18,8 +18,6 @@ import org.springframework.util.StringUtils;
 import java.io.ByteArrayOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -27,6 +25,7 @@ public class JournalServiceImpl extends ServiceImpl<JournalMapper, Journal> impl
 
     @Autowired
     private ExcelUtil excelUtil;
+
     @Override
     public Journal create(JournalDot journalDot) {
         Journal journal = new Journal();
@@ -39,9 +38,9 @@ public class JournalServiceImpl extends ServiceImpl<JournalMapper, Journal> impl
     }
 
     @Override
-    public Page<Journal> listPage(Integer offset, Integer limit,JournalDot journalDot) {
+    public Page<Journal> listPage(Integer offset, Integer limit, JournalDot journalDot) {
         Page<Journal> page = new Page<>(offset, limit);
-        if (!StringUtils.isEmpty(journalDot.getCreatedTimes())){
+        if (!StringUtils.isEmpty(journalDot.getCreatedTimes())) {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             try {
                 journalDot.setCreatedTime(format.parse(journalDot.getCreatedTimes()));
@@ -68,14 +67,5 @@ public class JournalServiceImpl extends ServiceImpl<JournalMapper, Journal> impl
     @Override
     public List<LocationStaticDot> departmentArticleSum() {
         return baseMapper.departmentArticleSum();
-    }
-
-    @Override
-    public List<JournalDot> departmentArticleAllCount() {
-        return baseMapper.departmentArticleAllCount();
-    }
-
-    public Integer  departmentArticleAllCountNum() {
-        return baseMapper.departmentArticleAllCountNum();
     }
 }
