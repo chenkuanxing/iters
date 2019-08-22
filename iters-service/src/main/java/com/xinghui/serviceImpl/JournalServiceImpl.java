@@ -4,9 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.xinghui.common.Constants;
-import com.xinghui.dot.JournalDot;
-import com.xinghui.dot.LocationCountDot;
-import com.xinghui.dot.LocationStaticDot;
+import com.xinghui.dot.*;
 import com.xinghui.entity.Journal;
 import com.xinghui.mapper.JournalMapper;
 import com.xinghui.service.JournalService;
@@ -39,7 +37,31 @@ public class JournalServiceImpl extends ServiceImpl<JournalMapper, Journal> impl
         this.saveOrUpdate(journal);
         return journal;
     }
-
+    @Override
+    public LocationTimesSumDot departmentArticleTimes() {
+        LocationTimesSumDot locationTimesSumDot = new LocationTimesSumDot();
+        List<LocationTimesDot> locationTimesDots = baseMapper.departmentArticleTimes();
+        for (LocationTimesDot locationTimesDot : locationTimesDots) {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            if (!StringUtils.isEmpty(locationTimesDot.getBeginsTimes())){
+                //format()方法将Date转换成指定格式的String
+                String beginsTimess = format.format(locationTimesDot.getBeginsTimes());
+                    locationTimesDot.setBeginsTimess(beginsTimess);
+                    locationTimesSumDot.setBeginssTimess(beginsTimess);
+                System.out.println("beginsTimess:"+ beginsTimess);
+            }
+            if (!StringUtils.isEmpty(locationTimesDot.getEndsTimes())){
+                //format()方法将Date转换成指定格式的String
+                String endsTimess = format.format(locationTimesDot.getEndsTimes());
+                locationTimesSumDot.setEndssTimess(endsTimess);
+                locationTimesDot.setEndsTimess(endsTimess);
+                System.out.println("endsTimess:"+endsTimess);
+            }
+            locationTimesSumDot.setLocationTimesDotsList(locationTimesDots);
+        }
+        System.out.println(locationTimesSumDot);
+        return locationTimesSumDot;
+    }
     @Override
     public Page<Journal> listPage(Integer offset, Integer limit, JournalDot journalDot) {
         Page<Journal> page = new Page<>(offset, limit);

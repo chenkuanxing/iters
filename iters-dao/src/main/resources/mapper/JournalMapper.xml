@@ -32,6 +32,8 @@ left join (SELECT b.*,c.`name` from s_user b left join s_department c on c.id = 
             and DATE_FORMAT(a.created_time,'%Y-%m-%d') &lt;= DATE_FORMAT(#{end},'%Y-%m-%d')
         </if>
 GROUP BY t.name ORDER BY  count desc
-
+ </select>
+    <select id="departmentArticleTimes" resultType="com.xinghui.dot.LocationTimesDot">
+    SELECT max(DATE_FORMAT(created_time,'%Y-%m-%d')) as endsTimes,min(DATE_FORMAT(created_time,'%Y-%m-%d')) as beginsTimes from s_journal
     </select>
 </mapper>

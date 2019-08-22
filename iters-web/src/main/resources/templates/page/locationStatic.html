@@ -59,7 +59,22 @@
 <script src="statics/assets/js/locationStatic.js"></script>
 <script src="statics/assets/js/work.js"></script>
 <script>
+    $(function () {//页面载入完毕执行此方法
+        $.ajax({
+            type: "GET",
+            url: "locationStatic/staticTimes",
+            dataType: "json",
+            success: function (result) {
+                if (result.code == 100) {
+                    $.each(result.data.locationTimesDotsList, function (index, value) {debugger;
+                    $("#startTime").html(result.data.beginssTimess);
+                    $("#endsTime").html(result.data.endssTimess);
+                    });
+                }
+            }
+        });
 
+    });
     var counts = [];
     var count ;
     var name;
@@ -198,13 +213,10 @@
             }
         });return defer.promise();
     }
-
-    $(function () {//页面载入完毕执行此方法
         $.when(querys()).done(function(){
 
+    });
 
-    });
-    });
 </script>
 
 </body>
