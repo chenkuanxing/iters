@@ -42,7 +42,7 @@ public class JournalServiceImpl extends ServiceImpl<JournalMapper, Journal> impl
         LocationTimesSumDot locationTimesSumDot = new LocationTimesSumDot();
         List<LocationTimesDot> locationTimesDots = baseMapper.departmentArticleTimes();
         for (LocationTimesDot locationTimesDot : locationTimesDots) {
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日");
             if (!StringUtils.isEmpty(locationTimesDot.getBeginsTimes())){
                 //format()方法将Date转换成指定格式的String
                 String beginsTimess = format.format(locationTimesDot.getBeginsTimes());
@@ -75,18 +75,37 @@ public class JournalServiceImpl extends ServiceImpl<JournalMapper, Journal> impl
         }
         return page.setRecords(baseMapper.listPage(page, journalDot));
     }
-
     @Override
     public byte[] export() throws Exception {
         List<Journal> journalList = this.list(new QueryWrapper<Journal>().lambda().eq(Journal::getStatus, Constants.status.TRUE));
         String name = "日志表";
         ByteArrayOutputStream outputStream = excelUtil.getExcel(name, Journal.class, journalList);
+        System.out.println(journalList);
         return outputStream.toByteArray();
     }
-
     @Override
     public List<JournalDot> getlist() {
-        return baseMapper.getlist();
+        List<JournalDot> exportLists = baseMapper.getlist();
+        JournalDot journalDot = new JournalDot();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日");
+        for (JournalDot journalDots : exportLists) {
+            if (!StringUtils.isEmpty(journalDots.getCreatedTime())){
+                //format()方法将Date转换成指定格式的String
+                String createTimess = format.format(journalDots.getCreatedTime());
+                journalDots.setCreatedTimes(createTimess);
+                System.out.println("createTimess:"+ createTimess);
+            }
+            if (!StringUtils.isEmpty(journalDots.getPerformTime())){
+                //format()方法将Date转换成指定格式的String
+                String performTimess = format.format(journalDots.getPerformTime());
+                journalDots.setPerformTimes(performTimess);
+                System.out.println("performTimess:"+ performTimess);
+            }
+            journalDot.setExportList(exportLists);
+
+        }
+        System.out.println(exportLists);
+        return exportLists;
     }
 
     @Override
