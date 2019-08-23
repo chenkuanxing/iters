@@ -14,10 +14,6 @@ var $dataTableHot;
             search: false, //显示搜索框
             sidePagination:"server",
             contentType: "application/x-www-form-urlencoded",//一种编码。好像在post请求的时候需要用到。这里用的get请求，注释掉这句话也能拿到数据
-            responseHandler: function (res) {
-                //如果后台返回的json格式不是{rows:[{...},{...}],total:100},可以在这块处理成这样的格式
-                return res;
-            },
             queryParams : function(params) {//x
                 var temp = {//如果是在服务器端实现分页，limit、offset这两个参数是必须的
                     limit : params.limit, // 每页显示数量
@@ -116,8 +112,8 @@ var $dataTableHot;
 //         }
 //     })
 // }
-function getWorkTableData(){
-
+function getWorkTableData(){debugger;
+    $dataTableHot.bootstrapTable('refresh');
 }
 function addWork() {
     openlayer()
@@ -127,7 +123,6 @@ function outWork() {
     alert("导出成功！");
     window.open("journal/export");
 }
-
 /*function openlayer(id) {debugger;
     $('#id').val(id);
     $("input[name='btSelectItem']:checked").each(function() {debugger;

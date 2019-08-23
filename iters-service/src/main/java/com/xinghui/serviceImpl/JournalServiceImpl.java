@@ -127,12 +127,10 @@ public class JournalServiceImpl extends ServiceImpl<JournalMapper, Journal> impl
         Integer exportSum = 0;
         if (!CollectionUtils.isEmpty(staticExportLists)) {
             for (LocationStaticExportDot locationStaticExportDots : staticExportLists) {
-
                 exportSum = exportSum + Integer.valueOf(locationStaticExportDots.getCount());
                 locationStaticExportDots.setExportSum(exportSum);
                 System.out.println("exportSum:" + exportSum);
             }
-
                 System.out.println("exportSum1:" + exportSum);
                 LocationStaticExportDot locationStaticExportDots = staticExportLists.get(0);
                 LocationStaticExportDot locationStaticExportDots1 = staticExportLists.get(staticExportLists.size() - 1);
