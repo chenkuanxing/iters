@@ -51,7 +51,7 @@
     </table>
     <p class="my_static" id="chart">
     </p>
-    <p class="book_foot"><input type="button" value="导出"/><input type="button" value="打印"/><input type="button"
+    <p class="book_foot"><input type="button" value="导出"/><input type="button" value="打印"/><input onclick="closeStaticFun()" type="button"
                                                                                                   value="关闭"/></p>
 </div>
 <script src="statics/assets/js/jquery.js"></script>
@@ -59,22 +59,12 @@
 <script src="statics/assets/js/locationStatic.js"></script>
 <script src="statics/assets/js/work.js"></script>
 <script>
-    $(function () {//页面载入完毕执行此方法
-        $.ajax({
-            type: "GET",
-            url: "locationStatic/staticTimes",
-            dataType: "json",
-            success: function (result) {
-                if (result.code == 100) {
-                    $.each(result.data.locationTimesDotsList, function (index, value) {debugger;
-                    $("#startTime").html(result.data.beginssTimess);
-                    $("#endsTime").html(result.data.endssTimess);
-                    });
-                }
-            }
-        });
+    function closeStaticFun(){
+        location.href = parent.location.href = 'index';
+    }
 
-    });
+
+
     var counts = [];
     var count ;
     var name;
@@ -94,7 +84,7 @@
             dataType: "json",
             success: function (result) {
                 if (result.code == 100) {
-                    $.each(result.data.locationStaticDotList, function (index, value) {debugger;
+                    $.each(result.data.locationStaticDotList, function (index, value) {
                         if(index==0){
                             count = value.count;
                         }else{
@@ -206,6 +196,23 @@
                     $("#min").html(result.data.min);
                     $("#startTime").html(beginTime);
                     $("#endsTime").html(endTime);
+                    $(function () {//页面载入完毕执行此方法
+                        $.ajax({
+                            type: "GET",
+                            url: "locationStatic/staticTimes",
+                            dataType: "json",
+                            success: function (result) {
+                                if (result.code == 100) {
+                                    console.log(result.data.locationTimesDotsList);
+                                    $.each(result.data.locationTimesDotsList, function (index, value) {debugger;
+                                        $("#startTime").html(result.data.beginssTimess);
+                                        $("#endsTime").html(result.data.endssTimess);
+                                    });
+                                }
+                            }
+                        });
+
+                    });
 
                 } else {
                     console.log(result.message);
@@ -213,10 +220,9 @@
             }
         });return defer.promise();
     }
-        $.when(querys()).done(function(){
+    $.when(querys()).done(function(){
 
     });
-
 </script>
 
 </body>
