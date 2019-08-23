@@ -2,6 +2,7 @@ package com.xinghui.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xinghui.dot.JournalDot;
+import com.xinghui.dot.LocationStaticExportDot;
 import com.xinghui.dot.LocationTimesDot;
 import com.xinghui.dot.LocationStaticDot;
 import com.xinghui.entity.Journal;
@@ -13,6 +14,8 @@ public interface JournalMapper extends BaseMapper<Journal> {
     List<Journal> listPage(Page page, @Param("journalDot") JournalDot journalDot);
 
     List<JournalDot> getlist();
+
+    List<LocationStaticExportDot> getStaticExportList();
 
     List<LocationStaticDot> departmentArticleSum(@Param("begin") Date begin, @Param("end") Date end);
 

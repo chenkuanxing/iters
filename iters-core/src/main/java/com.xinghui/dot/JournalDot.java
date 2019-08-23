@@ -58,7 +58,7 @@ public class JournalDot {
     /**
      * 执行时间(String类型)
      */
-    @Excel(name = "执行时间", orderNum = "2", width = 15, mergeVertical = true)
+    @Excel(name = "执行时间", orderNum = "1", width = 15, mergeVertical = true)
     private String performTimes;
     /**
      * 执行人

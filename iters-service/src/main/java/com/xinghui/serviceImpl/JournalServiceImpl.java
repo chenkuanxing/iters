@@ -102,12 +102,48 @@ public class JournalServiceImpl extends ServiceImpl<JournalMapper, Journal> impl
                 System.out.println("performTimess:"+ performTimess);
             }
             journalDot.setExportList(exportLists);
-
         }
         System.out.println(exportLists);
         return exportLists;
     }
+    public List<LocationStaticExportDot> getStaticExportList() {
+        List<LocationStaticExportDot> staticExportLists = baseMapper.getStaticExportList();
+        LocationStaticExportDot locationStaticExportDot = new LocationStaticExportDot();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日");
+        for (LocationStaticExportDot locationStaticExportDots : staticExportLists) {
+            if (!StringUtils.isEmpty(locationStaticExportDots.getBeginsExportTimes())) {
+                //format()方法将Date转换成指定格式的String
+                String beginsExportsTimes = format.format(locationStaticExportDots.getBeginsExportTimes());
+                locationStaticExportDots.setBeginsExportsTimes(beginsExportsTimes);
+                System.out.println("beginsExportsTimes:" + beginsExportsTimes);
+            }
+            if (!StringUtils.isEmpty(locationStaticExportDots.getEndsExportTimes())) {
+                //format()方法将Date转换成指定格式的String
+                String endsExportsTimes = format.format(locationStaticExportDots.getEndsExportTimes());
+                locationStaticExportDots.setEndsExportsTimes(endsExportsTimes);
+                System.out.println("endsExportsTimes:" + endsExportsTimes);
+            }
+        }
+        Integer exportSum = 0;
+        if (!CollectionUtils.isEmpty(staticExportLists)) {
+            for (LocationStaticExportDot locationStaticExportDots : staticExportLists) {
 
+                exportSum = exportSum + Integer.valueOf(locationStaticExportDots.getCount());
+                locationStaticExportDots.setExportSum(exportSum);
+                System.out.println("exportSum:" + exportSum);
+            }
+
+                System.out.println("exportSum1:" + exportSum);
+                LocationStaticExportDot locationStaticExportDots = staticExportLists.get(0);
+                LocationStaticExportDot locationStaticExportDots1 = staticExportLists.get(staticExportLists.size() - 1);
+                locationStaticExportDots.setExportMax(locationStaticExportDots.getName() + "(" + locationStaticExportDots.getCount() + "篇)");
+                locationStaticExportDots.setExportMin(locationStaticExportDots1.getName() + "(" + locationStaticExportDots1.getCount() + "篇)");
+                System.out.println(staticExportLists);
+                locationStaticExportDot.setStaticExportList(staticExportLists);
+                System.out.println(staticExportLists);
+    }
+            return staticExportLists;
+    }
     @Override
     public LocationCountDot departmentArticleSum(String beginTime, String endTime) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");

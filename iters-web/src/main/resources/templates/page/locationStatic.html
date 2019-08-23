@@ -51,7 +51,7 @@
     </table>
     <p class="my_static" id="chart">
     </p>
-    <p class="book_foot"><input type="button" value="导出"/><input type="button" value="打印"/><input onclick="closeStaticFun()" type="button"
+    <p class="book_foot"><input onclick="exportStatic()" type="button" value="导出"/><input type="button" value="打印"/><input onclick="closeStaticFun()" type="button"
                                                                                                   value="关闭"/></p>
 </div>
 <script src="statics/assets/js/jquery.js"></script>
@@ -60,7 +60,6 @@
 <script src="statics/assets/js/work.js"></script>
 <script>
     //页面载入完毕执行此方法
-
     window.onload = $(function () {debugger;
         setTimeout(setTimeouts,100);
        function setTimeouts() {
@@ -81,7 +80,10 @@
            });
        }
     });
-
+   function exportStatic(){
+       alert("导出成功");
+       window.open("locationStatic/exportStaticInformation");
+   }
     function closeStaticFun(){
         window.location.replace(window.location.href=parent.location.href = 'index');
     }

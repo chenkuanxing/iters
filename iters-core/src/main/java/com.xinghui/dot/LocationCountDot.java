@@ -11,11 +11,11 @@ public class LocationCountDot {
      */
     private Integer sum;
     /**
-     * 发布最多的部门
+     * 发布文章最多的部门
      */
     private String max;
     /**
-     * 发布最少的部门
+     * 发布文章最少的部门
      */
     private String min;
 
