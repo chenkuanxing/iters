@@ -59,12 +59,32 @@
 <script src="statics/assets/js/locationStatic.js"></script>
 <script src="statics/assets/js/work.js"></script>
 <script>
+    //页面载入完毕执行此方法
+
+    window.onload = $(function () {debugger;
+        setTimeout(setTimeouts,100);
+       function setTimeouts() {
+           $.ajax({
+               type: "GET",
+               url: "locationStatic/staticTimes",
+               dataType: "json",
+               success: function (result) {
+                   if (result.code == 100) {
+                       console.log(result.data.locationTimesDotsList);
+                       $.each(result.data.locationTimesDotsList, function (index, value) {
+                           debugger;
+                           $("#startTime").html(result.data.beginssTimess);
+                           $("#endsTime").html(result.data.endssTimess);
+                       });
+                   }
+               }
+           });
+       }
+    });
+
     function closeStaticFun(){
-        location.href = parent.location.href = 'index';
+        window.location.replace(window.location.href=parent.location.href = 'index');
     }
-
-
-
     var counts = [];
     var count ;
     var name;
@@ -196,23 +216,7 @@
                     $("#min").html(result.data.min);
                     $("#startTime").html(beginTime);
                     $("#endsTime").html(endTime);
-                    $(function () {//页面载入完毕执行此方法
-                        $.ajax({
-                            type: "GET",
-                            url: "locationStatic/staticTimes",
-                            dataType: "json",
-                            success: function (result) {
-                                if (result.code == 100) {
-                                    console.log(result.data.locationTimesDotsList);
-                                    $.each(result.data.locationTimesDotsList, function (index, value) {debugger;
-                                        $("#startTime").html(result.data.beginssTimess);
-                                        $("#endsTime").html(result.data.endssTimess);
-                                    });
-                                }
-                            }
-                        });
 
-                    });
 
                 } else {
                     console.log(result.message);
