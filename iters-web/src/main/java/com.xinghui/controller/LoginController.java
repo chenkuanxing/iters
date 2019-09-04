@@ -5,7 +5,6 @@ import com.xinghui.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -209,7 +208,7 @@ public class LoginController extends BaseController {
 
     @RequestMapping("/recode_tail01")
     public String recodeTail01() {
-        return "page/recode_tail01";
+        return "recode_tail";
     }
 
     @RequestMapping("/role")

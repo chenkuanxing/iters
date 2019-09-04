@@ -67,4 +67,6 @@ public class JournalDot {
 
     private List<JournalDot> exportList ;
 
+    private boolean type;
+
 }

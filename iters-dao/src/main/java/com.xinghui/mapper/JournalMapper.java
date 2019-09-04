@@ -11,7 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 public interface JournalMapper extends BaseMapper<Journal> {
-    List<Journal> listPage(Page page, @Param("journalDot") JournalDot journalDot);
+    List<Journal> listPage(Page page, @Param("journalDot") JournalDot journalDot,@Param("userId")String userId);
 
     List<JournalDot> getlist();
 

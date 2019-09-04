@@ -1,5 +1,4 @@
 package com.xinghui.serviceImpl;
-
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -7,6 +6,7 @@ import com.xinghui.common.Constants;
 import com.xinghui.dot.*;
 import com.xinghui.entity.Journal;
 import com.xinghui.mapper.JournalMapper;
+import com.xinghui.security.SecurityUtils;
 import com.xinghui.service.JournalService;
 import com.xinghui.utils.ExcelUtil;
 import org.springframework.beans.BeanUtils;
@@ -14,13 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
-
 import java.io.ByteArrayOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-
 @Service
 public class JournalServiceImpl extends ServiceImpl<JournalMapper, Journal> implements JournalService {
 
@@ -73,8 +71,9 @@ public class JournalServiceImpl extends ServiceImpl<JournalMapper, Journal> impl
                 e.printStackTrace();
             }
         }
-        return page.setRecords(baseMapper.listPage(page, journalDot));
+        return page.setRecords(baseMapper.listPage(page, journalDot,SecurityUtils.getCurrentUserId()));
     }
+
     @Override
     public byte[] export() throws Exception {
         List<Journal> journalList = this.list(new QueryWrapper<Journal>().lambda().eq(Journal::getStatus, Constants.status.TRUE));

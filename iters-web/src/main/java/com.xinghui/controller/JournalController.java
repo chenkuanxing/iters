@@ -1,6 +1,11 @@
 package com.xinghui.controller;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.xinghui.ResultDto;
+import com.xinghui.common.Constants;
 import com.xinghui.dot.JournalDot;
+import com.xinghui.entity.Journal;
+import com.xinghui.entity.User;
+import com.xinghui.security.SecurityUtils;
 import com.xinghui.service.JournalService;
 import com.xinghui.service.UserService;
 import com.xinghui.utils.ExcelUtils;
@@ -25,8 +30,6 @@ public class JournalController extends BaseController {
      */
     @GetMapping(value = "/listPage")
     public ResultDto listPage(Integer offset, Integer limit, JournalDot journalDot) {
-        System.out.println(limit);
-        System.out.println(offset);
         return success(journalService.listPage(offset, limit, journalDot));
     }
 
@@ -39,7 +42,10 @@ public class JournalController extends BaseController {
     public ResultDto create(JournalDot journalDot) {
         return success(journalService.create(journalDot));
     }
-
+    /**
+     * 日志导出功能
+     * @return
+     */
     @GetMapping(value = "/export")
     public void export(HttpServletRequest request, HttpServletResponse response) throws Exception {
         List<JournalDot> journalList = journalService.getlist();
@@ -48,17 +54,14 @@ public class JournalController extends BaseController {
 
     /**
      * 删除
-     *
      * @return
      */
     @GetMapping(value = "/delete/{id}")
     private ResultDto delete(@PathVariable("id") String id) {
         return success(journalService.removeById(id));
     }
-
     /**
      * 查询详情
-     *
      * @return
      */
     @GetMapping(value = "/query/{id}")
