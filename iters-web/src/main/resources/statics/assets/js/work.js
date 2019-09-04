@@ -14,14 +14,15 @@ var $dataTableHot;
             search: false, //显示搜索框
             sidePagination:"server",
             contentType: "application/x-www-form-urlencoded",//一种编码。好像在post请求的时候需要用到。这里用的get请求，注释掉这句话也能拿到数据
-            queryParams : function(params) {//x
+            queryParams : function(params) {
                 var temp = {//如果是在服务器端实现分页，limit、offset这两个参数是必须的
                     limit : params.limit, // 每页显示数量
                     offset : (params.offset / params.limit) + 1, // SQL语句起始索引
                     //page : (params.offset / params.limit) + 1, //当前页码
                     title : workTitle = $("#tit").val(),
                     publisher : Publisher = $("#person").val(),
-                    createdTimes : workTime = $("#demo").val()
+                    createdTimes : workTime = $("#demo").val(),
+                    type : false
                 };
 
                 return temp;
@@ -115,7 +116,7 @@ var $dataTableHot;
 function getWorkTableData(){debugger;
     $dataTableHot.bootstrapTable('refresh');
 }
-function addWork() {
+function addWork() {debugger;
     openlayer()
     currentID = "";
 }

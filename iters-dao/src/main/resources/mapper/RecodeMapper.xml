@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+        <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xinghui.mapper.RecodeMapper">
+<select id="listRecodePage" resultType="com.xinghui.entity.Recode">
+    select a.*,b.user_name as publisherName  from s_recode a
+    left join s_user b on a.publisher = b.id and b.status = 1
+    where a.status = 1
+    <if test="recodeDot.title != null and recodeDot.title != ''">
+        and a.title = #{recodeDot.title}
+    </if>
+    <if test="recodeDot.publisher != null and recodeDot.publisher != ''">
+        and b.user_name  LIKE  CONCAT('%',#{recodeDot.publisher,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="recodeDot.createdTime != null">
+        and DATE_FORMAT(a.created_time,'%Y-%m-%d') = DATE_FORMAT(#{recodeDot.createdTime},'%Y-%m-%d')
+    </if>
+    <if test="recodeDot.type">
+        <if test="userId != null and userId != ''">
+            and a.publisher = #{userId}
+        </if>
+    </if>
+</select>
+</mapper>

@@ -1,12 +1,10 @@
 package com.xinghui.security;
-
 import com.xinghui.enums.HttpCodeEnum;
 import com.xinghui.exception.CustException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.CollectionUtils;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -37,7 +35,6 @@ public class SecurityUtils {
             throw new CustException(HttpCodeEnum.deny.getValue(), HttpCodeEnum.deny.getDesc());
         }
     }
-
     /**
      * 获取登录用户
      *
@@ -52,7 +49,6 @@ public class SecurityUtils {
             throw new CustException(HttpCodeEnum.deny.getValue(), HttpCodeEnum.deny.getDesc());
         }
     }
-
     /**
      * 获取用户角色权限
      * @return
