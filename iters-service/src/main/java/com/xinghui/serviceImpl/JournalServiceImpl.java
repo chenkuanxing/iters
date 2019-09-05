@@ -1,4 +1,5 @@
 package com.xinghui.serviceImpl;
+
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -19,6 +20,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
 @Service
 public class JournalServiceImpl extends ServiceImpl<JournalMapper, Journal> implements JournalService {
 
@@ -34,31 +36,6 @@ public class JournalServiceImpl extends ServiceImpl<JournalMapper, Journal> impl
         BeanUtils.copyProperties(journalDot, journal);
         this.saveOrUpdate(journal);
         return journal;
-    }
-    @Override
-    public LocationTimesSumDot departmentArticleTimes() {
-        LocationTimesSumDot locationTimesSumDot = new LocationTimesSumDot();
-        List<LocationTimesDot> locationTimesDots = baseMapper.departmentArticleTimes();
-        for (LocationTimesDot locationTimesDot : locationTimesDots) {
-            SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日");
-            if (!StringUtils.isEmpty(locationTimesDot.getBeginsTimes())){
-                //format()方法将Date转换成指定格式的String
-                String beginsTimess = format.format(locationTimesDot.getBeginsTimes());
-                    locationTimesDot.setBeginsTimess(beginsTimess);
-                    locationTimesSumDot.setBeginssTimess(beginsTimess);
-                System.out.println("beginsTimess:"+ beginsTimess);
-            }
-            if (!StringUtils.isEmpty(locationTimesDot.getEndsTimes())){
-                //format()方法将Date转换成指定格式的String
-                String endsTimess = format.format(locationTimesDot.getEndsTimes());
-                locationTimesSumDot.setEndssTimess(endsTimess);
-                locationTimesDot.setEndsTimess(endsTimess);
-                System.out.println("endsTimess:"+endsTimess);
-            }
-            locationTimesSumDot.setLocationTimesDotsList(locationTimesDots);
-        }
-        System.out.println(locationTimesSumDot);
-        return locationTimesSumDot;
     }
     @Override
     public Page<Journal> listPage(Integer offset, Integer limit, JournalDot journalDot) {
@@ -104,6 +81,31 @@ public class JournalServiceImpl extends ServiceImpl<JournalMapper, Journal> impl
         }
         System.out.println(exportLists);
         return exportLists;
+    }
+    @Override
+    public LocationTimesSumDot departmentArticleTimes() {
+        LocationTimesSumDot locationTimesSumDot = new LocationTimesSumDot();
+        List<LocationTimesDot> locationTimesDots = baseMapper.departmentArticleTimes();
+        for (LocationTimesDot locationTimesDot : locationTimesDots) {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日");
+            if (!StringUtils.isEmpty(locationTimesDot.getBeginsTimes())){
+                //format()方法将Date转换成指定格式的String
+                String beginsTimess = format.format(locationTimesDot.getBeginsTimes());
+                locationTimesDot.setBeginsTimess(beginsTimess);
+                locationTimesSumDot.setBeginssTimess(beginsTimess);
+                System.out.println("beginsTimess:"+ beginsTimess);
+            }
+            if (!StringUtils.isEmpty(locationTimesDot.getEndsTimes())){
+                //format()方法将Date转换成指定格式的String
+                String endsTimess = format.format(locationTimesDot.getEndsTimes());
+                locationTimesSumDot.setEndssTimess(endsTimess);
+                locationTimesDot.setEndsTimess(endsTimess);
+                System.out.println("endsTimess:"+endsTimess);
+            }
+            locationTimesSumDot.setLocationTimesDotsList(locationTimesDots);
+        }
+        System.out.println(locationTimesSumDot);
+        return locationTimesSumDot;
     }
     public List<LocationStaticExportDot> getStaticExportList() {
         List<LocationStaticExportDot> staticExportLists = baseMapper.getStaticExportList();

@@ -108,9 +108,10 @@ public class LoginController extends BaseController {
     }
 
     @RequestMapping("/locationStatic")
-    public String locationStatic() {
-        return "page/locationStatic";
-    }
+    public String locationStatic() { return "page/locationStatic"; }
+
+    @RequestMapping("/locationRecodeStatic")
+    public String locationRecodeStatic() { return "page/locationRecodeStatic"; }
 
     @RequestMapping("/mailList")
     public String mailList() {

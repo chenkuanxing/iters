@@ -63,7 +63,7 @@ function Recodeload() {debugger;
                     valign: 'middle'
                 },
                 {
-                    title: '发布内容',
+                    title: '任务内容',
                     field: 'content',
                     align: 'center'
                 }
@@ -111,6 +111,10 @@ function delRecode(id) {
 }
 function getCurrentID() {
     return currentID;
+}
+function outRecodeWork() {
+    alert("导出成功！");
+    window.open("recode/recodeExport");
 }
 function openlayer(id) {
     $('#id').val(id);

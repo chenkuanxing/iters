@@ -14,7 +14,7 @@ public class RecodeDot {
      */
     private String id;
     /**
-     * 日志标题
+     * 定制任务标题
      */
     @Excel(name = "定制任务标题", orderNum = "1", width = 40, mergeVertical = true)
     private String title;
@@ -37,9 +37,9 @@ public class RecodeDot {
     @Excel(name = "发布时间", orderNum = "1", width = 15, mergeVertical = true)
     private String createdTimes;
     /**
-     * 发布内容
+     * 任务内容
      */
-    @Excel(name = "发布内容", orderNum = "1", width = 55, mergeVertical = true)
+    @Excel(name = "任务内容", orderNum = "1", width = 55, mergeVertical = true)
     private String content;
 //    /**
 //     * 发布部门

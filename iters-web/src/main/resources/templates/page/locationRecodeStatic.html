@@ -59,16 +59,16 @@
     //页面载入完毕执行此方法
     window.onload = $(function () {debugger;
         setTimeout(setTimeouts,100);
+        /*统计初始结束时间*/
        function setTimeouts() {
            $.ajax({
                type: "GET",
-               url: "locationStatic/staticTimes",
+               url: "locationRecodeStatic/staticTimes",
                dataType: "json",
                success: function (result) {
                    if (result.code == 100) {
                        console.log(result.data.locationTimesDotsList);
                        $.each(result.data.locationTimesDotsList, function (index, value) {
-                           debugger;
                            $("#startTime").html(result.data.beginssTimess);
                            $("#endsTime").html(result.data.endssTimess);
                        });
@@ -79,7 +79,7 @@
     });
    function exportStatic(){
        alert("导出成功");
-       window.open("locationStatic/exportStaticInformation");
+       window.open("locationRecodeStatic/exportStaticInformation");
    }
     function closeStaticFun(){
         window.location.replace(window.location.href=parent.location.href = 'index');
@@ -98,7 +98,7 @@
         console.log(data);
         $.ajax({
             type: "GET",
-            url: "locationStatic/staticCountNumberAll",
+            url: "locationRecodeStatic/staticCountNumberAll",
             data: data,
             dataType: "json",
             success: function (result) {
