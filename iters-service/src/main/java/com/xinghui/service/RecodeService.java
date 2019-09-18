@@ -8,7 +8,7 @@ import com.xinghui.dot.LocationTimesSumDot;
 import com.xinghui.dot.RecodeDot;
 import com.xinghui.entity.Recode;
 
-public interface RecodeServise extends IService<Recode> {
+public interface RecodeService extends IService<Recode> {
 
     Page<Recode> listRecodePage(Integer offset, Integer limit, RecodeDot recodeDot);
 

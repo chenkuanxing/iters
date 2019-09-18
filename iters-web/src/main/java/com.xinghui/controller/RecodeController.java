@@ -5,18 +5,16 @@ import com.xinghui.service.UserService;
 import com.xinghui.utils.ExcelUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.xinghui.service.RecodeServise;
+import com.xinghui.service.RecodeService;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
-
 @RestController
 @RequestMapping("/recode")
 public class RecodeController extends BaseController {
     @Autowired
-    private RecodeServise recodeServise;
+    private RecodeService recodeService;
     @Autowired
     private UserService userService;
     /**
@@ -24,7 +22,7 @@ public class RecodeController extends BaseController {
      */
     @GetMapping(value = "/listRecodePage")
     public ResultDto listRecodePage(Integer offset, Integer limit, RecodeDot recodeDot) {
-        return success(recodeServise.listRecodePage(offset, limit, recodeDot));
+        return success(recodeService.listRecodePage(offset, limit, recodeDot));
     }
     /**
      * 添加和更新定制任务
@@ -32,7 +30,7 @@ public class RecodeController extends BaseController {
      */
     @PostMapping(value = "/create")
     public ResultDto create(RecodeDot recodeDot) {
-        return success(recodeServise.create(recodeDot));
+        return success(recodeService.create(recodeDot));
     }
     /**
      * 删除定制任务
@@ -40,7 +38,7 @@ public class RecodeController extends BaseController {
      */
     @GetMapping(value = "/delete/{id}")
     private ResultDto delete(@PathVariable("id") String id) {
-        return success(recodeServise.removeById(id));
+        return success(recodeService.removeById(id));
     }
     /**
      * 导出定制任务
@@ -48,7 +46,7 @@ public class RecodeController extends BaseController {
      */
     @GetMapping(value = "/recodeExport")
     public void recodeExport(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        List<RecodeDot> recodeList = recodeServise.getRecodelist();
+        List<RecodeDot> recodeList = recodeService.getRecodelist();
         ExcelUtils.exportExcel(recodeList, "定制任务统计表", "定制任务统计表", RecodeDot.class, "定制任务统计表.xls", response);
     }
     /**
@@ -58,7 +56,7 @@ public class RecodeController extends BaseController {
     @GetMapping(value = "/query/{id}")
     public ResultDto query(@PathVariable("id") String id) {
         RecodeDot recodeDot = new RecodeDot();
-        BeanUtils.copyProperties(recodeServise.getById(id), recodeDot);
+        BeanUtils.copyProperties(recodeService.getById(id), recodeDot);
         recodeDot.setPublishName(userService.getById(recodeDot.getPublisher()).getUserName());
         recodeDot.setPerformByName(userService.getById(recodeDot.getPerformBy()).getUserName());
         return success(recodeDot);

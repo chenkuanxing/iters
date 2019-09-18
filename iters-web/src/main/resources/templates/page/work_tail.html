@@ -226,7 +226,8 @@
         });
     }
     var id = window.parent.document.getElementById("id").value;
-    if (!!id) {
+    alert(id);
+    if (!!id) {debugger;
         $.ajax({
             type: "GET",
             url: "journal/query/" + id,
@@ -235,7 +236,6 @@
                 if (result.code == 100) {
                     $('#title').val(result.data.title);
                     // $('#publisher').val(result.data.publisher);
-
                     $('#publisher').val(result.data.publishName);
                     $('#publisher').attr("data-id",result.data.publisher);
 

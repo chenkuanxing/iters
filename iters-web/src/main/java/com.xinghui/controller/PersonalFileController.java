@@ -1,5 +1,4 @@
 package com.xinghui.controller;
-
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.xinghui.ResultDto;
 import com.xinghui.common.Constants;
@@ -10,10 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.net.URL;
 import java.util.List;
-
 @RestController
 @RequestMapping("/personalFile")
 public class PersonalFileController extends BaseController {
@@ -43,7 +40,6 @@ public class PersonalFileController extends BaseController {
 
     /**
      * 添加
-     *
      * @return
      */
     @PostMapping(value = "/create")

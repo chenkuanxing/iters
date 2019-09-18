@@ -4,9 +4,9 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>写邮件</title>
-    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="css/tail.css" rel="stylesheet" type="text/css" />
-    <script type="text/javascript" src="js/jquery.js"></script>
+    <link href="statics/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="statics/assets/css/tail.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="statics/assets/js/jquery.js"></script>
     <script>
         function change() {
             var height01 = $(window).height();
@@ -14,30 +14,40 @@
         }
     </script>
 </head>
-
 <body style="border-radius: 8px" onload="change()">
 <!--<div class="title"><h2>写邮件</h2></div>-->
 <form id="form_demo" >
 <div class="top">
+    <input type="text" style="display: none" id="userId">
     <div>
         <div class="top_out">
             <table class="table" >
                 <tbody>
                 <tr>
                     <td style="border-top: none">邮件标题：<i class="i_start"></i> </td>
-                    <td  colspan = "6"  style="text-align: left;border-top: none"><input type="text" name ="name" minlength="2"  required></td>
+                    <td  colspan = "6"  style="text-align: left;border-top: none"><input type="text" name ="name" id="emailTitles" minlength="2"  required></td>
+                </tr>
+                <tr style="display: none">
+                    <td style="border-top: none">是否已查看： </td>
+                    <td  style="text-align: left"><input type="text" id="no"  name ="name" minlength="2" readonly="readonly"  required></td>
+                    <td  colspan = "6"    style="text-align: left;border-top: none"><input type="text" id="isMsgss"  value="否"  name ="name" minlength="2"  required></td>
+                </tr>
+
+                <tr>
+                    <td style="border-top: none">发件人姓名： </td>
+                    <td  colspan = "6"  style="text-align: left;border-top: none"><input type="text" name ="name" id="senderNames" minlength="2"  required></td>
                 </tr>
                 <tr>
-                    <td style="border-top: none">添加附件：</td>
-                    <td  colspan = "6"  style="text-align: left;border-top: none"><input type="file" style="border:none"></td>
+                    <td style="border-top: none">发件人邮箱： </td>
+                    <td  colspan = "6"  style="text-align: left;border-top: none"><input type="text" name ="name" id="senders" minlength="2"  required></td>
                 </tr>
                 <tr>
-                    <td style="border-top: none">发送人：<i class="i_start"></i> </td>
-                    <td  colspan = "6"  style="text-align: left;border-top: none"><select name ="name" minlength="2"  required><option>全部</option></select></td>
+                    <td style="border-top: none">收件人邮箱：</td>
+                    <td  colspan = "6"  style="text-align: left;border-top: none"><input type="text" name ="name" id="recipientss" minlength="2"  required></td>
                 </tr>
                 <tr>
-                    <td style="border-top: none">抄送人：</td>
-                    <td  colspan = "6"  style="text-align: left;border-top: none"><select><option>全部</option></select></td>
+                    <td style="border-top: none" id="hideAccessorys">添加附件：</td>
+                    <td  colspan = "6"  style="text-align: left;border-top: none"><input type="file" id="accessorys" style="border:none"></td>
                 </tr>
                 <tr>
                     <td style="line-height: 340px">邮件内容：</td>
@@ -48,17 +58,75 @@
         </div>
     </div>
     <div class="bot_btn">
-       <input type="submit" value="发送" class="btn"/>
+       <input type="submit" onclick="inForEmailFunc()" value="发送" class="btn"/>
         <button class="btn" style="background-color: #aa5500">草稿</button>
-        <button class="btn btn1"><a href="email.html" target="right">返回</a></button>
+        <button class="btn btn1"><a href="email" target="right">返回</a></button>
     </div>
 </div>
 </form>
 </body>
-<script type="text/javascript" src="js/jquery.js"></script>
-<script src="js/utf8-php/ueditor.config.js"></script>
-<script src="js/utf8-php/ueditor.all.min.js"></script>
+<script type="text/javascript" src="statics/assets/js/jquery.js"></script>
+<script src="statics/assets/js/utf8-php/ueditor.config.js"></script>
+<script src="statics/assets/js/utf8-php/ueditor.all.min.js"></script>
+<script>
+    /*点击详情查看发件箱里面内容*/
+    var id = window.parent.document.getElementById("id").value;
+    if (!!id) {debugger;
+        $.ajax({
+            type: "GET",
+            url: "email/queryEmail/" + id,
+            dataType: "json",
+            success: function (result) {
+                if (result.code == 100) {
+                    debugger;
+                    $.each(result.data, function (index, value) {debugger;
+                        $('#emailTitles').val(value.emailTitle);
+                        $('#hideAccessorys').html(value.accessory).hide();
+                        $('#accessorys').html(value.accessory).hide();
+                        $('#isMsgss').val(value.isMsgs);
+                        $('#senderNames').val(value.senderName);
+                        $('#senders').val(value.sender);
+                        $('#recipientss').val(value.recipients);
+                        UE.getEditor('editor').addListener("ready", function () {
+                            //赋值
+                            UE.getEditor('editor').setContent(value.emailContent);
+                        })
+                    });
+                }else {
+                    console.log(result.message);
+                }
+            }
+        });
+    }
+    /*发送书写邮件内容添加到收件箱*/
+    function inForEmailFunc() {debugger;
+        var emailTitle = $("#emailTitles").val();
+        var accessory = $("#accessorys").val();
+        var isMsgs = $("#isMsgss").val();
+        var senderName =$("#senderNames").val();
+        var sender = $("#senders").val();
+        var recipients = $("#recipientss").val();
+        var emailContent = UE.getEditor('editor').getContent();
+        var data = {
+            "emailTitle": emailTitle,"isMsgs": isMsgs,"senderName": senderName,"sender": sender,"recipients": recipients,"emailContent":emailContent,"accessory":accessory
+        }
+        $.ajax({
+                        type: "POST",
+                        url: "email/creatEmail",
+                        data: data,
+                        dataType: "json",
+                        success: function (result) {
+                            if (result.code == 100) {
+                                alert("发送成功");
+                                $dataTableHot.bootstrapTable('refresh');
+                            } else {
+                                console.log(result.message);
+                            }
+                        }
+                    });
 
+    }
+</script>
 <script >
     var ue = UE.getEditor('editor');
     function isFocus(e){
@@ -168,13 +236,6 @@
     }
 </script>
 <script >
-    $.validator.setDefaults({
-        submitHandler: function() {
-            alert("修改成功");
-        }
-    });
-    $().ready(function() {
-        $("#form_demo").validate();
-    });
+
 </script>
 </html>

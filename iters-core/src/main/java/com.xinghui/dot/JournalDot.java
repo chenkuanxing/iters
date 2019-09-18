@@ -1,11 +1,8 @@
 package com.xinghui.dot;
-
 import cn.afterturn.easypoi.excel.annotation.Excel;
 import lombok.Data;
-
 import java.util.Date;
 import java.util.List;
-
 @Data
 public class JournalDot {
 

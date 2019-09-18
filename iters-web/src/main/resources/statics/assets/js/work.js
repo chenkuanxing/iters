@@ -77,7 +77,6 @@ var $dataTableHot;
                 {
                     title: '操作',
                     align: 'center',
-
                     formatter: function (value, row) {
                         console.log("row="+row.id);
                         var e = '<button button="#" mce_href="#" onclick="delWork(\'' + row.id + '\')">删除</button>' +

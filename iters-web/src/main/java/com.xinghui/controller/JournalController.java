@@ -70,6 +70,7 @@ public class JournalController extends BaseController {
         BeanUtils.copyProperties(journalService.getById(id), journalDot);
         journalDot.setPublishName(userService.getById(journalDot.getPublisher()).getUserName());
         journalDot.setPerformByName(userService.getById(journalDot.getPerformBy()).getUserName());
+        System.out.println(journalDot);
         return success(journalDot);
     }
 }

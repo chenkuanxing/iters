@@ -7,7 +7,7 @@ import com.xinghui.dot.*;
 import com.xinghui.entity.Recode;
 import com.xinghui.mapper.RecodeMapper;
 import com.xinghui.security.SecurityUtils;
-import com.xinghui.service.RecodeServise;
+import com.xinghui.service.RecodeService;
 import com.xinghui.utils.ExcelUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 @Service
-public class RecodeServiseImpl extends ServiceImpl<RecodeMapper, Recode> implements RecodeServise {
+public class RecodeServiceImpl extends ServiceImpl<RecodeMapper, Recode> implements RecodeService {
     @Autowired
     private ExcelUtil excelUtil;
 
