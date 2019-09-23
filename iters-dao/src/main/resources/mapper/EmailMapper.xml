@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-        <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xinghui.mapper.EmailMapper">
-<select id="emailInboxPage" resultType="com.xinghui.entity.Email">
-    select a.*,b.user_name as senderName,b.emileIsMsgs as isMsgs from s_email a
-    left join s_user b on a.created_user = b.id and b.status = 1
-    where a.status = 1
-    <if test="emailDot.emailTitle != null and emailDot.emailTitle != ''">
-        and a.emailTitle = #{emailDot.emailTitle}
-    </if>
-    <if test="emailDot.isMsgs != null and emailDot.isMsgs != ''">
-        and a.isMsgs = #{emailDot.isMsgs}
-    </if>
-    <if test="emailDot.sendTime != null">
-        and DATE_FORMAT(a.sendTime,'%Y-%m-%d') = DATE_FORMAT(#{emailDot.sendTime},'%Y-%m-%d')
-    </if>
-</select>
-   <insert id="creatEmail" parameterType="java.util.List">
+    <select id="emailInboxPage" resultType="com.xinghui.entity.Email">
+        select a.*,b.user_name as senderName,b.emileIsMsgs as isMsgs from s_email a
+        left join s_user b on a.created_user = b.id and b.status = 1
+        where a.status = 1
+        <if test="emailDot.emailTitle != null and emailDot.emailTitle != ''">
+            and a.emailTitle = #{emailDot.emailTitle}
+        </if>
+        <if test="emailDot.isMsgs != null and emailDot.isMsgs != ''">
+            and a.isMsgs = #{emailDot.isMsgs}
+        </if>
+        <if test="emailDot.sendTime != null">
+            and DATE_FORMAT(a.sendTime,'%Y-%m-%d') = DATE_FORMAT(#{emailDot.sendTime},'%Y-%m-%d')
+        </if>
+    </select>
+    <select id="emailCountOrSum" resultType="java.util.HashMap">
+    select count(s.recipients) as inBoxSum, (count(if(s.isMsg=1,true,null))) as inBoxCount from s_email s where s.status = 1
+    </select>
+    <insert id="creatEmail" parameterType="java.util.HashMap">
        INSERT INTO s_email (
        id,
        emailTitle,
@@ -26,13 +29,24 @@
        recipients,
        emailContent,
        sendTime
-       )
-       VALUES(uuid(),#{emailTitle},#{accessory},#{isMsgs},#{senderName},#{sender},#{recipients},#{emailContent},now())
-   </insert>
+       ) VALUES
+      (uuid(),#{emailTitle},#{accessory},#{isMsgs},#{senderName},#{sender},#{recipients},#{emailContent},now())
 
+  </insert>
     <select id="queryEmail" resultType="com.xinghui.dot.EmailDot">
-     select s.*,s.id,s.emailTitle as emailTitle,s.accessory,s.isMsg,s.senderName,s.sender,s.sendTime,s.recipients,s.emailContent,b.user_name as senderName,b.emileIsMsgs as isMsgs from s_email s
+    select s.id,s.emailTitle as emailTitle,s.accessory,s.isMsg,s.isMsgs,s.senderName,s.sender,s.sendTime,s.recipients,s.emailContent from s_email s
     left join s_user b on s.created_user = b.id and b.status = 1
     where s.status = 1
     </select>
+    <select id="getEmailList" resultType="com.xinghui.dot.EmailDot">
+    select a.*,b.user_name as senderName,b.emileIsMsgs as isMsgs from s_email a
+    left join s_user b on a.created_user = b.id and b.status = 1
+    where a.status = 1
+    </select>
+    <update id="isMsgsEmail" parameterType="java.util.HashMap">
+        UPDATE s_email s SET s.isMsg = 0 ,s.isMsgs='是' WHERE id = #{id}
+        <if test="emailDot.isMsg != null and emailDot.isMsg != ''">
+            and s.isMsg = 1
+        </if>
+    </update>
 </mapper>

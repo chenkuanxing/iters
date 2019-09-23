@@ -268,9 +268,16 @@ public class LoginController extends BaseController {
     }
 
     @RequestMapping("/write_email")
-    public String writeEmail() {
-        return "page/write_email";
-    }
+    public String writeEmail() { return "page/write_email"; }
+
+    @RequestMapping("/write_queryEmail")
+    public String write_queryEmail() { return "page/write_queryEmail"; }
+
+    @RequestMapping("/write_replyEmail")
+    public String write_replyEmail() { return "page/write_replyEmail"; }
+
+    @RequestMapping("/write_repeatEmail")
+    public String write_repeatEmail() { return "page/write_repeatEmail"; }
 
     @RequestMapping("/password")
     public String password() {

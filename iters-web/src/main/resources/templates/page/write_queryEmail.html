@@ -1,9 +1,8 @@
-
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>写邮件</title>
+    <title>邮件详情</title>
     <link href="statics/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="statics/assets/css/tail.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="statics/assets/js/jquery.js"></script>
@@ -25,7 +24,7 @@
                     <tbody>
                     <tr>
                         <td style="border-top: none">邮件标题：<i class="i_start"></i> </td>
-                        <td  colspan = "6"  style="text-align: left;border-top: none"><input type="text" name ="name" id="emailTitles" minlength="2"  required></td>
+                        <td  colspan = "6"  style="text-align: left;border-top: none"><input type="text" name ="name" id="emailTitles"  readonly="readonly" minlength="2"  required></td>
                     </tr>
                     <tr style="display: none">
                         <td style="border-top: none">是否已查看： </td>
@@ -35,15 +34,15 @@
 
                     <tr>
                         <td style="border-top: none">发件人姓名： </td>
-                        <td  colspan = "6"  style="text-align: left;border-top: none"><input type="text" name ="name" id="senderNames" minlength="2"  required></td>
+                        <td  colspan = "6"  style="text-align: left;border-top: none"><input type="text" name ="name" id="senderNames"  readonly="readonly" minlength="2"  required></td>
                     </tr>
                     <tr>
                         <td style="border-top: none">发件人邮箱： </td>
-                        <td  colspan = "6"  style="text-align: left;border-top: none"><input type="text" name ="name" id="senders" minlength="2"  required></td>
+                        <td  colspan = "6"  style="text-align: left;border-top: none"><input type="text" name ="name" id="senders"  readonly="readonly" minlength="2"  required></td>
                     </tr>
                     <tr>
                         <td style="border-top: none">收件人邮箱：</td>
-                        <td  colspan = "6"  style="text-align: left;border-top: none"><input type="text" name ="name" id="recipientss" minlength="2"  required></td>
+                        <td  colspan = "6"  style="text-align: left;border-top: none"><input type="text" name ="name" id="recipientss" readonly="readonly" minlength="2"  required></td>
                     </tr>
                     <tr>
                         <td style="border-top: none" id="hideAccessorys">添加附件：</td>
@@ -51,15 +50,14 @@
                     </tr>
                     <tr>
                         <td style="line-height: 340px">邮件内容：</td>
-                        <td colspan = "8" style="text-align: left"><textarea  id="editor" style="width: 100%;height: 240px"></textarea></td>
+                        <td colspan = "8" style="text-align: left"><textarea onclick="moveMouseDont()"  id="editor" style="width: 100%;height: 240px"></textarea></td>
                     </tr>
                     </tbody>
                 </table>
             </div>
         </div>
         <div class="bot_btn">
-            <!--<a href="email" target="right"><input type="submit" onclick="inForEmailFunc()" value="发送" class="btn"/></a>-->
-            <button class="btn"><a href="email" target="right" onclick="inForEmailFunc()">发送</a></button>
+           <!-- <input type="submit" onclick="inForEmailFunc()" value="发送" class="btn"/>-->
             <button class="btn" style="background-color: #aa5500">草稿</button>
             <button class="btn btn1"><a href="email" target="right">返回</a></button>
         </div>
@@ -97,6 +95,20 @@
                 }
             }
         });
+        $.ajax({
+            type: "GET",
+            url: "email/isMsgsEmail/" + id,
+            dataType: "json",
+            success: function (result) {
+                if (result.code == 100) {
+                    $.each(result.data, function (index, value) {
+
+                    });
+                }else {
+                    console.log(result.message);
+                }
+            }
+        });
     }
     /*发送书写邮件内容添加到收件箱*/
     function inForEmailFunc() {debugger;
@@ -119,6 +131,7 @@
                 if (result.code == 100) {debugger;
                     console.log(data);
                     parent.location.href = 'email';
+                    window.location.reload();
                 } else {
                     console.log(result.message);
                 }
