@@ -171,9 +171,7 @@ function delWork(id) {
             }
         });
  }
-// function getCurrentID() {
-//     return currentID;
-// }
+
 
 
 

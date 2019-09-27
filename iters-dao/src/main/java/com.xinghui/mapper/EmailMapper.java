@@ -13,6 +13,8 @@ public interface EmailMapper extends BaseMapper<Email> {
 
     Map<String,Object> emailCountOrSum(EmailDot emailDot);
 
+    Map<String,Object> emailRecycleSumOrCount(EmailDot emailDot);
+
     Map<String,Object> creatEmail (EmailDot emailDot);
 
     List<EmailDot> getEmailList();
@@ -20,4 +22,14 @@ public interface EmailMapper extends BaseMapper<Email> {
     List<EmailDot> queryEmail(EmailDot emailDot, @Param("id") String id);
 
     Map<String,Object> isMsgsEmail(EmailDot emailDot, @Param("id") String id);
+
+    List<Email> emailRecyclePage(Page page, @Param("emailDot") EmailDot emailDot, @Param("userId") String userId);
+
+    List<EmailDot> queryRecycleEmail(EmailDot emailDot, @Param("id") String id);
+
+    List<EmailDot> emailRestoreRecycle(EmailDot emailDot, @Param("id") String id);
+
+    List<EmailDot> getRecycleEmailList();
+
+    List<EmailDot> getEmailsRecyclesInfmormations();
 }

@@ -22,7 +22,17 @@ public interface EmailService extends IService<Email> {
 
     Map<String,Object> isMsgsEmail(EmailDot emailDot,@PathVariable("id") String id);
 
+    Page<Email> emailRecyclePage(Integer offset, Integer limit, EmailDot emailDot);
 
+    List<EmailDot> emailRecycleSumOrCount(EmailDot emailDot);
+
+    List<EmailDot> queryRecycleEmail(EmailDot emailDot,@PathVariable("id") String id);
+
+    List<EmailDot> emailRestoreRecycle(EmailDot emailDot,@PathVariable("id") String id);
+
+    List<EmailDot> getRecycleEmailList();
+
+    List<EmailDot> getEmailsRecyclesInfmormations();
 
 
 

@@ -66,3 +66,12 @@ logging:
 file:
   filepaths: http://127.0.0.1:88/staticUp/
   uploadpath: D\:\\Upload&staticUp
+#邮箱配置
+mail:
+  spring.mail.host: smtp.qq.com
+  spring.mail.username: 1101225081@qq.com
+  spring.mail.password: glblvsldinymgbhi
+  spring.mail.default-encoding: UTF-8
+  spring.mail.port: 465
+  spring.mail.properties.mail.smtp.socketFactory.class: javax.net.ssl.SSLSocketFactory
+  spring.mail.properties.mail.debug: true

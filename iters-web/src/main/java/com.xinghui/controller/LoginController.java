@@ -67,6 +67,11 @@ public class LoginController extends BaseController {
         return "page/dossier_puplic";
     }
 
+    @RequestMapping("/emailRecycle")
+    public String emailRecycle() {
+        return "page/emailRecycle";
+    }
+
     @RequestMapping("/email")
     public String email() {
         return "page/email";
@@ -272,6 +277,9 @@ public class LoginController extends BaseController {
 
     @RequestMapping("/write_queryEmail")
     public String write_queryEmail() { return "page/write_queryEmail"; }
+
+    @RequestMapping("/write_queryRecycleEmail")
+    public String write_queryRecycleEmail() { return "page/write_queryRecycleEmail"; }
 
     @RequestMapping("/write_replyEmail")
     public String write_replyEmail() { return "page/write_replyEmail"; }

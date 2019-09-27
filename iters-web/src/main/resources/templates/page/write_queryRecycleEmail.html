@@ -1,0 +1,254 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>邮件详情</title>
+    <link href="statics/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="statics/assets/css/tail.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="statics/assets/js/jquery.js"></script>
+    <script>
+        function change() {
+            var height01 = $(window).height();
+            $(".top").css('height', height01 - 35+"px");
+        }
+    </script>
+</head>
+<body style="border-radius: 8px" onload="change()">
+<!--<div class="title"><h2>写邮件</h2></div>-->
+<form id="form_demo" >
+    <div class="top">
+        <input type="text" style="display: none" id="userId">
+        <div>
+            <div class="top_out">
+                <table class="table" >
+                    <tbody>
+                    <tr>
+                        <td style="border-top: none">邮件标题：<i class="i_start"></i> </td>
+                        <td  colspan = "6"  style="text-align: left;border-top: none"><input type="text" name ="name" id="emailTitles"  readonly="readonly" minlength="2"  required></td>
+                    </tr>
+                    <tr style="display: none">
+                        <td style="border-top: none">是否已查看： </td>
+                        <td  style="text-align: left"><input type="text" id="no"  name ="name" minlength="2" readonly="readonly"  required></td>
+                        <td  colspan = "6"    style="text-align: left;border-top: none"><input type="text" id="isMsgss"  value="否"  name ="name" minlength="2"  required></td>
+                    </tr>
+
+                    <tr>
+                        <td style="border-top: none">发件人姓名： </td>
+                        <td  colspan = "6"  style="text-align: left;border-top: none"><input type="text" name ="name" id="senderNames"  readonly="readonly" minlength="2"  required></td>
+                    </tr>
+                    <tr>
+                        <td style="border-top: none">发件人邮箱： </td>
+                        <td  colspan = "6"  style="text-align: left;border-top: none"><input type="text" name ="name" id="senders"  readonly="readonly" minlength="2"  required></td>
+                    </tr>
+                    <tr>
+                        <td style="border-top: none">收件人邮箱：</td>
+                        <td  colspan = "6"  style="text-align: left;border-top: none"><input type="text" name ="name" id="recipientss" readonly="readonly" minlength="2"  required></td>
+                    </tr>
+                    <tr>
+                        <td style="border-top: none" id="hideAccessorys">添加附件：</td>
+                        <td  colspan = "6"  style="text-align: left;border-top: none"><input type="file" id="accessorys" style="border:none"></td>
+                    </tr>
+                    <tr>
+                        <td style="line-height: 340px">邮件内容：</td>
+                        <td colspan = "8" style="text-align: left"><textarea onclick="moveMouseDont()"  id="editor" style="width: 100%;height: 240px"></textarea></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="bot_btn">
+           <!-- <input type="submit" onclick="inForEmailFunc()" value="发送" class="btn"/>-->
+            <button class="btn" style="background-color: #aa5500">草稿</button>
+            <button class="btn btn1"><a href="email" target="right">返回</a></button>
+        </div>
+    </div>
+</form>
+</body>
+<script type="text/javascript" src="statics/assets/js/jquery.js"></script>
+<script src="statics/assets/js/utf8-php/ueditor.config.js"></script>
+<script src="statics/assets/js/utf8-php/ueditor.all.min.js"></script>
+<script>
+    /*点击详情查看发件箱里面内容*/
+    var id = window.parent.document.getElementById("id").value;
+    if (!!id) {debugger;
+        $.ajax({
+            type: "GET",
+            url: "email/queryRecycleEmail/" + id,
+            dataType: "json",
+            success: function (result) {
+                if (result.code == 100) {
+                    $.each(result.data, function (index, value) {
+                        $('#emailTitles').val(value.emailTitle);
+                        $('#hideAccessorys').html(value.accessory).hide();
+                        $('#accessorys').html(value.accessory).hide();
+                        $('#isMsgss').val(value.isMsgs);
+                        $('#senderNames').val(value.senderName);
+                        $('#senders').val(value.sender);
+                        $('#recipientss').val(value.recipients);
+                        UE.getEditor('editor').addListener("ready", function () {
+                            //赋值
+                            UE.getEditor('editor').setContent(value.emailContent);
+                        })
+                    });
+                }else {
+                    console.log(result.message);
+                }
+            }
+        });
+        $.ajax({
+            type: "GET",
+            url: "email/isMsgsEmail/" + id,
+            dataType: "json",
+            success: function (result) {
+                if (result.code == 100) {
+                    $.each(result.data, function (index, value) {
+
+                    });
+                }else {
+                    console.log(result.message);
+                }
+            }
+        });
+    }
+    /*发送书写邮件内容添加到收件箱*/
+    function inForEmailFunc() {debugger;
+        var emailTitle = $("#emailTitles").val();
+        var accessory = $("#accessorys").val();
+        var isMsgs = $("#isMsgss").val();
+        var senderName =$("#senderNames").val();
+        var sender = $("#senders").val();
+        var recipients = $("#recipientss").val();
+        var emailContent = UE.getEditor('editor').getContent();
+        var data = {
+            "emailTitle": emailTitle,"isMsgs": isMsgs,"senderName": senderName,"sender": sender,"recipients": recipients,"emailContent":emailContent,"accessory":accessory
+        }
+        $.ajax({
+            type: "POST",
+            url: "email/creatEmail",
+            data: data,
+            dataType: "json",
+            success: function (result) {debugger;
+                if (result.code == 100) {debugger;
+                    console.log(data);
+                    parent.location.href = 'emailRecycle';
+                    window.location.reload();
+                } else {
+                    console.log(result.message);
+                }
+            }
+        });
+
+    }
+</script>
+<script >
+    var ue = UE.getEditor('editor');
+    function isFocus(e){
+        alert(UE.getEditor('editor').isFocus());
+        UE.dom.domUtils.preventDefault(e)
+    }
+    function setblur(e){
+        UE.getEditor('editor').blur();
+        UE.dom.domUtils.preventDefault(e)
+    }
+    function insertHtml() {
+        var value = prompt('????html????', '');
+        UE.getEditor('editor').execCommand('insertHtml', value)
+    }
+    function createEditor() {
+        enableBtn();
+        UE.getEditor('editor');
+    }
+    function getAllHtml() {
+        alert(UE.getEditor('editor').getAllHtml())
+    }
+    function getContent() {
+        var arr = [];
+        arr.push("");
+        arr.push("");
+        arr.push(UE.getEditor('editor').getContent());
+        alert(arr.join("\n"));
+    }
+    function getPlainTxt() {
+        var arr = [];
+        arr.push("");
+        arr.push("");
+        arr.push(UE.getEditor('editor').getPlainTxt());
+        alert(arr.join('\n'))
+    }
+    function setContent(isAppendTo) {
+        var arr = [];
+        arr.push("");
+        UE.getEditor('editor').setContent('??????ueditor', isAppendTo);
+        alert(arr.join("\n"));
+    }
+    function setDisabled() {
+        UE.getEditor('editor').setDisabled('fullscreen');
+        disableBtn("enable");
+    }
+
+    function setEnabled() {
+        UE.getEditor('editor').setEnabled();
+        enableBtn();
+    }
+
+    function getText() {
+
+        var range = UE.getEditor('editor').selection.getRange();
+        range.select();
+        var txt = UE.getEditor('editor').selection.getText();
+        alert(txt)
+    }
+
+    function getContentTxt() {
+        var arr = [];
+        arr.push("");
+        arr.push("");
+        arr.push(UE.getEditor('editor').getContentTxt());
+        alert(arr.join("\n"));
+    }
+    function hasContent() {
+        var arr = [];
+        arr.push("");
+        arr.push("");
+        arr.push(UE.getEditor('editor').hasContents());
+        alert(arr.join("\n"));
+    }
+    function setFocus() {
+        UE.getEditor('editor').focus();
+    }
+    function deleteEditor() {
+        disableBtn();
+        UE.getEditor('editor').destroy();
+    }
+    function disableBtn(str) {
+        var div = document.getElementById('btns');
+        var btns = UE.dom.domUtils.getElementsByTagName(div, "button");
+        for (var i = 0, btn; btn = btns[i++];) {
+            if (btn.id == str) {
+                UE.dom.domUtils.removeAttributes(btn, ["disabled"]);
+            } else {
+                btn.setAttribute("disabled", "true");
+            }
+        }
+    }
+    function enableBtn() {
+        var div = document.getElementById('btns');
+        var btns = UE.dom.domUtils.getElementsByTagName(div, "button");
+        for (var i = 0, btn; btn = btns[i++];) {
+            UE.dom.domUtils.removeAttributes(btn, ["disabled"]);
+        }
+    }
+
+    function getLocalData () {
+        alert(UE.getEditor('editor').execCommand( "getlocaldata" ));
+    }
+
+    function clearLocalData () {
+        UE.getEditor('editor').execCommand( "clearlocaldata" );
+        alert("")
+    }
+</script>
+<script >
+
+</script>
+</html>

@@ -84,8 +84,8 @@ public class JournalServiceImpl extends ServiceImpl<JournalMapper, Journal> impl
     }
     @Override
     public LocationTimesSumDot departmentArticleTimes() {
-        LocationTimesSumDot locationTimesSumDot = new LocationTimesSumDot();
         List<LocationTimesDot> locationTimesDots = baseMapper.departmentArticleTimes();
+        LocationTimesSumDot locationTimesSumDot = new LocationTimesSumDot();
         for (LocationTimesDot locationTimesDot : locationTimesDots) {
             SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日");
             if (!StringUtils.isEmpty(locationTimesDot.getBeginsTimes())){
@@ -94,6 +94,7 @@ public class JournalServiceImpl extends ServiceImpl<JournalMapper, Journal> impl
                 locationTimesDot.setBeginsTimess(beginsTimess);
                 locationTimesSumDot.setBeginssTimess(beginsTimess);
                 System.out.println("beginsTimess:"+ beginsTimess);
+                System.out.println("beginsTimess:"+ beginsTimess);
             }
             if (!StringUtils.isEmpty(locationTimesDot.getEndsTimes())){
                 //format()方法将Date转换成指定格式的String
@@ -101,16 +102,18 @@ public class JournalServiceImpl extends ServiceImpl<JournalMapper, Journal> impl
                 locationTimesSumDot.setEndssTimess(endsTimess);
                 locationTimesDot.setEndsTimess(endsTimess);
                 System.out.println("endsTimess:"+endsTimess);
+                System.out.println("endsTimess:"+endsTimess);
             }
             locationTimesSumDot.setLocationTimesDotsList(locationTimesDots);
+
         }
         System.out.println(locationTimesSumDot);
         return locationTimesSumDot;
     }
     public List<LocationStaticExportDot> getStaticExportList() {
-        List<LocationStaticExportDot> staticExportLists = baseMapper.getStaticExportList();
-        LocationStaticExportDot locationStaticExportDot = new LocationStaticExportDot();
         SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日");
+        LocationStaticExportDot locationStaticExportDot = new LocationStaticExportDot();
+        List<LocationStaticExportDot> staticExportLists = baseMapper.getStaticExportList();
         for (LocationStaticExportDot locationStaticExportDots : staticExportLists) {
             if (!StringUtils.isEmpty(locationStaticExportDots.getBeginsExportTimes())) {
                 //format()方法将Date转换成指定格式的String
@@ -122,8 +125,10 @@ public class JournalServiceImpl extends ServiceImpl<JournalMapper, Journal> impl
                 //format()方法将Date转换成指定格式的String
                 String endsExportsTimes = format.format(locationStaticExportDots.getEndsExportTimes());
                 locationStaticExportDots.setEndsExportsTimes(endsExportsTimes);
+                System.out.println();
                 System.out.println("endsExportsTimes:" + endsExportsTimes);
             }
+
         }
         Integer exportSum = 0;
         if (!CollectionUtils.isEmpty(staticExportLists)) {
@@ -131,22 +136,23 @@ public class JournalServiceImpl extends ServiceImpl<JournalMapper, Journal> impl
                 exportSum = exportSum + Integer.valueOf(locationStaticExportDots.getCount());
                 locationStaticExportDots.setExportSum(exportSum);
                 System.out.println("exportSum:" + exportSum);
+                System.out.println();
             }
                 System.out.println("exportSum1:" + exportSum);
                 LocationStaticExportDot locationStaticExportDots = staticExportLists.get(0);
                 LocationStaticExportDot locationStaticExportDots1 = staticExportLists.get(staticExportLists.size() - 1);
-                locationStaticExportDots.setExportMax(locationStaticExportDots.getName() + "(" + locationStaticExportDots.getCount() + "篇)");
                 locationStaticExportDots.setExportMin(locationStaticExportDots1.getName() + "(" + locationStaticExportDots1.getCount() + "篇)");
-                System.out.println(staticExportLists);
+                locationStaticExportDots.setExportMax(locationStaticExportDots.getName() + "(" + locationStaticExportDots.getCount() + "篇)");
                 locationStaticExportDot.setStaticExportList(staticExportLists);
                 System.out.println(staticExportLists);
+
     }
             return staticExportLists;
     }
     @Override
     public LocationCountDot departmentArticleSum(String beginTime, String endTime) {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         LocationCountDot locationCountDot = new LocationCountDot();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         try {
             if (StringUtils.isEmpty(endTime)){
                 endTime = format.format(new Date());
@@ -154,6 +160,7 @@ public class JournalServiceImpl extends ServiceImpl<JournalMapper, Journal> impl
             Date begin = null;
             if (!StringUtils.isEmpty(beginTime)) {
                 begin = format.parse(beginTime);
+                System.out.println();
             }
             Date end = format.parse(endTime);
             List<LocationStaticDot> locationStaticDots = baseMapper.departmentArticleSum(begin,end);
@@ -162,12 +169,12 @@ public class JournalServiceImpl extends ServiceImpl<JournalMapper, Journal> impl
                 for (LocationStaticDot locationStaticDot : locationStaticDots) {
                     sum = sum + Integer.valueOf(locationStaticDot.getCount());
                 }
-                locationCountDot.setLocationStaticDotList(locationStaticDots);
                 locationCountDot.setSum(sum);
+                locationCountDot.setLocationStaticDotList(locationStaticDots);
                 LocationStaticDot locationStaticDot = locationStaticDots.get(0);
                 LocationStaticDot locationStaticDot1 = locationStaticDots.get(locationStaticDots.size() - 1);
-                locationCountDot.setMax(locationStaticDot.getName() + "(" + locationStaticDot.getCount() + "篇)");
                 locationCountDot.setMin(locationStaticDot1.getName() + "(" + locationStaticDot1.getCount() + "篇)");
+                locationCountDot.setMax(locationStaticDot.getName() + "(" + locationStaticDot.getCount() + "篇)");
                 System.out.println(locationCountDot);
             }
         } catch (ParseException e) {

@@ -1,7 +1,7 @@
 var emailTitles, isMsgs, currentID, sendTimes, flag = true;
 var $dataTableHot;
 /*删除收件箱的内容*/
-function delEmail(id) {debugger;
+function delEmail(id) {
     $.ajax({
         type: "GET",
         url: "email/deleteEmail/"+id,
@@ -23,11 +23,11 @@ function exportEmails(){
     window.open("email/exportEmailsInformation");
 }
 /*收件箱查询的内容*/
-function InboxInf(){
+function InboxInf() {
     $(function () {
         $dataTableHot = $('#table').bootstrapTable({
-            method : 'get',
-            url : "email/emailInboxPage",//请求路径
+            method: 'get',
+            url: "email/emailInboxPage",//请求路径
             striped: true,
             singleSelect: false,
             dataType: "json",
@@ -35,16 +35,16 @@ function InboxInf(){
             pageSize: 10,
             pageNumber: 1,
             search: false, //显示搜索框
-            sidePagination:"server",
+            sidePagination: "server",
             contentType: "application/x-www-form-urlencoded",//一种编码。好像在post请求的时候需要用到。这里用的get请求，注释掉这句话也能拿到数据
-            queryParams : function(params) {
+            queryParams: function (params) {
                 var temp = {//如果是在服务器端实现分页，limit、offset这两个参数是必须的
-                    limit : params.limit, // 每页显示数量
-                    offset : (params.offset / params.limit) + 1, // SQL语句起始索引
+                    limit: params.limit, // 每页显示数量
+                    offset: (params.offset / params.limit) + 1, // SQL语句起始索引
                     //page : (params.offset / params.limit) + 1, //当前页码
-                    emailTitle : emailTitles = $("#emailTitles").val(),
-                    isMsgs : isMsgs = $("#isMsgs").val(),
-                    sendTime : sendTimes = $("#sendTimes").val(),
+                    emailTitle: emailTitles = $("#emailTitles").val(),
+                    isMsgs: isMsgs = $("#isMsgs").val(),
+                    sendTime: sendTimes = $("#sendTimes").val(),
                 };
                 return temp;
             },
@@ -52,8 +52,8 @@ function InboxInf(){
                 console.log(res.data.total);
                 console.log(res.data.records);
                 return {
-                    total : res.data.total,
-                    rows : res.data.records
+                    total: res.data.total,
+                    rows: res.data.records
                 };
             },
             columns: [
@@ -107,10 +107,10 @@ function InboxInf(){
                     title: '操作',
                     align: 'center',
                     formatter: function (value, row) {
-                        console.log("row="+row.id);
+                        console.log("row=" + row.id);
                         var e = '<button button="#" mce_href="#" onclick="delEmail(\'' + row.id + '\')">删除</button>' +
-                            '<button button="#" mce_href="#" onclick="openlayerEquery(\'' + row.id + '\')">详情</button> '+
-                            '<button button="#" mce_href="#" onclick="openlayerRepeat(\'' + row.id + '\')">转发</button> '+
+                            '<button button="#" mce_href="#" onclick="openlayerEquery(\'' + row.id + '\')">详情</button> ' +
+                            '<button button="#" mce_href="#" onclick="openlayerRepeat(\'' + row.id + '\')">转发</button> ' +
                             '<button button="#" mce_href="#" onclick="openlayerReply(\'' + row.id + '\')">回复</button> '
                         return e;
                     }
@@ -122,169 +122,6 @@ function InboxInf(){
 function getEmailTableData(){debugger;
     $dataTableHot.bootstrapTable('refresh');
 }
-
-$(function () {
-    $('#table01').bootstrapTable({
-        method: "get",
-        striped: true,
-        singleSelect: false,
-        url: "json/datum.json",
-        dataType: "json",
-        pagination: true, //分页
-        pageSize: 10,
-        pageNumber: 1,
-        search: false, //显示搜索框
-        contentType: "application/x-www-form-urlencoded",
-        queryParams: null,
-        columns: [
-            {
-                checkbox:"true",
-                field: 'ID',
-                align: 'center',
-                valign: 'middle'
-            },
-            {
-                title: '邮件标示',
-                field: 'id',
-                align: 'center',
-                formatter: function (value, row) {
-                    var e = '<a  href="#"><img src="statics/assets/images/topmail.png"/> </a> ';
-
-                    return e;
-                }
-            },
-            {
-                title: "发件人",
-                field: 'class',
-                align: 'center',
-                valign: 'middle'
-            },
-            {
-                title: '邮件标题',
-                field: 'sex',
-                align: 'center',
-                valign: 'middle'
-            },
-            {
-                title: '发送时间',
-                field: 'type',
-                align: 'center'
-            }
-
-
-        ]
-    });
-});
-
-$(function () {
-    $('#table02').bootstrapTable({
-        method: "get",
-        striped: true,
-        singleSelect: false,
-        url: "json/datum.json",
-        dataType: "json",
-        pagination: true, //分页
-        pageSize: 10,
-        pageNumber: 1,
-        search: false, //显示搜索框
-        contentType: "application/x-www-form-urlencoded",
-        queryParams: null,
-        columns: [
-            {
-                checkbox:"true",
-                field: 'ID',
-                align: 'center',
-                valign: 'middle'
-            },
-            {
-                title: '邮件标示',
-                field: 'id',
-                align: 'center',
-                formatter: function (value, row) {
-                    var e = '<a  href="#"><img src="statics/assets/images/topmail.png"/> </a> ';
-
-                    return e;
-                }
-            },
-            {
-                title: "发件人",
-                field: 'class',
-                align: 'center',
-                valign: 'middle'
-            },
-            {
-                title: '邮件标题',
-                field: 'sex',
-                align: 'center',
-                valign: 'middle'
-            },
-            {
-                title: '发送时间',
-                field: 'type',
-                align: 'center'
-            }
-
-
-        ]
-    });
-});
-
-$(function () {
-    $('#table03').bootstrapTable({
-        method: "get",
-        striped: true,
-        singleSelect: false,
-        url: "json/datum.json",
-        dataType: "json",
-        pagination: true, //分页
-        pageSize: 10,
-        pageNumber: 1,
-        search: false, //显示搜索框
-        contentType: "application/x-www-form-urlencoded",
-        queryParams: null,
-        columns: [
-            {
-                checkbox:"true",
-                field: 'ID',
-                align: 'center',
-                valign: 'middle'
-            },
-            {
-                title: '邮件标示',
-                field: 'id',
-                align: 'center',
-                formatter: function (value, row) {
-                    var e = '<a  href="#"><img src="statics/assets/images/topmail.png"/> </a> ';
-
-                    return e;
-                }
-            },
-            {
-                title: "发件人",
-                field: 'class',
-                align: 'center',
-                valign: 'middle'
-            },
-            {
-                title: '邮件标题',
-                field: 'sex',
-                align: 'center',
-                valign: 'middle'
-            },
-            {
-                title: '发送时间',
-                field: 'type',
-                align: 'center'
-            }
-
-
-        ]
-    });
-});
-!function(){
-    laydate.skin('molv');//切换皮肤，请查看skins下面皮肤库
-    laydate({elem: '#sendTimes',istime:true,format: 'YYYY-MM-DD hh:mm:ss'});//绑定元素
-}();
 function openlayerEquery(id){
     $('#id').val(id);
     layer.open({
@@ -300,7 +137,6 @@ function openlayerEquery(id){
         closeBtn: 1,
         content: 'write_queryEmail'
     });
-
 }
 function openlayerReply(id){
     $('#id').val(id);
@@ -350,3 +186,5 @@ function openlayer(id) {
         content: 'write_email'
     });
 }
+    /*----------------------------------以上是邮箱收件箱内容--------------------------*/
+
