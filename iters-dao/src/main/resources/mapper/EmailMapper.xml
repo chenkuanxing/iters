@@ -80,10 +80,16 @@
     left join s_user b on a.created_user = b.id and b.status = 1
     where a.status = -1
     </select>
-    <select id="getEmailsRecyclesInfmormations" resultType="com.xinghui.dot.EmailDot">
-    select s.senderName,s.emailTitle,
-    s.sendTime,s.emailContent from s_email s
+    <select id="emailsRecyclesInfmormations" resultType="com.xinghui.dot.EmailDot">
+    select s.senderName as senderName,s.emailTitle as emailTitle,
+    s.sendTime as sendTime,s.emailContent as emailContent from s_email s
     left join s_user b on s.created_user = b.id and b.status = 1
     where s.status = -1
+    </select>
+    <select id="emailsReceiversInfmormations" resultType="com.xinghui.dot.EmailDot">
+    select s.senderName as senderName,s.emailTitle as emailTitle,
+    s.sendTime as sendTime,s.emailContent as emailContent from s_email s
+    left join s_user b on s.created_user = b.id and b.status = 1
+    where s.status = 1
     </select>
 </mapper>

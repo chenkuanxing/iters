@@ -19,11 +19,11 @@
 <div class="emal_left">
     <input type="text" id="id" style="display: none" value>
     <div class="email_top">
-        <a href="#" class="a_border"><i class="get_i"></i> 收信</a>
+        <a href="emailReceiver" class="a_border"><i class="get_i"></i> 收信</a>
         <a href="#" onclick="openlayer()"><i class="write_i"></i>写信</a>
     </div>
     <ul class="email_ul">
-        <li class="li_active">收件箱(<b id="inBoxSum"></b>)<span id="inBoxCount"></span></li>
+        <a href="emailReceiver" style="text-decoration:none;color: #0C0C0C"><li class="li_active">收件箱(<b id="inBoxSum"></b>)<span id="inBoxCount"></span></li></a>
         <li>草稿箱<span>12</span></li>
         <li>已发送<span>12</span></li>
         <a href="emailRecycle" style="text-decoration:none;color: #0C0C0C"><li>回收站(<b id="recycleSum"></b>)<span id="recycleCount"></span></li></a>
@@ -31,27 +31,27 @@
 </div>
 <div class="emal_right">
     <div  class="email_con" style="display: block">
-        <div class="title"><h2>收件箱</h2></div>
-        <div class="query">
-            <div class="tabe_bot">
-                <div class="l_left"><label>邮件标题：</label><input type="text" id="emailTitles" placeholder="请输入邮件标题"></div>
-                <div class="l_left"><label>是否查看：</label><input id="isMsgs" placeholder="请输入是或者否" /></div>
-                <div class="l_left"><label>发送时间：</label><input id="sendTimes" placeholder="请输入发送时间" /></div>
-                <button class="tabe_btn " onclick="getEmailTableData()">查询</button>
-                <div class="clear"></div>
-            </div>
+    <div class="title"><h2>收件箱</h2></div>
+    <div class="query">
+        <div class="tabe_bot">
+            <div class="l_left"><label>邮件标题：</label><input type="text" id="emailTitles" placeholder="请输入邮件标题"></div>
+            <div class="l_left"><label>是否查看：</label><input id="isMsgs" placeholder="请输入是或者否" /></div>
+            <div class="l_left"><label>发送时间：</label><input id="sendTimes" placeholder="请输入发送时间" /></div>
+            <button class="tabe_btn " onclick="getEmailTableData()">查询</button>
+            <div class="clear"></div>
         </div>
-        <div class="table-operate ue-clear">
-            <!--<a href="#" class="sent01"  onclick="openlayerEquery(id)">转发</a>
-           &lt;!&ndash; <a href="javascript:;" class="del">删除</a>&ndash;&gt;
-            <a href="#" onclick="openlayerEquery(id)" class="back">回复</a>-->
-            <a href="javascript:;" class="out" onclick="exportEmails()">导出</a>
-        </div>
-        <div class="table-box">
-            <table id="table" class="table_style"></table>
-        </div>
-        <div class="pagination ue-clear"></div>
     </div>
+    <div class="table-operate ue-clear">
+        <!--<a href="#" class="sent01"  onclick="openlayerEquery(id)">转发</a>
+       &lt;!&ndash; <a href="javascript:;" class="del">删除</a>&ndash;&gt;
+        <a href="#" onclick="openlayerEquery(id)" class="back">回复</a>-->
+        <a href="javascript:;" class="out" onclick="exportEmails()">导出</a>
+    </div>
+    <div class="table-box">
+        <table id="table" class="table_style"></table>
+    </div>
+    <div class="pagination ue-clear"></div>
+</div>
     <div  class="email_con">
         <div class="title"><h2>草稿箱</h2></div>
         <div class="query">

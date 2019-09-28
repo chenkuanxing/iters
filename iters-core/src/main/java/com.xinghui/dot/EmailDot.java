@@ -69,4 +69,6 @@ public class EmailDot {
 
     private List<EmailDot> emailExportLists;
 
+    private List<EmailDot> emailQueryDotList;
+
 }

@@ -31,5 +31,7 @@ public interface EmailMapper extends BaseMapper<Email> {
 
     List<EmailDot> getRecycleEmailList();
 
-    List<EmailDot> getEmailsRecyclesInfmormations();
+    List<EmailDot> emailsRecyclesInfmormations();
+
+    List<EmailDot> emailsReceiversInfmormations();
 }

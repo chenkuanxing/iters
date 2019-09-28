@@ -144,8 +144,15 @@ public class EmailController extends BaseController {
      */
     @GetMapping(value = "/emailsRecyclesInfmormations")
     public ResultDto emailsRecyclesInfmormations() {
-        return success( emailService.getEmailsRecyclesInfmormations());
+        return success( emailService.emailsRecyclesInfmormations());
     }
-
+    /**
+     * 收件箱邮箱查询详情功能
+     * @return
+     */
+    @GetMapping(value = "/emailsReceiversInfmormations")
+    public ResultDto emailsReceiversInfmormations() {
+        return success( emailService.emailsReceiversInfmormations());
+    }
 
 }

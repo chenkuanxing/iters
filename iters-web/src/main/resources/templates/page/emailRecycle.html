@@ -19,22 +19,14 @@
 <div class="emal_left">
     <input type="text" id="id" style="display: none" value>
     <div class="email_top">
-        <a href="#" class="a_border" onclick="clickEmail()"><i class="get_i"></i> 收信</a>
+        <a href="emailReceiver" class="a_border" onclick="clickEmail()"><i class="get_i"></i> 收信</a>
         <a href="#" onclick="openlayer()"><i class="write_i"></i>写信</a>
     </div>
     <ul class="email_ul" id="htmlEmail">
-        <li style="display: none" class="li_active">收件箱(<b id="inBoxSum"></b>)<span id="inBoxCount"></span></li></a>
+        <li  class="li_active" style="display: none">收件箱(<b id="inBoxSum"></b>)<span id="inBoxCount"></span></li></a>
         <li style="display: none">草稿箱<span>12</span></li>
         <li style="display: none">已发送<span>12</span></li>
-        <li onclick="clickRecycle()">回收站(<b id="recycleSum"></b>)<span id="recycleCount"></span></li>
-        <li>
-            <font size="3"><b id="sendersName" style="text-overflow:ellipsis"></b></font><br>
-            <font size="2"><b id="emailsTitle"></b></font>.........<font size="2"><b id="sendsTime"></b></font><br>
-            <font size="2"><b id="emailsContent"></b></font>
-        </li>
-        <li>已发送<span>12</span></li>
-        <li>已发送<span>12</span></li>
-        <li>已发送<span>12</span></li>
+        <li  onclick="clickRecycle()">回收站(<b id="recycleSum"></b>)<span id="recycleCount"></span></li>
     </ul>
 </div>
 <div class="emal_right" id="show">
@@ -145,60 +137,24 @@
 <script src="statics/assets/js/layer_v2.1/layer/layer.js"></script>
 <script src="statics/assets/js/emailRecycle.js"></script>
 <script>
-    function clickRecycle(){debugger;
-        alert("点击成功")
+    function clickRecycle(){
         $.ajax({
             type: "GET",
             url: "email/emailsRecyclesInfmormations/",
             dataType: "json",
             success: function (result) {
-                if (result.code == 100) {debugger;
-                    $.each(result.data,function (index, value) {debugger;
-                        if (index%4==0){
+                if (result.code == 100) {
+                    $.each(result.data.emailQueryDotList,function (index, value) {
                             var htmlEmail="";
-                            $('#htmlEmail').append('<li>已发送<span>12</span></li>');
-                            htmlEmail+='<ul class="email_ul" id="htmlEmail">' +
+                            htmlEmail+='<ul  id="htmlEmail" class="email_ul" >' +
                                 '<li>' +
-                                '<font size="3">eeffefef<b id="senderNames" style="text-overflow:ellipsis"></b></font><br>'+
-                                '<font size="2">effef<b id="emailTitle"></b></font>....<font size="2"><b id="sendTime">gerrg</b></font><br>'+
-                                '<font size="2">fegggggg<b id="emailContent"></b></font>'+
+                                '<font size="3">'+value.senderName+'<b id="senderNames" style="text-overflow:ellipsis"></b></font><br>'+
+                                '<font size="2">'+value.emailTitle+'<b id="emailTitle"></b></font>&nbsp&nbsp&nbsp<font size="2"><b style="float: right;" id="sendTime">'+value.sendTimes+'</b></font><br>'+
+                                '<font size="2">'+value.emailContent+'<b id="emailContent"></b></font>'+
                                 ' </li>'+
                                 '</ul>'
-                            $('#htmlEmail').append(htmlEmail);
-                        }
-                        if(index==0||index%4==0){
-                            if(value.length<=9){
-                                $("#senderName").text(value);
-                            }else{
-                                var sendersNames = value.substring(0,9)+"......";
-                                $("#senderName").text(sendersNames)
-                            }
-                        }
-                        if(index==1||index%4==1) {
-                            if(value.length<=6){
-                                $("#emailTitle").text(value);
-                            }else{
-                                var emailTitles = value.substring(0,6)+"..........";
-                                $("#emailTitle").text(emailTitles)
-                            }
-                        }
-                        if(index==2||index%4==2) {
-                            if(value.length<=11){
-                                $("#sendTime").text(value);
-                            }else{
-                                var sendTimes = value.substring(0,11)+"..........";
-                                $("#sendTime").text(sendTimes)
-                            }
-                        }
-                        if(index==3||index%4==3) {
-                            if (value.length <=10) {
-                                $("#emailContent").text(value);
-                            } else {
-                                var emailContents = value.substring(0,10) + "..........";
-                                $("#emailContent").text(emailContents)
-                            }
-                        }
-
+                            $("#htmlEmail").append(htmlEmail);
+                            $("#htmlEmail").trigger("create");
                     });
 
                 }

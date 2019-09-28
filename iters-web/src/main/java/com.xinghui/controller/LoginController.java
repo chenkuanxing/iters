@@ -73,8 +73,11 @@ public class LoginController extends BaseController {
     }
 
     @RequestMapping("/email")
-    public String email() {
-        return "page/email";
+    public String email() { return "page/email"; }
+
+    @RequestMapping("/emailReceiver")
+    public String emailReceiver() {
+        return "page/emailReceiver";
     }
 
     @RequestMapping("/fcontract_sign")
