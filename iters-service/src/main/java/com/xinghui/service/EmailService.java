@@ -34,6 +34,4 @@ public interface EmailService extends IService<Email> {
 
     List<EmailDot> getEmailsRecyclesInfmormations();
 
-
-
 }

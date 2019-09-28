@@ -235,12 +235,15 @@ public class EmailServiceImpl extends ServiceImpl<EmailMapper, Email> implements
     @Override
     public List<EmailDot> getEmailsRecyclesInfmormations() {
         List<EmailDot> emailRecycleLists = baseMapper.getEmailsRecyclesInfmormations();
+        EmailDot emailDot = new EmailDot();
         SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日");
         List emailCountsOrSumsRecycleLists = new ArrayList();
+        int emailRecycleTimes=0;
         for (EmailDot emailDots : emailRecycleLists) {
-            if (!StringUtils.isEmpty(emailDots.getSender())){
-                String senders = emailDots.getSender();
-                emailCountsOrSumsRecycleLists.add(senders);
+            emailRecycleTimes=emailRecycleTimes+1;
+            if (!StringUtils.isEmpty(emailDots.getSenderName())){
+                String senderNames = emailDots.getSenderName();
+                emailCountsOrSumsRecycleLists.add(senderNames);
             }
             if (!StringUtils.isEmpty(emailDots.getEmailTitle())){
                 String emailTitles = emailDots.getEmailTitle();
@@ -257,8 +260,12 @@ public class EmailServiceImpl extends ServiceImpl<EmailMapper, Email> implements
                 String emailContents = emailDots.getEmailContent();
                 emailCountsOrSumsRecycleLists.add(emailContents);
             }
+            if (emailRecycleTimes%4==0) {
+                emailDot.setEmailAddLists(emailCountsOrSumsRecycleLists);
+            }
         }
-        System.out.println("emailCountsOrSumsRecycleLists:"+emailCountsOrSumsRecycleLists);
+        List<EmailDot> emailCountsOrSumsRecycleAllLists=emailDot.getEmailAddLists();
+        System.out.println("emailCountsOrSumsRecycleAllLists:"+emailCountsOrSumsRecycleAllLists);
         return emailCountsOrSumsRecycleLists;
     }
 }
