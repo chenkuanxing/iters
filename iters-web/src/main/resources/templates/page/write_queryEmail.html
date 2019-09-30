@@ -58,7 +58,7 @@
         </div>
         <div class="bot_btn">
            <!-- <input type="submit" onclick="inForEmailFunc()" value="发送" class="btn"/>-->
-            <button class="btn" style="background-color: #aa5500">草稿</button>
+            <button class="btn" style="background-color: #aa5500"><a href="email" target="right" onclick="draftsEmailFunc()">草稿</a></button>
             <button class="btn btn1"><a href="email" target="right">返回</a></button>
         </div>
     </div>
@@ -68,7 +68,7 @@
 <script src="statics/assets/js/utf8-php/ueditor.config.js"></script>
 <script src="statics/assets/js/utf8-php/ueditor.all.min.js"></script>
 <script>
-    /*点击详情查看发件箱里面内容*/
+    /*点击详情查看收件箱里面内容*/
     var id = window.parent.document.getElementById("id").value;
     if (!!id) {debugger;
         $.ajax({
@@ -110,34 +110,33 @@
             }
         });
     }
-    /*发送书写邮件内容添加到收件箱*/
-    function inForEmailFunc() {debugger;
+    /*发送书写邮件内容添加到草稿箱*/
+    function draftsEmailFunc() {debugger;
         var emailTitle = $("#emailTitles").val();
         var accessory = $("#accessorys").val();
         var isMsgs = $("#isMsgss").val();
         var senderName =$("#senderNames").val();
         var sender = $("#senders").val();
         var recipients = $("#recipientss").val();
+        var status = 2 ;
         var emailContent = UE.getEditor('editor').getContent();
         var data = {
-            "emailTitle": emailTitle,"isMsgs": isMsgs,"senderName": senderName,"sender": sender,"recipients": recipients,"emailContent":emailContent,"accessory":accessory
+            "status":status,"emailTitle": emailTitle,"isMsgs": isMsgs,"senderName": senderName,"sender": sender,"recipients": recipients,"emailContent":emailContent,"accessory":accessory
         }
         $.ajax({
             type: "POST",
-            url: "email/creatEmail",
+            url: "email/draftsEmail",
             data: data,
             dataType: "json",
             success: function (result) {debugger;
                 if (result.code == 100) {debugger;
                     console.log(data);
                     parent.location.href = 'email';
-                    window.location.reload();
                 } else {
                     console.log(result.message);
                 }
             }
         });
-
     }
 </script>
 <script >

@@ -23,4 +23,8 @@ public class EmailQueryDot {
     private List<EmailDot> emailQueryDotList;
 
     private List<EmailDot> emailReceiversLists;
+
+    private List<EmailDot> emailSentersLists;
+
+    private List<EmailDot> emailDraftsLists;
 }

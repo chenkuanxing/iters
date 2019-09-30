@@ -54,6 +54,10 @@ public class EmailDot {
      */
     private Integer isMsg;
     /**
+     * 邮箱状态
+     */
+    private Integer status;
+    /**
      * 附件内容
      */
     private String accessory;

@@ -92,4 +92,88 @@
     left join s_user b on s.created_user = b.id and b.status = 1
     where s.status = 1
     </select>
+    <select id="emailSenterPage" resultType="com.xinghui.entity.Email">
+        select a.*,b.user_name as senderName,b.emileIsMsgs as isMsgs from s_email a
+        left join s_user b on a.created_user = b.id and b.status = 1
+        where a.status = 1
+        <if test="emailDot.emailTitle != null and emailDot.emailTitle != ''">
+            and a.emailTitle = #{emailDot.emailTitle}
+        </if>
+        <if test="emailDot.isMsgs != null and emailDot.isMsgs != ''">
+            and a.isMsgs = #{emailDot.isMsgs}
+        </if>
+        <if test="emailDot.sendTime != null">
+            and DATE_FORMAT(a.sendTime,'%Y-%m-%d') = DATE_FORMAT(#{emailDot.sendTime},'%Y-%m-%d')
+        </if>
+    </select>
+    <select id="emailsSentersInfmormations" resultType="com.xinghui.dot.EmailDot">
+    select s.senderName as senderName,s.emailTitle as emailTitle,
+    s.sendTime as sendTime,s.emailContent as emailContent from s_email s
+    left join s_user b on s.created_user = b.id and b.status = 1
+    where s.status = 1
+    </select>
+    <select id="emailSenterSumOrCount" resultType="java.util.HashMap">
+    select count(s.recipients) as inBoxSum, (count(if(s.isMsg=1,true,null))) as inBoxCount from s_email s where s.status = 1
+    </select>
+    <select id="getSenterEmailList" resultType="com.xinghui.dot.EmailDot">
+    select a.*,b.user_name as senderName,b.emileIsMsgs as isMsgs from s_email a
+    left join s_user b on a.created_user = b.id and b.status = 1
+    where a.status = 1
+    </select>
+    <select id="querySenterEmail" resultType="com.xinghui.dot.EmailDot">
+    select s.id,s.emailTitle as emailTitle,s.accessory,s.isMsg,s.isMsgs,
+    s.senderName,s.sender,s.sendTime,s.recipients,s.emailContent from s_email s
+    left join s_user b on s.created_user = b.id and b.status = 1
+    where s.status = 1
+    </select>
+    <select id="emailDraftsPage" resultType="com.xinghui.entity.Email">
+        select a.*,b.user_name as senderName,b.emileIsMsgs as isMsgs from s_email a
+        left join s_user b on a.created_user = b.id and b.status = 1
+        where a.status = 2
+        <if test="emailDot.emailTitle != null and emailDot.emailTitle != ''">
+            and a.emailTitle = #{emailDot.emailTitle}
+        </if>
+        <if test="emailDot.isMsgs != null and emailDot.isMsgs != ''">
+            and a.isMsgs = #{emailDot.isMsgs}
+        </if>
+        <if test="emailDot.sendTime != null">
+            and DATE_FORMAT(a.sendTime,'%Y-%m-%d') = DATE_FORMAT(#{emailDot.sendTime},'%Y-%m-%d')
+        </if>
+    </select>
+    <update id="emailDraftsEmail" parameterType="java.util.List">
+        UPDATE s_email s SET s.status= -1 WHERE id = #{id}
+    </update>
+    <select id="emailDraftsSumOrCount" resultType="java.util.HashMap">
+        select count(s.recipients) as DraftsSum, (count(if(s.isMsg=1,true,null))) as DraftsCount from s_email s where s.status = 2
+    </select>
+    <select id="emailsDraftsInfmormations" resultType="com.xinghui.dot.EmailDot">
+    select a.*,b.user_name as senderName,b.emileIsMsgs as isMsgs from s_email a
+    left join s_user b on a.created_user = b.id and b.status = 1
+    where a.status = 2
+    </select>
+    <select id="queryDraftsEmail" resultType="com.xinghui.dot.EmailDot">
+    select a.*,b.user_name as senderName,b.emileIsMsgs as isMsgs from s_email a
+    left join s_user b on a.created_user = b.id and b.status = 1
+    where a.status = 2
+    </select>
+    <select id="getDraftsEmailList" resultType="com.xinghui.dot.EmailDot">
+    select a.*,b.user_name as senderName,b.emileIsMsgs as isMsgs from s_email a
+    left join s_user b on a.created_user = b.id and b.status = 1
+    where a.status = 2
+    </select>
+    <insert id="draftsEmail" parameterType="java.util.HashMap">
+       INSERT INTO s_email (
+       id,
+       status,
+       emailTitle,
+       accessory,
+       isMsgs,
+       senderName,
+       sender,
+       recipients,
+       emailContent,
+       sendTime
+       ) VALUES
+      (uuid(),#{status},#{emailTitle},#{accessory},#{isMsgs},#{senderName},#{sender},#{recipients},#{emailContent},now())
+  </insert>
 </mapper>

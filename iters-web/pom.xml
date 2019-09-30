@@ -23,7 +23,6 @@
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
-
     <build>
         <finalName>iters</finalName>
         <plugins>
@@ -33,6 +32,4 @@
             </plugin>
         </plugins>
     </build>
-
-
 </project>

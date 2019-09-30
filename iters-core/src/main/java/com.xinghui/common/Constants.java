@@ -34,5 +34,14 @@ public interface Constants {
             map.put(TRUE,"否");
         }
     }
+    static class emailsStatus{
+        public static final Integer FALSE = 2;
+        public static final Integer TRUE = 1;
+        public static Map<Integer,Integer> map = new HashMap<>();
+        static{
+            map.put(FALSE,-1);
+            map.put(TRUE,2);
+        }
+    }
 
 }

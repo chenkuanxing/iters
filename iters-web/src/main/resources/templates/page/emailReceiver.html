@@ -23,9 +23,9 @@
         <a href="#" onclick="openlayer()"><i class="write_i"></i>写信</a>
     </div>
     <ul class="email_ul" id="htmlEmail">
-        <a href="emailReceiver" onclick="clickReceiver()" style="text-decoration:none;color: #0C0C0C"><li class="li_active">收件箱(<b id="inBoxSum"></b>)<span id="inBoxCount"></span></li></a>
+        <li onclick="clickReceiver()" class="li_active">收件箱(<b id="inBoxSum"></b>)<span id="inBoxCount"></span></li>
         <li style="display: none">草稿箱<span>12</span></li>
-        <li style="display: none">已发送<span>12</span></li>
+        <li style="display: none">发件箱<span>12</span></li>
         <li style="display: none"  onclick="clickRecycle()">回收站(<b id="recycleSum"></b>)<span id="recycleCount"></span></li>
     </ul>
 </div>
@@ -141,33 +141,32 @@
 <script src="statics/assets/js/email.js"></script>
 <script src="statics/assets/js/emailRecycle.js"></script>
 <script>
-
-
-
+function clickReceiver(){
+    $.ajax({
+        type: "GET",
+        url: "email/emailsReceiversInfmormations/",
+        dataType: "json",
+        success: function (result) {debugger;
+            if (result.code == 100) {debugger;
+                $.each(result.data.emailReceiversLists,function (index, value) {
+                    var htmlEmail="";
+                    htmlEmail+='<ul  id="htmlEmail" class="email_ul" >' +
+                        '<li>' +
+                        '<font size="3">'+value.senderName+'<b id="senderNames" style="text-overflow:ellipsis"></b></font><br>'+
+                        '<font size="2">'+value.emailTitle+'<b id="emailTitle"></b></font>&nbsp&nbsp&nbsp<font size="2"><b style="float: right;" id="sendTime">'+value.sendTimes+'</b></font><br>'+
+                        '<font size="2">'+value.emailContent+'<b id="emailContent"></b></font>'+
+                        ' </li>'+
+                        '</ul>'
+                    $("#htmlEmail").append(htmlEmail);
+                    $("#htmlEmail").trigger("create");
+                });
+            }
+        }
+    });
+}
 </script>
 <script>
     $(function () {
-        $.ajax({
-            type: "GET",
-            url: "email/emailsReceiversInfmormations/",
-            dataType: "json",
-            success: function (result) {debugger;
-                if (result.code == 100) {debugger;
-                    $.each(result.data.emailReceiversLists,function (index, value) {
-                        var htmlEmail="";
-                        htmlEmail+='<ul  id="htmlEmail" class="email_ul" >' +
-                            '<li>' +
-                            '<font size="3">'+value.senderName+'<b id="senderNames" style="text-overflow:ellipsis"></b></font><br>'+
-                            '<font size="2">'+value.emailTitle+'<b id="emailTitle"></b></font>&nbsp&nbsp&nbsp<font size="2"><b style="float: right;" id="sendTime">'+value.sendTimes+'</b></font><br>'+
-                            '<font size="2">'+value.emailContent+'<b id="emailContent"></b></font>'+
-                            ' </li>'+
-                            '</ul>'
-                        $("#htmlEmail").append(htmlEmail);
-                        $("#htmlEmail").trigger("create");
-                    });
-                }
-            }
-        });
         $.ajax({
             type: "GET",
             url: "email/emailInBoxSumOrCount/",

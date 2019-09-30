@@ -60,7 +60,7 @@
         <div class="bot_btn">
             <!--<a href="email" target="right"><input type="submit" onclick="inForEmailFunc()" value="发送" class="btn"/></a>-->
             <button class="btn"><a href="email" target="right" onclick="inForEmailFunc()">发送</a></button>
-            <button class="btn" style="background-color: #aa5500">草稿</button>
+            <button class="btn" style="background-color: #aa5500"><a href="email" target="right" onclick="draftsEmailFunc()">草稿</a></button>
             <button class="btn btn1"><a href="email" target="right">返回</a></button>
         </div>
     </div>
@@ -125,6 +125,34 @@
             }
         });
 
+    }
+    /*发送书写邮件内容添加到草稿箱*/
+    function draftsEmailFunc() {debugger;
+        var emailTitle = $("#emailTitles").val();
+        var accessory = $("#accessorys").val();
+        var isMsgs = $("#isMsgss").val();
+        var senderName =$("#senderNames").val();
+        var sender = $("#senders").val();
+        var recipients = $("#recipientss").val();
+        var status = 2 ;
+        var emailContent = UE.getEditor('editor').getContent();
+        var data = {
+            "status":status,"emailTitle": emailTitle,"isMsgs": isMsgs,"senderName": senderName,"sender": sender,"recipients": recipients,"emailContent":emailContent,"accessory":accessory
+        }
+        $.ajax({
+            type: "POST",
+            url: "email/draftsEmail",
+            data: data,
+            dataType: "json",
+            success: function (result) {debugger;
+                if (result.code == 100) {debugger;
+                    console.log(data);
+                    parent.location.href = 'email';
+                } else {
+                    console.log(result.message);
+                }
+            }
+        });
     }
 </script>
 <script >

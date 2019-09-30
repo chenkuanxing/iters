@@ -34,4 +34,29 @@ public interface EmailMapper extends BaseMapper<Email> {
     List<EmailDot> emailsRecyclesInfmormations();
 
     List<EmailDot> emailsReceiversInfmormations();
+
+    List<Email> emailSenterPage(Page page, @Param("emailDot") EmailDot emailDot, @Param("userId") String userId);
+
+    List<EmailDot> emailsSentersInfmormations();
+
+    Map<String,Object> emailSenterSumOrCount(EmailDot emailDot);
+
+    List<EmailDot> getSenterEmailList();
+
+    List<EmailDot> querySenterEmail(EmailDot emailDot, @Param("id") String id);
+
+    List<Email> emailDraftsPage(Page page, @Param("emailDot") EmailDot emailDot, @Param("userId") String userId);
+
+    List<EmailDot> emailDraftsEmail(EmailDot emailDot, @Param("id") String id);
+
+    Map<String,Object> emailDraftsSumOrCount(EmailDot emailDot);
+
+    List<EmailDot> emailsDraftsInfmormations();
+
+    List<EmailDot> queryDraftsEmail(EmailDot emailDot, @Param("id") String id);
+
+    List<EmailDot> getDraftsEmailList();
+
+    Map<String,Object> draftsEmail(EmailDot emailDot);
+
 }

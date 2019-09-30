@@ -41,9 +41,9 @@ public class EmailServiceImpl extends ServiceImpl<EmailMapper, Email> implements
             }
         }
         Page<Email> emailPageLists = page.setRecords(emailLists);
+        System.out.println(emailPageLists);
         return emailPageLists;
     }
-
     @Override
     public List<EmailDot> emailInBoxSumOrCount(EmailDot emailDot) {
         Map<String, Object> emailCountsOrSums = baseMapper.emailCountOrSum(emailDot);
@@ -66,7 +66,6 @@ public class EmailServiceImpl extends ServiceImpl<EmailMapper, Email> implements
         }
         return emailCountsOrSumsList;
     }
-
     @Override
     public List<EmailDot> getEmailList() {
         List<EmailDot> exportEmailLists = baseMapper.getEmailList();
@@ -77,7 +76,6 @@ public class EmailServiceImpl extends ServiceImpl<EmailMapper, Email> implements
                 //format()方法将Date转换成指定格式的String
                 String sendTimess = format.format(emailDots.getSendTime());
                 emailDots.setSendTimes(sendTimess);
-                System.out.println("sendTimess:" + sendTimess);
             }
             journalDot.setEmailExportLists(exportEmailLists);
         }
@@ -89,7 +87,6 @@ public class EmailServiceImpl extends ServiceImpl<EmailMapper, Email> implements
         Email email = new Email();
         BeanUtils.copyProperties(emailDot, email);
         Map<String, Object> emailsAddsLists = baseMapper.creatEmail(emailDot);
-        System.out.println(emailsAddsLists);
         return emailsAddsLists;
     }
     @Override
@@ -123,7 +120,6 @@ public class EmailServiceImpl extends ServiceImpl<EmailMapper, Email> implements
     }
     public Map<String, Object> isMsgsEmail(EmailDot emailDot, @PathVariable("id") String id) {
         Map<String, Object> isMsgsMap = baseMapper.isMsgsEmail(emailDot, id);
-        System.out.println(isMsgsMap);
         return isMsgsMap;
     }
     @Override
@@ -149,7 +145,6 @@ public class EmailServiceImpl extends ServiceImpl<EmailMapper, Email> implements
                 }
             }
         }
-        System.out.println(emailRecycleLists);
         Page<Email> emailPageLists = pages.setRecords(emailRecycleLists);
         return emailPageLists;
     }
@@ -196,7 +191,6 @@ public class EmailServiceImpl extends ServiceImpl<EmailMapper, Email> implements
                     String Msg = Constants.emailStatus.map.get(Constants.emailStatus.FALSE);
                     emailDotsList.setIsMsgs(Msg);
                     emailqueryRecycleLists.add(emailDotsList);
-                    System.out.println(emailqueryRecycleLists);
                 }
                 emailqueryRecycleOnlyLists=emailqueryRecycleLists;
                 EmailDot emailDotsLists = emailqueryRecycleOnlyLists.get(emailCount-1);
@@ -224,7 +218,6 @@ public class EmailServiceImpl extends ServiceImpl<EmailMapper, Email> implements
                 //format()方法将Date转换成指定格式的String
                 String sendTimess = format.format(emailDots.getSendTime());
                 emailDots.setSendTimes(sendTimess);
-                System.out.println("sendTimess:"+ sendTimess);
             }
             journalDot.setEmailExportLists(exportEmailRecycleLists);
             System.out.println(exportEmailRecycleLists);
@@ -243,7 +236,6 @@ public class EmailServiceImpl extends ServiceImpl<EmailMapper, Email> implements
                 if (!StringUtils.isEmpty(emailDots.getSendTime())) {
                     //format()方法将Date转换成指定格式的String
                     String sendTimess = format.format(emailDots.getSendTime());
-                    System.out.println("sendTimess:" + sendTimess);
                     emailDots.setSendTimes(sendTimess);
                     emailQueryDot.setSendTime(sendTimess);
                 }
@@ -273,7 +265,6 @@ public class EmailServiceImpl extends ServiceImpl<EmailMapper, Email> implements
                 emailQueryDot.setEmailQueryDotList(emailRecycleLists);
             }
         }
-        System.out.println("emailQueryDot:"+emailQueryDot);
         return emailQueryDot;
     }
     @Override
@@ -288,7 +279,6 @@ public class EmailServiceImpl extends ServiceImpl<EmailMapper, Email> implements
                 if (!StringUtils.isEmpty(emailDots.getSendTime())) {
                     //format()方法将Date转换成指定格式的String
                     String sendTimess = format.format(emailDots.getSendTime());
-                    System.out.println("sendTimess:" + sendTimess);
                     emailDots.setSendTimes(sendTimess);
                     emailReceiversDots.setSendTime(sendTimess);
                 }
@@ -318,7 +308,313 @@ public class EmailServiceImpl extends ServiceImpl<EmailMapper, Email> implements
                 }
             }
         }
-            System.out.println("emailReceiversDots:" + emailReceiversDots);
             return emailReceiversDots;
+    }
+    @Override
+    public Page<Email> emailSenterPage(Integer offset, Integer limit, EmailDot emailDot) {
+        Email email = new Email();
+        Page<Email> page = new Page<>(offset, limit);
+        BeanUtils.copyProperties(emailDot, email);
+        List<Email> emailSenterLists = baseMapper.emailSenterPage(page, emailDot, SecurityUtils.getCurrentUserId());
+        for (Email emails : emailSenterLists) {
+            if (emails.getIsMsg() == Constants.emailStatus.FALSE) {
+                emails.setIsMsgs(Constants.emailStatus.map.get(Constants.emailStatus.FALSE));
+            } else {
+                emails.setIsMsgs(Constants.emailStatus.map.get(Constants.emailStatus.TRUE));
+            }
+        }
+        if (!StringUtils.isEmpty(emailDot.getSendTimes())) {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            try {
+                emailDot.setSendTime(format.parse(emailDot.getSendTimes()));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            System.out.println(emailSenterLists);
+        }
+        Page<Email> emailSenterPageLists = page.setRecords(emailSenterLists);
+        return emailSenterPageLists;
+    }
+    @Override
+    public EmailQueryDot emailsSentersInfmormations() {
+        EmailQueryDot emailSentersDots = new EmailQueryDot();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日");
+        List<EmailDot> emailSentersLists = baseMapper.emailsSentersInfmormations();
+        if (!CollectionUtils.isEmpty(emailSentersLists)) {
+            int emailSentersTimes = 0;
+            for (EmailDot emailDots : emailSentersLists) {
+                emailSentersTimes = emailSentersTimes + 1;
+                if (!StringUtils.isEmpty(emailDots.getSendTime())) {
+                    //format()方法将Date转换成指定格式的String
+                    String sendTimess = format.format(emailDots.getSendTime());
+                    System.out.println(sendTimess);
+                    emailDots.setSendTimes(sendTimess);
+                    emailSentersDots.setSendTime(sendTimess);
+                }
+                if (!StringUtils.isEmpty(emailDots.getEmailTitle())) {
+                    if (emailDots.getEmailTitle().length() <= 8) {
+                        String emailTitles = emailDots.getEmailTitle();
+                        emailDots.setEmailTitle(emailTitles);
+                        emailSentersDots.setEmailTitle(emailTitles);
+                    } else {
+                        String emailsTitles = emailDots.getEmailTitle().substring(0, 8) + "...";
+                        emailDots.setEmailTitle(emailsTitles);
+                        System.out.println(emailSentersDots);
+                        emailSentersDots.setEmailTitle(emailsTitles);
+                    }
+                    if (!StringUtils.isEmpty(emailDots.getEmailContent())) {
+                        if (emailDots.getEmailContent().length() <= 10) {
+                            String emailContents = emailDots.getEmailContent();
+                            emailDots.setEmailContent(emailContents);
+                            emailSentersDots.setEmailContent(emailContents);
+                        } else {
+                            String emailContents = emailDots.getEmailContent().substring(0, 10) + "...";
+                            emailSentersDots.setEmailContent(emailContents);
+                            System.out.println(emailSentersDots);
+                            emailDots.setEmailContent(emailContents);
+
+                        }
+                    }
+                    emailSentersDots.setEmailSentersLists(emailSentersLists);
+                }
+            }
+        }
+        return emailSentersDots;
+    }
+    @Override
+    public List<EmailDot> emailSenterSumOrCount(EmailDot emailDot) {
+        Map<String, Object> emailSenterCountsOrSums = baseMapper.emailSenterSumOrCount(emailDot);
+        List emailSenterCountsOrSumsList = new ArrayList();
+        Map<String, Object> emailSenterCountsOrSumsLists = new HashMap<>();
+        emailSenterCountsOrSumsLists.put("inBoxCount", emailSenterCountsOrSums.get("inBoxCount"));
+        emailSenterCountsOrSumsLists.put("inBoxSum", emailSenterCountsOrSums.get("inBoxSum"));
+        Iterator<Map.Entry<String, Object>> it = emailSenterCountsOrSumsLists.entrySet().iterator();
+        while (it.hasNext()) {
+            int emailOtherTime = 0;
+            for (int emailInt = 0; emailInt <= 1; emailInt++) {
+                int emailOtherTimes = emailOtherTime + 1;
+                if (emailOtherTimes <= 1 && emailTimes == false) {
+                    Map.Entry<String, Object> entry = it.next();
+                    emailSenterCountsOrSumsList.add(entry.getValue());
+                } else if (emailOtherTimes > 1) {
+                    emailTimes = true;
+                    System.out.println(emailOtherTime);
+                }
+            }
+        }
+        return emailSenterCountsOrSumsList;
+    }
+    @Override
+    public List<EmailDot> getSenterEmailList() {
+        List<EmailDot> exportEmailSenterLists = baseMapper.getSenterEmailList();
+        EmailDot journalDot = new EmailDot();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日");
+        for (EmailDot emailDots : exportEmailSenterLists) {
+            if (!StringUtils.isEmpty(emailDots.getSendTime())){
+                //format()方法将Date转换成指定格式的String
+                String sendTimess = format.format(emailDots.getSendTime());
+                emailDots.setSendTimes(sendTimess);
+                System.out.println(sendTimess);
+            }
+            journalDot.setEmailExportLists(exportEmailSenterLists);
+
+        }
+        return exportEmailSenterLists;
+    }
+    @Override
+    public List<EmailDot> querySenterEmail(EmailDot emailDot,@PathVariable("id") String id) {
+        Email email = new Email();
+        BeanUtils.copyProperties(emailDot, email);
+        List<EmailDot> emailquerySenterLists = baseMapper.querySenterEmail(emailDot, id);
+        List<EmailDot>  emailqueryAllSenterLists = new ArrayList<> ();
+        List<EmailDot> emailqueryRecycleOnlyLists = null ;
+        int emailCount=0;
+        for(EmailDot emailDotsList:emailquerySenterLists){
+            emailCount=emailCount+1;
+            if (id.equals(emailDotsList.getId())) {
+                if (emailDotsList.getIsMsg()==1) {
+                    String Msg = Constants.emailStatus.map.get(Constants.emailStatus.FALSE);
+                    emailDotsList.setIsMsgs(Msg);
+                    emailquerySenterLists.add(emailDotsList);
+                }else if(emailDotsList.getIsMsg()==0){
+                    String Msg = Constants.emailStatus.map.get(Constants.emailStatus.FALSE);
+                    emailDotsList.setIsMsgs(Msg);
+                    emailquerySenterLists.add(emailDotsList);
+                    System.out.println(emailDotsList);
+                }
+                emailqueryRecycleOnlyLists=emailquerySenterLists;
+                EmailDot emailDotsLists = emailqueryRecycleOnlyLists.get(emailCount-1);
+                emailqueryAllSenterLists.add(emailDotsLists);
+                break;
+            }
+        }
+        email.setEmailAddList(emailqueryAllSenterLists);
+        return emailqueryAllSenterLists;
+    }
+    @Override
+    public Page<Email> emailDraftsPage(Integer offset, Integer limit, EmailDot emailDot) {
+        Email email = new Email();
+        BeanUtils.copyProperties(emailDot, email);
+        Page<Email> page = new Page<>(offset, limit);
+        List<Email> emailDraftsLists = baseMapper.emailDraftsPage(page, emailDot, SecurityUtils.getCurrentUserId());
+        for (Email emails : emailDraftsLists) {
+            if (emails.getIsMsg() == Constants.emailStatus.FALSE) {
+                emails.setIsMsgs(Constants.emailStatus.map.get(Constants.emailStatus.FALSE));
+            } else {
+                emails.setIsMsgs(Constants.emailStatus.map.get(Constants.emailStatus.TRUE));
+            }
+        }
+        if (!StringUtils.isEmpty(emailDot.getSendTimes())) {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            try {
+                emailDot.setSendTime(format.parse(emailDot.getSendTimes()));
+                System.out.println(emailDraftsLists);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        Page<Email> emailDraftsPageLists = page.setRecords(emailDraftsLists);
+        return emailDraftsPageLists;
+    }
+    public List<EmailDot> emailDraftsEmail(EmailDot emailDot,@PathVariable("id") String id){
+        EmailDot emailsDot = new EmailDot();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日");
+        List<EmailDot> emailDraftsLists = baseMapper.emailDraftsEmail(emailDot,id);
+        for(EmailDot emailDots:emailDraftsLists){
+            if (!StringUtils.isEmpty(emailDots.getSendTime())){
+                //format()方法将Date转换成指定格式的String
+                String sendTimess = format.format(emailDots.getSendTime());
+                emailDots.setSendTimes(sendTimess);
+                System.out.println(sendTimess);
+            }
+            if (id.equals(emailDots.getId())){
+                if (emailDots.getStatus()==Constants.emailsStatus.FALSE){
+                    emailDots.setStatus(Constants.emailsStatus.map.get(Constants.emailsStatus.FALSE));
+                    emailsDot.setStatus(Constants.emailsStatus.map.get(Constants.emailsStatus.FALSE));
+                }
+            }
+        }
+        return emailDraftsLists;
+    }
+    @Override
+    public List<EmailDot> emailDraftsSumOrCount(EmailDot emailDot) {
+        Map<String, Object> emailDraftsCountsOrSums = baseMapper.emailDraftsSumOrCount(emailDot);
+        Map<String, Object> emailDraftsCountsOrSumsLists = new HashMap<>();
+        List emailDraftsCountsOrSumsList = new ArrayList();
+        emailDraftsCountsOrSumsLists.put("DraftsSum", emailDraftsCountsOrSums.get("DraftsSum"));
+        emailDraftsCountsOrSumsLists.put("DraftsCount", emailDraftsCountsOrSums.get("DraftsCount"));
+        Iterator<Map.Entry<String, Object>> it = emailDraftsCountsOrSumsLists.entrySet().iterator();
+        while (it.hasNext()) {
+            int emailOtherTime = 0;
+            for (int emailInt = 0; emailInt <= 1; emailInt++) {
+                int emailOtherTimes = emailOtherTime + 1;
+                if (emailOtherTimes <= 1 && emailTimes == false) {
+                    Map.Entry<String, Object> entry = it.next();
+                    emailDraftsCountsOrSumsList.add(entry.getValue());
+                } else if (emailOtherTimes > 1) {
+                    emailTimes = true;
+                    System.out.println(true);
+                }
+            }
+        }
+        return emailDraftsCountsOrSumsList;
+    }
+    @Override
+    public EmailQueryDot emailsDraftsInfmormations() {
+        EmailQueryDot emailDraftsDots = new EmailQueryDot();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日");
+        List<EmailDot> emailDraftsLists = baseMapper.emailsDraftsInfmormations();
+        if (!CollectionUtils.isEmpty(emailDraftsLists)) {
+            int emailSentersTimes = 0;
+            for (EmailDot emailDots : emailDraftsLists) {
+                emailSentersTimes = emailSentersTimes + 1;
+                if (!StringUtils.isEmpty(emailDots.getSendTime())) {
+                    //format()方法将Date转换成指定格式的String
+                    String sendTimess = format.format(emailDots.getSendTime());
+                    emailDots.setSendTimes(sendTimess);
+                    emailDraftsDots.setSendTime(sendTimess);
+                }
+                if (!StringUtils.isEmpty(emailDots.getEmailTitle())) {
+                    if (emailDots.getEmailTitle().length() <= 8) {
+                        String emailTitles = emailDots.getEmailTitle();
+                        emailDots.setEmailTitle(emailTitles);
+                        emailDraftsDots.setEmailTitle(emailTitles);
+                        System.out.println(emailDraftsLists);
+                    } else {
+                        String emailsTitles = emailDots.getEmailTitle().substring(0, 8) + "...";
+                        emailDots.setEmailTitle(emailsTitles);
+                        emailDraftsDots.setEmailTitle(emailsTitles);
+                    }
+                    if (!StringUtils.isEmpty(emailDots.getEmailContent())) {
+                        if (emailDots.getEmailContent().length() <= 10) {
+                            String emailContents = emailDots.getEmailContent();
+                            emailDots.setEmailContent(emailContents);
+                            emailDraftsDots.setEmailContent(emailContents);
+                            System.out.println(emailDraftsLists);
+                        } else {
+                            String emailContents = emailDots.getEmailContent().substring(0, 10) + "...";
+                            emailDraftsDots.setEmailContent(emailContents);
+                            emailDots.setEmailContent(emailContents);
+                        }
+
+                    }
+                    emailDraftsDots.setEmailDraftsLists(emailDraftsLists);
+                }
+            }
+        }
+        return emailDraftsDots;
+    }
+    @Override
+    public List<EmailDot> queryDraftsEmail(EmailDot emailDot,@PathVariable("id") String id) {
+        Email email = new Email();
+        List<EmailDot> emailqueryDraftsLists = baseMapper.queryDraftsEmail(emailDot, id);
+        BeanUtils.copyProperties(emailDot, email);
+        List<EmailDot> emailqueryDraftsOnlyLists = null ;
+        List<EmailDot>  emailqueryAllDraftsLists = new ArrayList<> ();
+        int emailCount=0;
+        for(EmailDot emailDotsList:emailqueryDraftsLists){
+            emailCount=emailCount+1;
+            if (id.equals(emailDotsList.getId())) {
+                if (emailDotsList.getIsMsg()==1) {
+                    String Msg = Constants.emailStatus.map.get(Constants.emailStatus.FALSE);
+                    emailDotsList.setIsMsgs(Msg);
+                    emailqueryDraftsLists.add(emailDotsList);
+                }else if(emailDotsList.getIsMsg()==0){
+                    String Msg = Constants.emailStatus.map.get(Constants.emailStatus.FALSE);
+                    emailDotsList.setIsMsgs(Msg);
+                    System.out.println(Msg);
+                    emailqueryDraftsLists.add(emailDotsList);
+
+                }
+                emailqueryDraftsOnlyLists=emailqueryDraftsLists;
+                EmailDot emailDotsLists = emailqueryDraftsOnlyLists.get(emailCount-1);
+                emailqueryAllDraftsLists.add(emailDotsLists);
+                break;
+            }
+        }
+        email.setEmailAddList(emailqueryAllDraftsLists);
+        return emailqueryAllDraftsLists;
+    }
+    @Override
+    public List<EmailDot> getDraftsEmailList() {
+        List<EmailDot> exportEmailDraftsLists = baseMapper.getDraftsEmailList();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日");
+        EmailDot journalDot = new EmailDot();
+        for (EmailDot emailDots : exportEmailDraftsLists) {
+            if (!StringUtils.isEmpty(emailDots.getSendTime())){
+                //format()方法将Date转换成指定格式的String
+                String sendTimess = format.format(emailDots.getSendTime());
+                emailDots.setSendTimes(sendTimess);
+            }
+            journalDot.setEmailExportLists(exportEmailDraftsLists);
+        }
+        return exportEmailDraftsLists;
+    }
+    @Override
+    public Map<String, Object> draftsEmail(EmailDot emailDot) {
+        Email email = new Email();
+        BeanUtils.copyProperties(emailDot, email);
+        Map<String, Object> emailsAddsDraftsLists = baseMapper.draftsEmail(emailDot);
+        return emailsAddsDraftsLists;
     }
 }

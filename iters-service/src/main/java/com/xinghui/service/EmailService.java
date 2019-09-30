@@ -37,4 +37,28 @@ public interface EmailService extends IService<Email> {
 
     EmailQueryDot emailsReceiversInfmormations();
 
+    Page<Email> emailSenterPage(Integer offset, Integer limit, EmailDot emailDot);
+
+    EmailQueryDot emailsSentersInfmormations();
+
+    List<EmailDot> emailSenterSumOrCount(EmailDot emailDot);
+
+    List<EmailDot> getSenterEmailList();
+
+    List<EmailDot> querySenterEmail(EmailDot emailDot,@PathVariable("id") String id);
+
+    Page<Email> emailDraftsPage(Integer offset, Integer limit, EmailDot emailDot);
+
+    List<EmailDot> emailDraftsEmail( EmailDot emailDot,@PathVariable("id") String id);
+
+    List<EmailDot> emailDraftsSumOrCount(EmailDot emailDot);
+
+    EmailQueryDot emailsDraftsInfmormations();
+
+    List<EmailDot> queryDraftsEmail(EmailDot emailDot,@PathVariable("id") String id);
+
+    List<EmailDot> getDraftsEmailList();
+
+    Map<String,Object> draftsEmail(EmailDot emailDot);
+
 }

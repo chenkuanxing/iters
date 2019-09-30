@@ -75,6 +75,24 @@ public class LoginController extends BaseController {
     @RequestMapping("/email")
     public String email() { return "page/email"; }
 
+    @RequestMapping("/write_querySenterEmail")
+    public String write_querySenterEmail() { return "page/write_querySenterEmail"; }
+
+    @RequestMapping("/emailSenter")
+    public String emailSenter() {
+        return "page/emailSenter";
+    }
+
+    @RequestMapping("/write_queryDraftsEmail")
+    public String write_queryDraftsEmail() {
+        return "page/write_queryDraftsEmail";
+    }
+
+    @RequestMapping("/emailDrafts")
+    public String emailDrafts() {
+        return "page/emailDrafts";
+    }
+
     @RequestMapping("/emailReceiver")
     public String emailReceiver() {
         return "page/emailReceiver";

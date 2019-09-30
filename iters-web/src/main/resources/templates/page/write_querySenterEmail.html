@@ -59,7 +59,7 @@
         <div class="bot_btn">
            <!-- <input type="submit" onclick="inForEmailFunc()" value="发送" class="btn"/>-->
             <button class="btn" style="background-color: #aa5500"><a href="email" target="right" onclick="draftsEmailFunc()">草稿</a></button>
-            <button class="btn btn1"><a href="emailRecycle" target="right">返回</a></button>
+            <button class="btn btn1"><a href="emailSenter" target="right">返回</a></button>
         </div>
     </div>
 </form>
@@ -68,12 +68,12 @@
 <script src="statics/assets/js/utf8-php/ueditor.config.js"></script>
 <script src="statics/assets/js/utf8-php/ueditor.all.min.js"></script>
 <script>
-    /*点击详情查看回收站里面内容*/
+    /*点击详情查看发件箱里面内容*/
     var id = window.parent.document.getElementById("id").value;
     if (!!id) {debugger;
         $.ajax({
             type: "GET",
-            url: "email/queryRecycleEmail/" + id,
+            url: "email/querySenterEmail/" + id,
             dataType: "json",
             success: function (result) {
                 if (result.code == 100) {
