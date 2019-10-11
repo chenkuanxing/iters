@@ -119,7 +119,7 @@ function InboxInf() {
         });
     });
 }
-function getEmailTableData(){debugger;
+function getEmailTableData(){
     $dataTableHot.bootstrapTable('refresh');
 }
 function openlayerEquery(id){

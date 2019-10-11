@@ -56,6 +56,7 @@ h1{ float:left; margin:8px 0 0 20px; width:260px; height:64px;
 .sidebar .nav>li.role_m .nav-header a{ background:url(../images/ico90.png) no-repeat left center;}
 .sidebar .nav>li.news_m .nav-header a{ background:url(../images/ico91.png) no-repeat left center;}
 .sidebar .nav>li.list_m .nav-header a{ background:url(../images/liicon03.png) no-repeat left center;}
+.sidebar .nav>li.list_ms .nav-header a{ background:url(../images/liicon08.png) no-repeat left center;}
 .sidebar .nav>li.sign .nav-header a{ background:url(../images/liicon05.png) no-repeat left center;}
 .sidebar .nav>li.train .nav-header a{ background:url(../images/liicon06.png) no-repeat left center;}
 .sidebar .nav>li.person .nav-header a{ background:url(../images/ico05.png) no-repeat left center;}

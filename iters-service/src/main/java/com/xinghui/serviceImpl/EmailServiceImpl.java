@@ -118,6 +118,7 @@ public class EmailServiceImpl extends ServiceImpl<EmailMapper, Email> implements
         email.setEmailAddList(emailqueryAllLists);
         return emailqueryAllLists;
     }
+    @Override
     public Map<String, Object> isMsgsEmail(EmailDot emailDot, @PathVariable("id") String id) {
         Map<String, Object> isMsgsMap = baseMapper.isMsgsEmail(emailDot, id);
         return isMsgsMap;

@@ -27,10 +27,8 @@ public class LoginController extends BaseController {
         return "page/index";
     }
 
-    @RequestMapping("/home")
-    public String home() {
-        return "page/home";
-    }
+    @RequestMapping("/home") public String home() { return "page/home"; }
+
 
     @RequestMapping("/access_list")
     public String accessList() {
@@ -74,6 +72,9 @@ public class LoginController extends BaseController {
 
     @RequestMapping("/email")
     public String email() { return "page/email"; }
+
+    @RequestMapping("/alipay")
+    public String alipay() { return "page/alipay"; }
 
     @RequestMapping("/write_querySenterEmail")
     public String write_querySenterEmail() { return "page/write_querySenterEmail"; }

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+        <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xinghui.mapper.TrainMapper">
+<select id="trainPage" resultType="com.xinghui.entity.Train">
+    select a.*,b.user_name as keynoteSpeaker from s_train a
+    left join s_user b on a.created_user = b.id and b.status = 1
+    where a.status = 1
+    <if test="trainDot.trainingName != null and trainDot.trainingName != ''">
+        and a.trainingName = #{trainDot.trainingName}
+    </if>
+    <if test="trainDot.keynoteSpeaker != null and trainDot.keynoteSpeaker != ''">
+        and a.keynoteSpeaker  LIKE  CONCAT('%',#{trainDot.keynoteSpeaker,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="trainDot.trainTime != null">
+        and DATE_FORMAT(a.created_time,'%Y-%m-%d') = DATE_FORMAT(#{trainDot.trainTime},'%Y-%m-%d')
+    </if>
+</select>
+    <insert id="creatTrain" parameterType="java.util.HashMap">
+       INSERT INTO s_train (
+       id,
+       trainingName,
+       keynoteSpeaker,
+       trainTime,
+       endTime,
+       participator,
+       trainingPlace,
+       performance,
+       trainContent
+       ) VALUES
+      (uuid(),#{trainingName},#{keynoteSpeaker},#{trainTime},#{endTime},#{participator},#{trainingPlace},#{performance},#{trainContent})
+  </insert>
+    <select id="queryTrain" resultType="com.xinghui.dot.TrainDot">
+    select s.id,s.trainingName,s.keynoteSpeaker,s.trainingPlace,s.trainTime,
+    s.endTime,s.performance,s.participator,s.trainContent from s_train s
+    left join s_user b on s.created_user = b.id and b.status = 1
+    where s.status = 1
+    </select>
+</mapper>

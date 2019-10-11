@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="statics/assets/css/base.css" />
+    <link rel="stylesheet" type="text/css" href="statics/assets/css/jquery.dialog.css" />
+    <link rel="stylesheet" href="statics/assets/css/index.css" />
+    <script src="statics/libs/vue.min.js"></script>
+    <style>
+        .layui-layer-title{background:url(statics/assets/images/righttitlebig.png) repeat-x;font-weight:bold;color:#46647e; border:1px solid #c1d3de;height: 33px;line-height: 33px;}
+    </style>
+    <title>OA管理系统</title>
+</head>
+<body>
+<form  method="post" >
+    订单号：<input type="text" id="WIDout_trade_no" name="WIDout_trade_no" required><br/>
+    订单名称：<input type="text" id="WIDsubject" name="WIDsubject" required><br/>
+    付款金额：<input type="text" id="WIDtotal_amount" name="WIDtotal_amount" required><br/>
+    WIDbody：<input type="text" id="WIDbody" name="WIDbody"><br/>
+    <input type="submit" value="下单" onclick="submitAlipay()"> <input type="reset" value="重置">
+</form>
+</body>
+<script type="text/javascript" src="statics/assets/js/jquery.js"></script>
+<script type="text/javascript" src="statics/assets/js/core.js"></script>
+<script type="text/javascript" src="statics/assets/js/jquery.dialog.js"></script>
+<script type="text/javascript" src="statics/assets/js/index.js"></script>
+<script src="statics/assets/js/layer_v2.1/layer/layer.js"></script>
+<script src="statics/js/index.js"></script>
+<script src="statics/assets/js/email.js"></script>
+<script type="text/javascript">
+function submitAlipay(){debugger;
+    var WIDout_trade_no = $("#WIDout_trade_no").val();
+    var WIDsubject = $("#WIDsubject").val();
+    var WIDtotal_amount = $("#WIDtotal_amount").val();
+    var WIDbody = $("#WIDbody").val();
+    var data = {
+        "WIDout_trade_no": WIDout_trade_no,"WIDsubject": WIDsubject,"WIDtotal_amount": WIDtotal_amount,"WIDbody": WIDbody
+    }
+    $.ajax({
+        type: "POST",
+        url: "alipay/pay",
+        data:data,
+        dataType: "json",
+        success: function (result) {debugger;
+            if (result.code == 100) {debugger;
+                console.log(data);
+            } else {
+                console.log(result.message);
+            }
+        }
+    });
+}
+</script>
+</html>

@@ -1,4 +1,3 @@
-
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -72,7 +71,7 @@
 <script>
     /*点击详情查看发件箱里面内容*/
     var id = window.parent.document.getElementById("id").value;
-    if (!!id) {debugger;
+    if (!!id) {
         $.ajax({
             type: "GET",
             url: "email/queryEmail/" + id,
@@ -99,7 +98,7 @@
         });
     }
     /*发送书写邮件内容添加到收件箱*/
-    function inForEmailFunc() {debugger;
+    function inForEmailFunc() {
         var emailTitle = $("#emailTitles").val();
         var accessory = $("#accessorys").val();
         var isMsgs = $("#isMsgss").val();
@@ -124,7 +123,6 @@
                 }
             }
         });
-
     }
     /*发送书写邮件内容添加到草稿箱*/
     function draftsEmailFunc() {debugger;

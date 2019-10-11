@@ -1,11 +1,26 @@
-/**
- * Created by Administrator on 2016/8/4.
- */
-
-var name, person, currentID, time, flag = true;
+/*删除培训列表的内容*/
+function delTrain(id) {
+    $.ajax({
+        type: "GET",
+        url: "train/deleteTrain/"+id,
+        dataType: "json",
+        success: function(result) {
+            if (result.code == 100) {
+                alert("删除成功！")
+                $dataTableHot.bootstrapTable('refresh');
+                window.location.reload();
+            } else {bootstrapTable
+                console.log(result.message);
+            }
+        }
+    });
+}
+var trainingName, keynoteSpeaker, currentID, trainTime, flag = true;
+var $dataTableHot;
 function Trainload() {
-    $('#table').bootstrapTable({
-        method: "get",
+    $dataTableHot = $('#table').bootstrapTable({
+        method: 'get',
+        url: "train/trainPage",//请求路径
         striped: true,
         singleSelect: false,
         dataType: "json",
@@ -13,60 +28,71 @@ function Trainload() {
         pageSize: 10,
         pageNumber: 1,
         search: false, //显示搜索框
-        contentType: "application/x-www-form-urlencoded",
-        queryParams: null,
+        sidePagination: "server",
+        contentType: "application/x-www-form-urlencoded",//一种编码。好像在post请求的时候需要用到。这里用的get请求，注释掉这句话也能拿到数据
+        queryParams: function (params) {
+            var temp = {//如果是在服务器端实现分页，limit、offset这两个参数是必须的
+                limit: params.limit, // 每页显示数量
+                offset: (params.offset / params.limit) + 1, // SQL语句起始索引
+                //page : (params.offset / params.limit) + 1, //当前页码
+                trainingName: trainingName = $("#trainingName").val(),
+                keynoteSpeaker: keynoteSpeaker = $("#keynoteSpeaker").val(),
+                trainTime: sendTimes = $("#trainTime").val(),
+            };
+            return temp;
+        },
+        responseHandler: function (res) {
+            console.log(res.data.total);
+            console.log(res.data.records);
+            return {
+                total: res.data.total,
+                rows: res.data.records
+            };
+        },
         columns: [
-
-            {
-                checkbox:"true",
-                field: 'ID',
-                align: 'center',
-                valign: 'middle'
-            },
-            {
-                title: "编号",
-                field: 'class',
-                align: 'center',
-                valign: 'middle'
-            },
             {
                 title: '培训名称',
-                field: 'sex',
+                field: 'trainingName',
                 align: 'center',
                 valign: 'middle'
             },
             {
                 title: '主讲人',
-                field: 'type',
+                field: 'keynoteSpeaker',
                 align: 'center'
             },
             {
-                title: '开始时间',
-                field: 'name',
-                align: 'center',
-                valign: 'middle'
-            },
-            {
-                title: '结束时间',
-                field: 'name',
+                title: '培训时间',
+                field: 'trainTime',
                 align: 'center',
                 valign: 'middle'
             },
             {
                 title: '参加人',
-                field: 'name',
+                field: 'participator',
                 align: 'center',
                 valign: 'middle'
             },
             {
                 title: '培训地点',
-                field: 'name',
+                field: 'trainingPlace',
+                align: 'center',
+                valign: 'middle'
+            },
+            {
+                title: '培训内容',
+                field: 'trainContent',
+                align: 'center'
+            },
+            {
+                title: '结束时间',
+                field: 'endTime',
                 align: 'center',
                 valign: 'middle'
             },
             {
                 title: '成绩',
-                field: 'work',
+                field: 'performance',
                 align: 'center'
             },
            
@@ -75,14 +101,16 @@ function Trainload() {
                 field: '',
                 align: 'center',
                 formatter: function (value, row) {
-                    var e = '<button button="#" mce_href="#" onclick="del(\'' + row.WORKRECORDID + '\')">删除</button> '
-                    var d = '<button button="#" mce_href="#" onclick="edit(\'' + row.WORKRECORDID + '\')">编辑</button> ';
+                    var e = '<button button="#" mce_href="#" onclick="delTrain(\'' + row.id + '\')">删除</button> '
+                    var d = '<button button="#" mce_href="#" onclick="editTrain(\'' + row.id + '\')">编辑</button> ';
                     return e + d;
                 }
             }
         ]
     });
-    getData();
+}
+function getTrainTableData(){debugger;
+    $dataTableHot.bootstrapTable('refresh');
 }
 function getData() {
     if (flag) {
@@ -142,29 +170,12 @@ function edit(id) {
     openlayer()
     currentID = id;
 }
-function del(id) {
-    alert(id)
-    var Id = id;
-    $.ajax({
-        url: '../WorkRecord/DeleteWork?workId=' + Id,
-        type: 'GET',
-        dataType: 'json',
-        success: function (data) {
-            if (data.data) {
-                alert("删除成功！")
-               getData();
-            } else {
-                alert("删除失败")
-            }
-        },
-        error: function (err) {
-        }
-    });
-}
 function getCurrentID() {
     return currentID;
 }
-function openlayer(id){
+function editTrain(id){
+    $('#id').val(id);
+    alert(id);
     layer.open({
         type: 2,
         title: '添加信息',
@@ -176,7 +187,7 @@ function openlayer(id){
         area: ['90%', '98%'],
         shadeClose: true,
         closeBtn: 1,
-        content: 'train_tail.html'
+        content: 'train_tail'
         //iframe的url
     });
 }
