@@ -11,4 +11,6 @@ import java.util.List;
 
 public interface PublishMapper extends BaseMapper<Publish> {
     List<Publish> listPage(Page page, @Param("publishDot") PublishDot publishDot);
+
+    List<PublishDot> publishHomeInformations();
 }

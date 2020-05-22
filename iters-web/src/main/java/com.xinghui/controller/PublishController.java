@@ -62,6 +62,12 @@ public class PublishController extends BaseController {
         publishDot.setPublishName(userService.getById(publishDot.getPublishBy()).getUserName());
         return success(publishDot);
     }
-
+    /**
+     * 通知公告查询详情标题功能
+     * @return
+     */
+    @GetMapping(value = "/publishHomeInformations")
+    public ResultDto publishHomeInformations() {
+        return success( publishService.publishHomeInformations());}
 
 }

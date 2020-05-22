@@ -15,4 +15,12 @@
             and DATE_FORMAT(a.publish_time,'%Y-%m-%d') = DATE_FORMAT(#{publishDot.publishTime},'%Y-%m-%d')
         </if>
     </select>
+    <select id="publishHomeInformations" resultType="com.xinghui.dot.PublishDot">
+        select s.title as title,
+        s.created_time as publishTime from s_publish s
+        left join s_user b on s.created_user = b.id and b.status = 1
+        where s.status = 1
+    </select>
+
+
 </mapper>
